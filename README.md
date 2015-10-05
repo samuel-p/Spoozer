@@ -1,0 +1,2 @@
+# Spoozer
+Project for Softwareengeneering
