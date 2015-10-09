@@ -38,3 +38,30 @@ dependencies {
     testCompile "org.springframework:spring-test:3.2.3.RELEASE"
     testCompile "org.mockito:mockito-all:1.8.4"
 }
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main/java'
+        }
+        resources {
+            srcDir 'src/main/resources'
+            srcDir 'src/main/webapp'
+        }
+    }
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'de.saphijaga.spoozer.SpoozerApplication'
+    }
+}
+
+task buildAll(type: Jar) {
+    manifest {
+        attributes 'Main-Class': 'de.saphijaga.spoozer.SpoozerApplication'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
