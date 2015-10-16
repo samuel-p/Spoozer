@@ -1,0 +1,33 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
+<head>
+    <title tiles:fragment="title">Spoozer Registration Page</title>
+</head>
+<body>
+<div tiles:fragment="content">
+    <form th:object="${user}" th:action="@{/register}" method="post">
+        <fieldset>
+            <legend>Please Register</legend>
+            <div th:if="${#fields.hasAnyErrors()}">
+                <p th:each="err : ${#fields.allErrors()}" th:text="${err}">...</p>
+            </div>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" th:field="*{username}" th:errorclass="fieldError" />
+            <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Incorrect date</span>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" th:field="*{email}" th:errorclass="fieldError"/>
+            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Incorrect date</span>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" th:field="*{password}" th:errorclass="fieldError"/>
+            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Incorrect date</span>
+            <label for="password2">Password 2</label>
+            <input type="password" id="password2" name="password2" th:field="*{password2}" th:errorclass="fieldError"/>
+            <span th:if="${#fields.hasErrors('password2')}" th:errors="*{password2}">Incorrect date</span>
+
+            <div class="form-actions">
+                <button type="submit" class="btn">Register</button>
+            </div>
+        </fieldset>
+    </form>
+</div>
+</body>
+</html>
