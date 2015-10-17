@@ -1,4 +1,4 @@
-package de.saphijaga.spoozer.web.auth;
+package de.saphijaga.spoozer.web.authentication;
 
 import de.saphijaga.spoozer.core.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

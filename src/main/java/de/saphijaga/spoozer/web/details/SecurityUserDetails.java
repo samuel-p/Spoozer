@@ -7,10 +7,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class SecurityUserDetails implements UserDetails {
+    private String id;
     private String username;
     private String password;
 
-    public SecurityUserDetails(String username, String password) {
+    public SecurityUserDetails(String id, String username, String password) {
+        this.id = id;
         this.username = username;
         this.password = password;
     }
@@ -18,6 +20,10 @@ public class SecurityUserDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return new ArrayList<>();
+    }
+
+    public String getId() {
+        return id;
     }
 
     @Override

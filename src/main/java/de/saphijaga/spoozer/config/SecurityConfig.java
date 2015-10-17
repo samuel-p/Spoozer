@@ -1,5 +1,7 @@
 package de.saphijaga.spoozer.config;
 
+import de.saphijaga.spoozer.config.session.SecurityAuthenticationSuccessHandler;
+import de.saphijaga.spoozer.core.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +21,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    private UserService userService;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authProvider());
@@ -35,14 +40,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/js/**", "/css/**", "/img/**", "/fonts/**", "/register").permitAll()
                 .anyRequest().authenticated()
                 .and()
-            .formLogin()
+                .formLogin()
                 .loginPage("/login")
+                .successHandler(new SecurityAuthenticationSuccessHandler(userService))
                 .permitAll()
                 .and()
-            .logout()
+                .logout()
                 .permitAll()
                 .and()
-            .sessionManagement()
+                .sessionManagement()
                 .invalidSessionUrl("/login?time")
                 .maximumSessions(1)
                 .expiredUrl("/login?expired");

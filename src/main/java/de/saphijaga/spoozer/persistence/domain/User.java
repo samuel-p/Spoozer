@@ -2,6 +2,7 @@ package de.saphijaga.spoozer.persistence.domain;
 
 import org.springframework.data.annotation.Id;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 
 /**
@@ -11,12 +12,10 @@ public class User {
     @Id
     @GeneratedValue(generator = "system-uuid")
     private String id;
+    @Column(unique = true)
     private String username;
     private String password;
     private String email;
-
-    public User() {
-    }
 
     public String getId() {
         return id;

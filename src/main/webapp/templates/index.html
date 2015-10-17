@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8"/>
+    <meta charset="UTF-8" />
     <title>Hello WebSocket</title>
     <script src="js/sockjs-0.3.4.min.js"></script>
     <script src="js/stomp.min.js"></script>
     <script type="text/javascript">
         var stompClient = null;
 
-        function setConnected(connected) {
-        }
-
         function connect() {
             var socket = new SockJS('/connect');
             stompClient = Stomp.over(socket);
-            stompClient.connect({}, function(frame) {
-                setConnected(true);
+            stompClient.connect({}, function (frame) {
                 console.log('Connected: ' + frame);
-                stompClient.subscribe('/topic/greetings', function(greeting){
-                    showGreeting(JSON.parse(greeting.body).content);
+                stompClient.subscribe('/setUserDetails', function (e) {
+                    var event = JSON.parse(e.body);
+                    document.getElementById("userid").innerHTML = event.userDetails.id;
+                    document.getElementById("username").innerHTML = event.userDetails.username;
+                    document.getElementById("useremail").innerHTML = event.userDetails.email;
                 });
+                stompClient.send("/getUserDetails", {}, "");
             });
         }
 
@@ -27,27 +28,32 @@
             if (stompClient != null) {
                 stompClient.disconnect();
             }
-            setConnected(false);
             console.log("Disconnected");
         }
-
-        function sendName() {
-            var name = document.getElementById('name').value;
-            stompClient.send("/app/hello", {}, JSON.stringify({ 'name': name }));
-        }
-
-        function showGreeting(message) {
-            console.log(message);
-        }
-
     </script>
 </head>
-<body onload="disconnect()">
-<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
-    enabled. Please enable Javascript and reload this page!</h2></noscript>
-<h1>Spoozer Application</h1>
-<form class="form-inline" th:action="@{/logout}" method="post">
-    <input type="submit" value="Log out"/>
-</form>
+
+<body onload="connect()">
+    <noscript>
+        <h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
+    enabled. Please enable Javascript and reload this page!</h2>
+    </noscript>
+    <h1>Spoozer Application</h1>
+    <table>
+        <tr>
+            <th>Id:</th>
+            <th>Username:</th>
+            <th>E-Mail:</th>
+        </tr>
+        <tr>
+            <td id="userid">Unknown</td>
+            <td id="username">Unknown</td>
+            <td id="useremail">Unknown</td>
+        </tr>
+    </table>
+    <form class="form-inline" th:action="@{/logout}" method="post">
+        <input type="submit" value="Log out" />
+    </form>
 </body>
+
 </html>

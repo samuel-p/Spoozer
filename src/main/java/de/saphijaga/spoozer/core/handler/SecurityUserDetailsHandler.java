@@ -1,6 +1,5 @@
 package de.saphijaga.spoozer.core.handler;
 
-import de.saphijaga.spoozer.core.service.UserService;
 import de.saphijaga.spoozer.persistence.domain.User;
 import de.saphijaga.spoozer.persistence.service.UserPersistenceService;
 import de.saphijaga.spoozer.web.details.SecurityUserDetails;
@@ -21,11 +20,9 @@ public class SecurityUserDetailsHandler implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> user = userService.getUserByUsername(username);
         if (user.isPresent()) {
-            return new SecurityUserDetails(user.get().getUsername(), user.get().getPassword());
+            return new SecurityUserDetails(user.get().getId(), user.get().getUsername(), user.get().getPassword());
         } else {
             throw new UsernameNotFoundException(username);
         }
     }
-
-
 }

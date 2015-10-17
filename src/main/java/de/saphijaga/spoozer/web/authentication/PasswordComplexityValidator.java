@@ -1,4 +1,4 @@
-package de.saphijaga.spoozer.web.auth;
+package de.saphijaga.spoozer.web.authentication;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

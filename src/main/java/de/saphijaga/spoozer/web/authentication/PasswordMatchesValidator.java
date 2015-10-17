@@ -1,4 +1,4 @@
-package de.saphijaga.spoozer.web.auth;
+package de.saphijaga.spoozer.web.authentication;
 
 import de.saphijaga.spoozer.web.domain.request.RegisterUserRequest;
 
