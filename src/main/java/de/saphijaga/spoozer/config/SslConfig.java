@@ -10,10 +10,9 @@ import org.springframework.boot.context.embedded.ErrorPage;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.PathResource;
 import org.springframework.http.HttpStatus;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
@@ -45,14 +44,12 @@ public class SslConfig {
         connector.setSecure(true);
         connector.setPort(8443);
         try {
-            File ssl = new ClassPathResource("ssl").getFile();
-            JsonNode config = new ObjectMapper().readTree(new File(ssl, "ssl.conf"));
-            File keystore = new File(ssl, config.get("filename").textValue());
             Http11NioProtocol protocol = (Http11NioProtocol) connector.getProtocolHandler();
-            protocol.setSSLEnabled(true);
-            protocol.setKeystoreFile(keystore.getAbsolutePath());
+            JsonNode config = new ObjectMapper().readTree(new PathResource("ssl.conf").getInputStream());
+            protocol.setKeystoreFile(new PathResource(config.get("filename").textValue()).getFile().getAbsolutePath());
             protocol.setKeystorePass(config.get("password").textValue());
             protocol.setKeystoreType("PKCS12");
+            protocol.setSSLEnabled(true);
             return connector;
         } catch (IOException ex) {
             throw new IllegalStateException("can't access keystore", ex);
