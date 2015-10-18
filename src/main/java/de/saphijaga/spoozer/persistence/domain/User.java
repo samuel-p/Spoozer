@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
  */
 public class User {
     @Id
-    @GeneratedValue(generator = "system-uuid")
     private String id;
     @Column(unique = true)
     private String username;

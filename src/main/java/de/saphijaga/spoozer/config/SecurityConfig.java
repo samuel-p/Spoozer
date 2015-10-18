@@ -3,6 +3,7 @@ package de.saphijaga.spoozer.config;
 import de.saphijaga.spoozer.config.session.SecurityAuthenticationSuccessHandler;
 import de.saphijaga.spoozer.core.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -13,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Configuration
 @EnableWebSecurity
@@ -24,10 +26,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserService userService;
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(authProvider());
-    }
+    @Autowired
+    private TomcatEmbeddedServletContainerFactory factory;
 
     @Autowired
     public void configAuthBuilder(AuthenticationManagerBuilder builder) throws Exception {
@@ -37,21 +37,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/js/**", "/css/**", "/img/**", "/fonts/**", "/register").permitAll()
-                .anyRequest().authenticated()
+                .antMatchers("/js/**", "/css/**", "/img/**", "/fonts/**", "/register").permitAll().anyRequest().authenticated()
                 .and()
-                .formLogin()
-                .loginPage("/login")
-                .successHandler(new SecurityAuthenticationSuccessHandler(userService))
-                .permitAll()
+                .formLogin().loginPage("/login").successHandler(new SecurityAuthenticationSuccessHandler(userService)).permitAll()
                 .and()
-                .logout()
-                .permitAll()
+                .logout().permitAll()
                 .and()
-                .sessionManagement()
-                .invalidSessionUrl("/login?time")
-                .maximumSessions(1)
-                .expiredUrl("/login?expired");
+                .sessionManagement().invalidSessionUrl("/login?time").maximumSessions(1).expiredUrl("/login?expired");
+
+        if (factory.getAdditionalTomcatConnectors().stream().anyMatch(c -> c.getSecure())) {
+            http.requiresChannel().anyRequest().requiresSecure();
+        }
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(authProvider());
     }
 
     @Bean

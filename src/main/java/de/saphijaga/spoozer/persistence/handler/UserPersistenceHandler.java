@@ -6,6 +6,7 @@ import de.saphijaga.spoozer.persistence.service.UserPersistenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -18,6 +19,7 @@ import static java.util.Optional.ofNullable;
 public class UserPersistenceHandler implements UserPersistenceService {
     @Autowired
     private UserRepository userRepository;
+
     @Override
     public Optional<User> saveUser(User user) {
         if (user.getId() == null) {

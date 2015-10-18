@@ -4,6 +4,7 @@
 </head>
 <body>
 <div tiles:fragment="content">
+    <p th:if="${!security.isConnectionSecure()}">Die Daten werden unverschlüsselt übertragen!</p>
     <form name="f" th:action="@{/login}" method="post">
         <fieldset>
             <legend>Please Login</legend>
