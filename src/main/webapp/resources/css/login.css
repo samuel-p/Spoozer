@@ -1,0 +1,31 @@
+body {
+    background: #eee;
+    height: auto;
+}
+
+.header {
+    margin-top: 5%;
+    margin-bottom: 1%;
+}
+
+.header img {
+    height: 100px;
+    margin: 0 2%;
+}
+
+.not-secure {
+    margin: 0;
+}
+
+.form-login fieldset {
+    background: #fff;
+    border: 1px solid #aaa;
+}
+
+.form-login .button {
+    margin: 0;
+}
+
+.form-login input.error {
+    border-color: #F04124;
+}

@@ -1,0 +1,21 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+    <th:block th:fragment="header">
+        <div class="row header">
+            <div class="small-6 small-centered columns text-center">
+                <img th:src="@{img/logo.png}" />
+                <img th:src="@{img/spoozer.png}" />
+            </div>
+        </div>
+    </th:block>
+    <th:block th:fragment="secure">
+        <div class="row" th:if="${!security.isConnectionSecure()}">
+            <div class=" small-6 small-centered columns">
+                <div class="alert-box warning not-secure">Die Daten werden unverschlüsselt übertragen!</div>
+            </div>
+        </div>
+    </th:block>
+</body>
+
+</html>

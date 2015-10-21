@@ -1,33 +1,44 @@
-<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
-<head>
-    <title tiles:fragment="title">Spoozer Login Page</title>
-</head>
-<body>
-<div tiles:fragment="content">
-    <p th:if="${!security.isConnectionSecure()}">Die Daten werden unverschlüsselt übertragen!</p>
-    <form name="f" th:action="@{/login}" method="post">
-        <fieldset>
-            <legend>Please Login</legend>
-            <div th:if="${param.error}" class="alert alert-error">
-                Invalid username and password.
-            </div>
-            <div th:if="${param.logout}" class="alert alert-success">
-                You have been logged out.
-            </div>
-            <div th:if="${param.expired}" class="alert alert-success">
-                You have been logged out, because your session has expired.
-            </div>
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username"/>
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password"/>
+<html xmlns:th="http://www.thymeleaf.org">
 
-            <div class="form-actions">
-                <button type="submit" class="btn">Log in</button>
-            </div>
-        </fieldset>
-    </form>
-</div>
-<a href="/register">Register</a>
+<head>
+    <title>Spoozer - Anmeldung</title>
+    <th:block th:replace="views/assets :: favicon"></th:block>
+    <th:block th:replace="views/assets :: css-foundation"></th:block>
+    <th:block th:replace="views/assets :: css-login"></th:block>
+    <th:block th:replace="views/assets :: js-foundation"></th:block>
+</head>
+
+<body>
+    <th:block th:replace="views/static :: header"></th:block>
+    <th:block th:replace="views/static :: secure"></th:block>
+    <div class="row">
+        <div class="small-6 small-centered columns">
+            <form th:action="@{/login}" class="form-login" method="post">
+                <fieldset>
+                    <h3>Bitte anmelden</h3>
+
+                    <div th:if="${param.error}" class="alert-box alert">
+                        Login fehlgeschlagen!
+                    </div>
+                    <div th:if="${param.logout}" class="alert-box alert">
+                        Sie wurden abgemeldet.
+                    </div>
+                    <div th:if="${param.expired}" class="alert-box alert">
+                        Sie wurden aufgrund von Inaktivität abgemeldet!
+                    </div>
+                    <label for="username">Benutzername</label>
+                    <input type="text" id="username" name="username" required="required" autofocus="autofocus" />
+                    <label for="password">Passwort</label>
+                    <input type="password" id="password" name="password" required="required" />
+
+                    <div class="clearfix">
+                        <button type="submit" class="button left">Anmelden</button>
+                        <a th:href="@{/register}" class="button secondary right">Registrieren</a>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
 </body>
+
 </html>

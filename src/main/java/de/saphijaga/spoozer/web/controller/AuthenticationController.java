@@ -1,6 +1,7 @@
 package de.saphijaga.spoozer.web.controller;
 
 import de.saphijaga.spoozer.core.service.UserService;
+import de.saphijaga.spoozer.web.authentication.PasswordMatches;
 import de.saphijaga.spoozer.web.details.UserDetails;
 import de.saphijaga.spoozer.web.domain.request.RegisterUserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +37,10 @@ public class AuthenticationController {
             return "redirect:/";
         }
         if (result.hasErrors()) {
+            Optional<ObjectError> error = result.getAllErrors().stream().filter(e -> e.getCode().equals(PasswordMatches.class.getSimpleName())).findAny();
+            if (error.isPresent()) {
+                result.addError(new FieldError("user", "password2", error.get().getDefaultMessage()));
+            }
             return "register";
         }
         Optional<UserDetails> user = userService.registerUser(register);

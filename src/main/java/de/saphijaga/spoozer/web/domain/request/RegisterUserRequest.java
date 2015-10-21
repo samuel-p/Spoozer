@@ -11,19 +11,18 @@ import javax.validation.constraints.NotNull;
 /**
  * Created by samuel on 15.10.15.
  */
-@PasswordMatches
+@PasswordMatches(message = "Die Passwörter stimmen nicht überein")
 public class RegisterUserRequest {
     @NotNull
     @NotEmpty
-    @UsernameNotInUse
+    @UsernameNotInUse(message = "Dieser Benutzername wird bereits verwendet")
     private String username;
     @NotNull
     @NotEmpty
-    @ComplexPassword
+    @ComplexPassword(message = "Das Passwort muss Groß- und Keinbuchstaben, sowie Zahlen enthalten")
     private String password;
     @NotNull
     @NotEmpty
-    @ComplexPassword
     private String password2;
     @NotNull
     @NotEmpty
