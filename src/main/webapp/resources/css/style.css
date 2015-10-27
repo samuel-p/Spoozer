@@ -1,0 +1,33 @@
+body {
+    background-image: url("../img/bg.png");
+}
+
+.require-js {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: #222;
+    color: #f00;
+    text-align: center;
+    vertical-align: center;
+    z-index: 100000;
+}
+
+.require-js h3 {
+    margin-top: 10%;
+    color: #f00;
+}
+
+.spoozer {
+    background-color: #00c300;
+    border-color: #00ad00;
+    color: #000;
+}
+
+.spoozer:hover,
+.spoozer:focus {
+    background-color: #00ad00;
+    color: #000;
+}

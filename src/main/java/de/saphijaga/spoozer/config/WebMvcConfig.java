@@ -4,6 +4,7 @@ import de.saphijaga.spoozer.config.resolver.UserDetailsArgumentResolver;
 import de.saphijaga.spoozer.web.details.SecurityDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -13,6 +14,10 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.thymeleaf.resourceresolver.IResourceResolver;
+import org.thymeleaf.spring4.expression.ThymeleafEvaluationContextWrapper;
+import org.thymeleaf.templateresolver.ITemplateResolver;
+import org.thymeleaf.templateresolver.TemplateResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,7 +32,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/**").addResourceLocations("classpath:resources/", "classpath:static/");
+        registry.addResourceHandler("/**").addResourceLocations("classpath:resources/");
+        registry.addResourceHandler("/lib/**").addResourceLocations("classpath:static/");
     }
 
     @Override

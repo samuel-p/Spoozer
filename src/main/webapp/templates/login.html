@@ -1,6 +1,8 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
+    <th:block th:replace="views/assets :: meta"></th:block>
     <title>Spoozer - Anmeldung</title>
     <th:block th:replace="views/assets :: favicon"></th:block>
     <th:block th:replace="views/assets :: css-foundation"></th:block>
@@ -9,21 +11,21 @@
 </head>
 
 <body>
-    <th:block th:replace="views/static :: header"></th:block>
+    <th:block th:replace="views/static :: require-js"></th:block>
+    <th:block th:replace="views/static :: heading"></th:block>
     <th:block th:replace="views/static :: secure"></th:block>
     <div class="row">
-        <div class="small-6 small-centered columns">
+        <div class="large-6 medium-8 small-11 large-centered small-centered columns">
             <form th:action="@{/login}" class="form-login" method="post">
                 <fieldset>
                     <h3>Bitte anmelden</h3>
-
                     <div th:if="${param.error}" class="alert-box alert">
                         Login fehlgeschlagen!
                     </div>
-                    <div th:if="${param.logout}" class="alert-box alert">
+                    <div th:if="${param.logout}" class="alert-box info">
                         Sie wurden abgemeldet.
                     </div>
-                    <div th:if="${param.expired}" class="alert-box alert">
+                    <div th:if="${param.expired}" class="alert-box warning">
                         Sie wurden aufgrund von Inaktivität abgemeldet!
                     </div>
                     <label for="username">Benutzername</label>
@@ -32,13 +34,16 @@
                     <input type="password" id="password" name="password" required="required" />
 
                     <div class="clearfix">
-                        <button type="submit" class="button left">Anmelden</button>
-                        <a th:href="@{/register}" class="button secondary right">Registrieren</a>
+                        <button type="submit" class="button left large-4 medium-4 small-12">Anmelden</button>
+                        <a th:href="@{/register}" class="button secondary right large-5 medium-5 small-12">Registrieren</a>
                     </div>
                 </fieldset>
             </form>
         </div>
     </div>
+    <script>
+        $(document).foundation();
+    </script>
 </body>
 
 </html>

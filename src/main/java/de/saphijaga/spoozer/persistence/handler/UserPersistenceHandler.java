@@ -6,7 +6,6 @@ import de.saphijaga.spoozer.persistence.service.UserPersistenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -41,6 +40,6 @@ public class UserPersistenceHandler implements UserPersistenceService {
 
     @Override
     public Optional<User> getUserByUsername(String username) {
-        return ofNullable(userRepository.findByUsername(username));
+        return ofNullable(userRepository.findByUsernameIgnoreCase(username));
     }
 }

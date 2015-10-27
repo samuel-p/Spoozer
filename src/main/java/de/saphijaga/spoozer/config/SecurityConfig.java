@@ -37,13 +37,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/js/**", "/css/**", "/img/**", "/icons/**", "/register").permitAll().anyRequest().authenticated()
+                .antMatchers("/js/**", "/css/**", "/img/**", "/lib/**", "/register"/*, "/"*/).permitAll().anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").successHandler(new SecurityAuthenticationSuccessHandler(userService)).permitAll()
                 .and()
-                .logout().permitAll()
+                .logout().logoutUrl("/logout").logoutSuccessUrl("/login?logout").permitAll()
                 .and()
-                .sessionManagement().invalidSessionUrl("/login?time").maximumSessions(1).expiredUrl("/login?expired");
+                .sessionManagement().maximumSessions(1).expiredUrl("/login?expired");
 
         if (factory.getAdditionalTomcatConnectors().stream().anyMatch(c -> c.getSecure())) {
             http.requiresChannel().anyRequest().requiresSecure();

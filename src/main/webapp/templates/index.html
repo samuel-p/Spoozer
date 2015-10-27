@@ -2,10 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8" />
-    <title>Spoozer Application</title>
-    <script type="text/javascript" src="js/sockjs-0.3.4.min.js"></script>
-    <script type="text/javascript" src="js/stomp.min.js"></script>
+    <th:block th:replace="views/assets :: meta"></th:block>
+    <title>Spoozer</title>
+    <th:block th:replace="views/assets :: favicon"></th:block>
+    <th:block th:replace="views/assets :: css-foundation"></th:block>
+    <th:block th:replace="views/assets :: css-app"></th:block>
+    <th:block th:replace="views/assets :: js-lib-app"></th:block>
+    <th:block th:replace="views/assets :: js-app"></th:block>
     <script type="text/javascript">
         var stompClient = null;
 
@@ -34,27 +37,205 @@
 </head>
 
 <body onload="connect()">
-    <p th:if="${!security.isConnectionSecure()}">Die Daten werden unverschlüsselt übertragen!</p>
-    <noscript>
-        <h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
+    <th:block th:replace="views/static :: require-js"></th:block>
+    <div class="fixed">
+        <nav class="top-bar" data-topbar="" role="navigation">
+            <ul class="title-area">
+                <li class="name">
+                    <h1><a href=""><img src="img/logo.png"/><img src="img/spoozer-light.png"/></a></h1>
+                </li>
+                <li class="toggle-topbar menu-icon"><a href="#"><span>Menü</span></a>
+                </li>
+            </ul>
+
+            <section class="top-bar-section">
+                <!-- Left Nav Section -->
+                <ul class="left">
+                    <li class="has-form search">
+                        <form class="row collapse">
+                            <div class="large-10 small-10 columns">
+                                <input name="search" type="text" placeholder="Suchen..." />
+                            </div>
+                            <div class="large-2 small-2 columns">
+                                <button href="#" class="button spoozer expand" type="submit"><span class="fi-page-search"></span>
+                                </button>
+                            </div>
+                        </form>
+                    </li>
+                </ul>
+
+                <!-- Right Nav Section -->
+                <ul class="right">
+                    <li class="divider"></li>
+                    <li class="has-dropdown">
+                        <a href="#">Profil</a>
+                        <ul class="dropdown">
+                            <li><a href="#" id="userid">Unknown</a>
+                            </li>
+                            <li><a href="#" id="username">Unknown</a>
+                            </li>
+                            <li><a href="#" id="useremail">Unknown</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="divider"></li>
+                    <li class="has-form">
+                        <form th:action="@{/logout}" method="post">
+                            <button type="submit" class="button spoozer">Abmelden</button>
+                        </form>
+                    </li>
+                </ul>
+            </section>
+        </nav>
+    </div>
+    <div class="dynamic-content">
+        <p th:if="${!security.isConnectionSecure()}">Die Daten werden unverschlüsselt übertragen!</p>
+        <noscript>
+            <h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
         enabled. Please enable Javascript and reload this page!</h2>
-    </noscript>
-    <h1>Spoozer Application</h1>
-    <table>
-        <tr>
-            <th>Id:</th>
-            <th>Username:</th>
-            <th>E-Mail:</th>
-        </tr>
-        <tr>
-            <td id="userid">Unknown</td>
-            <td id="username">Unknown</td>
-            <td id="useremail">Unknown</td>
-        </tr>
-    </table>
-    <form class="form-inline" th:action="@{/logout}" method="post">
-        <input type="submit" value="Log out" />
-    </form>
+        </noscript>
+        <h1>Spoozer Application</h1>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+        <p>Test</p>
+    </div>
+    <div class="row player">
+        <div class="large-3 columns">
+            <span class="label secondary track-info">Title</span>
+        </div>
+        <div class="large-2 columns">
+            <div class="progress secondary track-time-progress">
+                <span class="meter" style="width: 40%"></span>
+            </div>
+        </div>
+        <div class="large-1 columns text-left">
+            <div class="track-time-text">
+                <span>1:21 - 3:32</span>
+            </div>
+        </div>
+        <div class="large-2 columns text-center">
+            <ul class="button-group round player-control">
+                <li><a href="#" class="button secondary small"><span class="fi-previous"></span></a>
+                </li>
+                <li><a href="#" class="button secondary small"><span class="fi-play"></span></a>
+                </li>
+                <li><a href="#" class="button secondary small"><span class="fi-next"></span></a>
+                </li>
+            </ul>
+        </div>
+        <div class="large-2 columns">
+            <div class="range-slider volume-slider" data-slider="">
+                <span class="range-slider-handle" role="slider" tabindex="0"></span>
+                <span class="range-slider-active-segment"></span>
+            </div>
+        </div>
+        <div class="large-2"></div>
+    </div>
+    <script>
+        $(document).foundation({
+            topbar: {
+                custom_back_text: true,
+                back_text: '<span class="fi-arrow-left"/> Zurück'
+            }
+        });
+    </script>
+
 </body>
 
 </html>

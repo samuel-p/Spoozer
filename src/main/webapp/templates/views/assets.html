@@ -1,19 +1,40 @@
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
+    <th:block th:fragment="meta">
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    </th:block>
     <th:block th:fragment="favicon">
         <link rel="shortcut icon" type="image/x-icon" th:href="@{img/favicon.ico}" />
     </th:block>
     <th:block th:fragment="css-foundation">
-        <link rel="stylesheet" href="css/normalize.css" />
-        <link rel="stylesheet" href="css/foundation.min.css" />
-        <link rel="stylesheet" href="css/foundation-icons.css" />
+        <link rel="stylesheet" href="lib/css/normalize.css" />
+        <link rel="stylesheet" href="lib/css/foundation.min.css" />
+        <link rel="stylesheet" href="lib/css/foundation-icons.css" />
     </th:block>
     <th:block th:fragment="css-login">
+        <link rel="stylesheet" href="css/style.css" />
         <link rel="stylesheet" href="css/login.css" />
     </th:block>
+    <th:block th:fragment="css-app">
+        <link rel="stylesheet" href="css/style.css" />
+        <link rel="stylesheet" href="css/app.css" />
+    </th:block>
     <th:block th:fragment="js-foundation">
-        <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
-        <script type="text/javascript" src="js/foundation.min.js"></script>
+        <script type="text/javascript" src="lib/js/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="lib/js/foundation.min.js"></script>
+    </th:block>
+    <th:block th:fragment="js-lib-app">
+        <script type="text/javascript" src="lib/js/sockjs-0.3.4.min.js"></script>
+        <script type="text/javascript" src="lib/js/stomp.min.js"></script>
+        <script type="text/javascript" src="lib/js/angular.min.js"></script>
+        <script type="text/javascript" src="lib/js/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="lib/js/foundation.min.js"></script>
+        <script type="text/javascript" src="lib/js/mm-foundation-0.8.0.min.js"></script>
+    </th:block>
+    <th:block th:fragment="js-app">
     </th:block>
 </head>
+
 </html>

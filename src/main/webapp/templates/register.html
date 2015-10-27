@@ -1,6 +1,8 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
+    <th:block th:replace="views/assets :: meta"></th:block>
     <title>Spoozer - Registrierung</title>
     <th:block th:replace="views/assets :: favicon"></th:block>
     <th:block th:replace="views/assets :: css-foundation"></th:block>
@@ -9,10 +11,11 @@
 </head>
 
 <body>
-    <th:block th:replace="views/static :: header"></th:block>
+    <th:block th:replace="views/static :: require-js"></th:block>
+    <th:block th:replace="views/static :: heading"></th:block>
     <th:block th:replace="views/static :: secure"></th:block>
     <div class="row">
-        <div class="small-6 small-centered columns">
+        <div class="large-6 medium-8 small-11 large-centered small-centered columns">
             <form th:object="${user}" th:action="@{/register}" class="form-login" method="post">
                 <fieldset>
                     <h3>Bitte registrieren</h3>
@@ -33,13 +36,16 @@
                     <small class="error" th:if="${#fields.hasErrors('password2')}" th:errors="*{password2}"></small>
 
                     <div class="clearfix">
-                        <button type="submit" class="button left">Registrieren</button>
-                        <a th:href="@{/}" class="button secondary right">Zurück</a>
+                        <button type="submit" class="button left large-5 medium-5 small-12">Registrieren</button>
+                        <a th:href="@{/}" class="button secondary right large-4 medium-4 small-12">Zurück</a>
                     </div>
                 </fieldset>
             </form>
         </div>
     </div>
+    <script>
+        $(document).foundation();
+    </script>
 </body>
 
 </html>
