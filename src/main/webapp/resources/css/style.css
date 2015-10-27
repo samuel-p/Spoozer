@@ -21,13 +21,13 @@ body {
 }
 
 .spoozer {
-    background-color: #00c300;
-    border-color: #00ad00;
-    color: #000;
+    background-color: #00c300 !important;
+    border-color: #00ad00 !important;
+    color: #000 !important;
 }
 
 .spoozer:hover,
 .spoozer:focus {
-    background-color: #00ad00;
-    color: #000;
+    background-color: #00ad00 !important;
+    color: #000 !important;
 }
