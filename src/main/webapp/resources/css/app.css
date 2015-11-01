@@ -8,7 +8,7 @@ body *:focus {
     outline: 0;
 }
 
-.dynamic-content {
+.content {
     position: fixed;
     top: 45px;
     bottom: 75px;
@@ -120,8 +120,4 @@ body *:focus {
 
 .player .volume-slider {
     margin: 30px auto;
-}
-
-.test {
-    background: rgba(255, 0, 0, 0.5);
 }
