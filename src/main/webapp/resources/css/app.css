@@ -69,7 +69,6 @@ body *:focus {
     left: 0;
     right: 0;
     height: 75px;
-    background-color: #00ad00;
     color: #000;
     max-width: 100%;
 }
