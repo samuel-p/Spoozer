@@ -15,9 +15,9 @@
         function connect() {
             var socket = new SockJS('/connect');
             stompClient = Stomp.over(socket);
-            stompClient.connect({}, function (frame) {
+            stompClient.connect({}, function(frame) {
                 console.log('Connected: ' + frame);
-                stompClient.subscribe('/setUserDetails', function (e) {
+                stompClient.subscribe('/setUserDetails', function(e) {
                     var event = JSON.parse(e.body);
                     document.getElementById("userid").innerHTML = event.userDetails.id;
                     document.getElementById("username").innerHTML = event.userDetails.username;
@@ -42,9 +42,17 @@
         <nav class="top-bar" data-topbar="" role="navigation">
             <ul class="title-area">
                 <li class="name">
-                    <h1><a href=""><img src="img/logo.png"/><img src="img/spoozer-light.png"/></a></h1>
+                    <h1>
+                        <a href="">
+                            <img src="img/logo.png" />
+                            <img src="img/spoozer-light.png" />
+                        </a>
+                    </h1>
                 </li>
-                <li class="toggle-topbar menu-icon"><a href="#"><span>Menü</span></a>
+                <li class="toggle-topbar menu-icon">
+                    <a href="#">
+                        <span>Menü</span>
+                    </a>
                 </li>
             </ul>
 
@@ -57,7 +65,8 @@
                                 <input name="search" type="text" placeholder="Suchen..." />
                             </div>
                             <div class="large-2 small-2 columns">
-                                <button href="#" class="button spoozer expand" type="submit"><span class="fi-page-search"></span>
+                                <button href="#" class="button spoozer expand" type="submit">
+                                    <span class="fi-page-search"></span>
                                 </button>
                             </div>
                         </form>
@@ -88,112 +97,99 @@
             </section>
         </nav>
     </div>
-    <div class="dynamic-content">
-        <p th:if="${!security.isConnectionSecure()}">Die Daten werden unverschlüsselt übertragen!</p>
-        <noscript>
-            <h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
-        enabled. Please enable Javascript and reload this page!</h2>
-        </noscript>
-        <h1>Spoozer Application</h1>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
-        <p>Test</p>
+    <div class="content">
+        <div class="large-1 medium-2 hide-for-small-only columns sidebar spoozer-background">
+            <div class="icon-bar vertical five-up">
+                <a class="item">
+                    <i class="fi fi-home"></i>
+                    <label>Home</label>
+                </a>
+                <a class="item">
+                    <i class="fi fi-gamepad"></i>
+                    <label>ONE</label>
+                </a>
+                <a class="item">
+                    <i class="fi fi-star"></i>
+                    <label>TWO</label>
+                </a>
+                <a class="item">
+                    <i class="fi fi-thumbs-up"></i>
+                    <label>THREE</label>
+                </a>
+                <a class="item">
+                    <i class="fi fi-trophy"></i>
+                    <label>FOUR</label>
+                </a>
+            </div>
+        </div>
+        <div class="large-11 medium-10 small-12 columns dynamic">
+            <ul class="large-block-grid-4 medium-block-grid-2 small-block-grid-1" data-equalizer="panels">
+                <li>
+                    <div class="panel" data-equalizer-watch="panels">
+                        <h5>Sicherheit</h5>
+                        <p th:if="${!security.isConnectionSecure()}">Die Daten werden unverschlüsselt übertragen!</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="panel" data-equalizer-watch="panels">
+                        <h5>This is a regular panel.</h5>
+                        <p>It has an easy to override visual style, and is appropriately subdued.</p>
+                        <p>It has an easy to override visual style, and is appropriately subdued.</p>
+                        <p>It has an easy to override visual style, and is appropriately subdued.</p>
+                        <p>It has an easy to override visual style, and is appropriately subdued.</p>
+                        <p>It has an easy to override visual style, and is appropriately subdued.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="panel" data-equalizer-watch="panels">
+                        <h5>This is a regular panel.</h5>
+                        <p>It has an easy to override visual style, and is appropriately subdued.</p>
+                        <p>It has an easy to override visual style, and is appropriately subdued.</p>
+                        <p>It has an easy to override visual style, and is appropriately subdued.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="panel" data-equalizer-watch="panels">
+                        <h5>This is a regular panel.</h5>
+                        <p>It has an easy to override visual style, and is appropriately subdued.</p>
+                        <p>It has an easy to override visual style, and is appropriately subdued.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="panel" data-equalizer-watch="panels">
+                        <h5>This is a regular panel.</h5>
+                        <p>It has an easy to override visual style, and is appropriately subdued.</p>
+                        <p>It has an easy to override visual style, and is appropriately subdued.</p>
+                        <p>It has an easy to override visual style, and is appropriately subdued.</p>
+                        <p>It has an easy to override visual style, and is appropriately subdued.</p>
+                        <p>It has an easy to override visual style, and is appropriately subdued.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="panel" data-equalizer-watch="panels">
+                        <h5>This is a regular panel.</h5>
+                        <p>It has an easy to override visual style, and is appropriately subdued.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="panel" data-equalizer-watch="panels">
+                        <h5>This is a regular panel.</h5>
+                        <p>It has an easy to override visual style, and is appropriately subdued.</p>
+                        <p>It has an easy to override visual style, and is appropriately subdued.</p>
+                        <p>It has an easy to override visual style, and is appropriately subdued.</p>
+                        <p>It has an easy to override visual style, and is appropriately subdued.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="panel" data-equalizer-watch="panels">
+                        <h5>This is a regular panel.</h5>
+                        <p>It has an easy to override visual style, and is appropriately subdued.</p>
+                        <p>It has an easy to override visual style, and is appropriately subdued.</p>
+                        <p>It has an easy to override visual style, and is appropriately subdued.</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
     <div class="row player">
         <div class="large-3 columns">
@@ -211,11 +207,20 @@
         </div>
         <div class="large-2 columns text-center">
             <ul class="button-group round player-control">
-                <li><a href="#" class="button secondary small"><span class="fi-previous"></span></a>
+                <li>
+                    <a href="#" class="button secondary small">
+                        <span class="fi-previous"></span>
+                    </a>
                 </li>
-                <li><a href="#" class="button secondary small"><span class="fi-play"></span></a>
+                <li>
+                    <a href="#" class="button secondary small">
+                        <span class="fi-play"></span>
+                    </a>
                 </li>
-                <li><a href="#" class="button secondary small"><span class="fi-next"></span></a>
+                <li>
+                    <a href="#" class="button secondary small">
+                        <span class="fi-next"></span>
+                    </a>
                 </li>
             </ul>
         </div>
@@ -232,6 +237,9 @@
             topbar: {
                 custom_back_text: true,
                 back_text: '<span class="fi-arrow-left"/> Zurück'
+            },
+            equalizer: {
+                equalize_on_stack: true
             }
         });
     </script>

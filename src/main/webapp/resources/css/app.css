@@ -8,13 +8,36 @@ body *:focus {
     outline: 0;
 }
 
-.dynamic-content {
+.content {
     position: fixed;
     top: 45px;
     bottom: 75px;
     left: 0;
     right: 0;
+    overflow: hidden;
+    max-width: none;
+}
+
+.content .sidebar {
+    height: 100%;
+    padding: 0;
     overflow: auto;
+}
+
+.content .sidebar .icon-bar.vertical {
+    width: 100%;
+}
+
+.content .dynamic {
+    height: 100%;
+    color: #fff;
+    padding-top: 0.9375rem;
+    padding-bottom: 0.9375rem;
+    overflow: auto;
+}
+
+.content .dynamic .panel {
+    margin: 0;
 }
 
 .top-bar .title-area .name img {

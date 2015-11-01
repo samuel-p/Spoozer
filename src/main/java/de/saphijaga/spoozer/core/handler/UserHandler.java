@@ -60,6 +60,7 @@ public class UserHandler implements UserService {
         details.setId(user.get().getId());
         details.setUsername(user.get().getUsername());
         details.setEmail(user.get().getEmail());
+        details.setName(user.get().getName());
         return of(details);
     }
 }
