@@ -39,34 +39,25 @@
 <body onload="connect()">
     <th:block th:replace="views/static :: require-js"></th:block>
     <div class="fixed">
-        <nav class="top-bar" data-topbar="" role="navigation">
+        <nav class="top-bar spoozer-background" data-topbar="" role="navigation">
             <ul class="title-area">
                 <li class="name">
-                    <h1>
-                        <a href="">
-                            <img src="img/logo.png" />
-                            <img src="img/spoozer-light.png" />
-                        </a>
-                    </h1>
+                    <h1><a href=""><img src="img/logo.png"/><img src="img/spoozer-light.png"/></a></h1>
                 </li>
-                <li class="toggle-topbar menu-icon">
-                    <a href="#">
-                        <span>Menü</span>
-                    </a>
+                <li class="toggle-topbar menu-icon"><a href="#"><span>Menü</span></a>
                 </li>
             </ul>
 
             <section class="top-bar-section">
                 <!-- Left Nav Section -->
                 <ul class="left">
-                    <li class="has-form search">
+                    <li class="has-form search spoozer-background">
                         <form class="row collapse">
                             <div class="large-10 small-10 columns">
                                 <input name="search" type="text" placeholder="Suchen..." />
                             </div>
                             <div class="large-2 small-2 columns">
-                                <button href="#" class="button spoozer expand" type="submit">
-                                    <span class="fi-page-search"></span>
+                                <button href="#" class="button spoozer expand" type="submit"><span class="fi-page-search"></span>
                                 </button>
                             </div>
                         </form>
@@ -77,18 +68,18 @@
                 <ul class="right">
                     <li class="divider"></li>
                     <li class="has-dropdown">
-                        <a href="#">Profil</a>
+                        <a href="#" class="spoozer-background">Profil</a>
                         <ul class="dropdown">
-                            <li><a href="#" id="userid">Unknown</a>
+                            <li><a href="#" id="userid" class="spoozer-background">Unknown</a>
                             </li>
-                            <li><a href="#" id="username">Unknown</a>
+                            <li><a href="#" id="username" class="spoozer-background">Unknown</a>
                             </li>
-                            <li><a href="#" id="useremail">Unknown</a>
+                            <li><a href="#" id="useremail" class="spoozer-background">Unknown</a>
                             </li>
                         </ul>
                     </li>
                     <li class="divider"></li>
-                    <li class="has-form">
+                    <li class="has-form spoozer-background">
                         <form th:action="@{/logout}" method="post">
                             <button type="submit" class="button spoozer">Abmelden</button>
                         </form>
@@ -191,43 +182,34 @@
             </ul>
         </div>
     </div>
-    <div class="row player">
+    <div class="row player spoozer-background">
         <div class="large-3 columns">
-            <span class="label secondary track-info">Title</span>
+            <span class="label spoozer track-info">Title</span>
         </div>
         <div class="large-2 columns">
-            <div class="progress secondary track-time-progress">
-                <span class="meter" style="width: 40%"></span>
+            <div class="progress track-time-progress">
+                <span class="meter spoozer" style="width: 40%"></span>
             </div>
         </div>
         <div class="large-1 columns text-left">
-            <div class="track-time-text">
+            <div class="track-time-text text-white">
                 <span>1:21 - 3:32</span>
             </div>
         </div>
         <div class="large-2 columns text-center">
             <ul class="button-group round player-control">
-                <li>
-                    <a href="#" class="button secondary small">
-                        <span class="fi-previous"></span>
-                    </a>
+                <li><a href="#" class="button spoozer small"><span class="fi-previous"></span></a>
                 </li>
-                <li>
-                    <a href="#" class="button secondary small">
-                        <span class="fi-play"></span>
-                    </a>
+                <li><a href="#" class="button spoozer small"><span class="fi-play"></span></a>
                 </li>
-                <li>
-                    <a href="#" class="button secondary small">
-                        <span class="fi-next"></span>
-                    </a>
+                <li><a href="#" class="button spoozer small"><span class="fi-next"></span></a>
                 </li>
             </ul>
         </div>
         <div class="large-2 columns">
             <div class="range-slider volume-slider" data-slider="">
-                <span class="range-slider-handle" role="slider" tabindex="0"></span>
-                <span class="range-slider-active-segment"></span>
+                <span class="range-slider-handle grey" role="slider" tabindex="0"></span>
+                <span class="range-slider-active-segment spoozer"></span>
             </div>
         </div>
         <div class="large-2"></div>

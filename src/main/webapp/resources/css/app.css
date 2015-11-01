@@ -8,7 +8,7 @@ body *:focus {
     outline: 0;
 }
 
-.content {
+.dynamic-content {
     position: fixed;
     top: 45px;
     bottom: 75px;
@@ -46,6 +46,14 @@ body *:focus {
     margin: 5px;
 }
 
+.spoozer-background{
+    background-color: #222 !important;
+}
+.top-bar-section ul li:hover:not(.has-form)>a,
+.top-bar-section .dropdown li:not(.has-form):not(.active):hover>a:not(.button){
+    background-color: #333 !important;
+}
+
 .top-bar .has-form .button {
     font-size: 0.8125rem;
     padding: 5px 13px;
@@ -66,10 +74,24 @@ body *:focus {
     max-width: 100%;
 }
 
+.grey{
+    background-color: #888;
+}
+
+.range-slider-handle:focus,
+.range-slider-handle:hover{
+    background-color: #888;
+}
+
+.text-white{
+    color: #fff !important;
+}
+
 .player .columns {
     padding: 0;
     height: 100%;
 }
+
 
 .player .track-info {
     display: block;
