@@ -2,18 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <th:block th:replace="views/assets :: meta"></th:block>
+    <th:block th:replace="template/assets :: meta"></th:block>
     <title>Spoozer - Anmeldung</title>
-    <th:block th:replace="views/assets :: favicon"></th:block>
-    <th:block th:replace="views/assets :: css-foundation"></th:block>
-    <th:block th:replace="views/assets :: css-login"></th:block>
-    <th:block th:replace="views/assets :: js-foundation"></th:block>
+    <th:block th:replace="template/assets :: favicon"></th:block>
+    <th:block th:replace="template/assets :: css-foundation"></th:block>
+    <th:block th:replace="template/assets :: css-login"></th:block>
+    <th:block th:replace="template/assets :: js-foundation"></th:block>
 </head>
 
 <body>
-    <th:block th:replace="views/static :: require-js"></th:block>
-    <th:block th:replace="views/static :: heading"></th:block>
-    <th:block th:replace="views/static :: secure"></th:block>
+    <th:block th:replace="template/static :: require-js"></th:block>
+    <th:block th:replace="template/static :: heading"></th:block>
+    <th:block th:replace="template/static :: secure"></th:block>
     <div class="row">
         <div class="large-6 medium-8 small-11 large-centered small-centered columns">
             <form th:action="@{/login}" class="form-login" method="post">

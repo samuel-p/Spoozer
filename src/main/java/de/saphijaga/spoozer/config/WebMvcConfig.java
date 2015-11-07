@@ -34,6 +34,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**").addResourceLocations("classpath:resources/");
         registry.addResourceHandler("/lib/**").addResourceLocations("classpath:static/");
+        registry.addResourceHandler("/views/**").addResourceLocations("classpath:templates/views/");
     }
 
     @Override

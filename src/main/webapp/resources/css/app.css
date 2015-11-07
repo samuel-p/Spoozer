@@ -49,9 +49,17 @@ body *:focus {
 .spoozer-background{
     background-color: #222 !important;
 }
+
+.top-bar-section ul li,
+.top-bar-section ul li>a,
+.sidebar .icon-bar a {
+    background-color: #222 !important;
+}
+
 .top-bar-section ul li:hover:not(.has-form)>a,
-.top-bar-section .dropdown li:not(.has-form):not(.active):hover>a:not(.button){
-    background-color: #333 !important;
+.top-bar-section .dropdown li:not(.has-form):not(.active):hover>a:not(.button),
+.sidebar .icon-bar a:hover {
+    background-color: #292929 !important;
 }
 
 .top-bar .has-form .button {
