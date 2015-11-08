@@ -1,7 +1,7 @@
 package de.saphijaga.spoozer.web.controller;
 
 import de.saphijaga.spoozer.web.details.UserDetails;
-import de.saphijaga.spoozer.web.domain.response.GetUsetDetailsResponse;
+import de.saphijaga.spoozer.web.domain.response.GetUserDetailsResponse;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     @MessageMapping("/getUserDetails")
     @SendTo("/setUserDetails")
-    public GetUsetDetailsResponse getUserDetails(UserDetails user) {
-        return new GetUsetDetailsResponse(user);
+    public GetUserDetailsResponse getUserDetails(UserDetails user) {
+        return new GetUserDetailsResponse(user);
     }
 }

@@ -27,12 +27,12 @@
             <!-- Left Nav Section -->
             <ul class="left">
                 <li class="has-form search">
-                    <form class="row collapse">
+                    <form class="row collapse" ng-submit="search()">
                         <div class="large-10 small-10 columns">
-                            <input name="search" type="text" placeholder="Suchen..."/>
+                            <input name="text" type="text" placeholder="Suchen..." ng-model="text" value="{{text}}"/>
                         </div>
                         <div class="large-2 small-2 columns">
-                            <button href="#" class="button spoozer expand" type="submit"><span
+                            <button href="#/" class="button spoozer expand" type="submit"><span
                                     class="fi-page-search"></span>
                             </button>
                         </div>
@@ -44,13 +44,13 @@
             <ul class="right">
                 <li class="divider"></li>
                 <li class="has-dropdown">
-                    <a href="#">Profil</a>
+                    <a href="#/">Profil</a>
                     <ul class="dropdown">
-                        <li><a href="#" ng-show="userDetails.id">{{userDetails.id}}</a>
+                        <li><a href="#/" ng-show="userDetails.id">{{userDetails.id}}</a>
                         </li>
-                        <li><a href="#" ng-show="userDetails.username">{{userDetails.username}}</a>
+                        <li><a href="#/" ng-show="userDetails.username">{{userDetails.username}}</a>
                         </li>
-                        <li><a href="#" ng-show="userDetails.email">{{userDetails.email}}</a>
+                        <li><a href="#/" ng-show="userDetails.email">{{userDetails.email}}</a>
                         </li>
                     </ul>
                 </li>
@@ -100,11 +100,11 @@
     </div>
     <div class="large-2 columns text-center">
         <ul class="button-group round player-control">
-            <li><a href="#" class="button spoozer small"><span class="fi-previous"></span></a>
+            <li><a href="#/" class="button spoozer small"><span class="fi-previous"></span></a>
             </li>
-            <li><a href="#" class="button spoozer small"><span class="fi-play"></span></a>
+            <li><a href="#/" class="button spoozer small"><span class="fi-play"></span></a>
             </li>
-            <li><a href="#" class="button spoozer small"><span class="fi-next"></span></a>
+            <li><a href="#/" class="button spoozer small"><span class="fi-next"></span></a>
             </li>
         </ul>
     </div>

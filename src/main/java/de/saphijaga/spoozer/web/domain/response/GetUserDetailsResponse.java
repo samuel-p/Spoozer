@@ -5,10 +5,10 @@ import de.saphijaga.spoozer.web.details.UserDetails;
 /**
  * Created by samuel on 17.10.15.
  */
-public class GetUsetDetailsResponse {
+public class GetUserDetailsResponse {
     private UserDetails userDetails;
 
-    public GetUsetDetailsResponse(UserDetails userDetails) {
+    public GetUserDetailsResponse(UserDetails userDetails) {
         this.userDetails = userDetails;
     }
 
