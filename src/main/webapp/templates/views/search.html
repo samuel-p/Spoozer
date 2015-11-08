@@ -1,6 +1,9 @@
-<ul ng-repeat="(service, result) in searchResult">
-    <li>{{service}}</li>
-    <ul ng-repeat="track in result">
-        <li>ID: {{track.id}}</li>
+<div>
+    <a href="#/">Zurück</a>
+    <ul ng-repeat="(service, result) in searchResult">
+        <li>{{service}}</li>
+        <ul ng-repeat="track in result">
+            <li>ID: {{track.id}}</li>
+        </ul>
     </ul>
-</ul>
+</div>

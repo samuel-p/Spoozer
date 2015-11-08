@@ -12,9 +12,4 @@ public class SpoozerController {
     public String getWebContent() {
         return "index";
     }
-
-    @RequestMapping("/app/**")
-    public String getWebContentForApp() {
-        return "index";
-    }
 }

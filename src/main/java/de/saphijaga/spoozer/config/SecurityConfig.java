@@ -1,11 +1,13 @@
 package de.saphijaga.spoozer.config;
 
+import de.saphijaga.spoozer.config.session.SecurityAccessDeniedHandler;
 import de.saphijaga.spoozer.config.session.SecurityAuthenticationSuccessHandler;
 import de.saphijaga.spoozer.core.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,7 +16,15 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandlerImpl;
+import org.springframework.security.web.csrf.InvalidCsrfTokenException;
+import org.springframework.security.web.csrf.MissingCsrfTokenException;
 import org.springframework.web.bind.annotation.ModelAttribute;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity
@@ -43,7 +53,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout().logoutUrl("/logout").logoutSuccessUrl("/login?logout").permitAll()
                 .and()
-                .sessionManagement().maximumSessions(1).expiredUrl("/login?expired");
+                .sessionManagement().invalidSessionUrl("/login?error").maximumSessions(1).expiredUrl("/login?expired");
+
+        http.exceptionHandling().accessDeniedHandler(new SecurityAccessDeniedHandler("/login?error"));
 
         if (factory.getAdditionalTomcatConnectors().stream().anyMatch(c -> c.getSecure())) {
             http.requiresChannel().anyRequest().requiresSecure();
