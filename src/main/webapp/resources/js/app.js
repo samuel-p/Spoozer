@@ -1,4 +1,4 @@
-var app = angular.module('spoozerApp', ['ngRoute', 'ngWs']);
+var app = angular.module('spoozerApp', ['ngRoute', 'ngWs', 'mm.foundation']);
 app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $routeProvider.
         when('/dashboard', {
@@ -11,16 +11,28 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
             controller: 'SearchCtrl',
             caseInsensitiveMatch: true
         }).
+        when('/profile', {
+            templateUrl: 'views/profile.html',
+            controller: 'ProfileCtrl',
+            caseInsensitiveMatch: true
+        }).
         otherwise({
             redirectTo: '/dashboard'
         });
 }]);
-app.run(['$rootScope', function ($rootScope) {
+app.run(['$rootScope', '$location', function ($rootScope, $location) {
     $rootScope.$on('$routeChangeSuccess', function (next, current) {
         $rootScope.$applyAsync(function() {
             $(document).foundation('reflow');
         });
     });
+
+    $rootScope.isActive = function(path) {
+        if (path == '/') {
+            path = '/dashboard';
+        }
+        return $location.path() == path;
+    };
 
     $(document).foundation({
         topbar: {
@@ -30,34 +42,5 @@ app.run(['$rootScope', function ($rootScope) {
         equalizer: {
             equalize_on_stack: true
         }
-    });
-}]);
-
-app.controller('MenuCtrl', ['$ws', '$scope', '$location', function ($ws, $scope, $location) {
-    $ws.subscribe('/setUserDetails', function (payload, headers, res) {
-        $scope.$applyAsync(function () {
-            $scope.userDetails = payload.userDetails;
-        });
-    });
-
-    $ws.send('/getUserDetails');
-    $scope.search = function() {
-        $location.path('/search/' + encodeURIComponent($scope.text));
-    }
-}]);
-
-app.controller('DashboardCtrl', ['$scope', function ($scope) {
-
-}]);
-
-app.controller('SearchCtrl', ['$ws', '$scope', '$routeParams', function ($ws, $scope, $routeParams) {
-    $ws.subscribe("/setSearchResult", function (payload, headers, res) {
-        $scope.$applyAsync(function() {
-            console.log(payload);
-            $scope.searchResult = payload.searchResult;
-        });
-    });
-    $ws.send('/getSearchResult', {
-        search: decodeURIComponent($routeParams.text)
     });
 }]);

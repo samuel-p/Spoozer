@@ -8,7 +8,7 @@ body *:focus {
     outline: 0;
 }
 
-.content {
+.fixed-content {
     position: fixed;
     top: 45px;
     bottom: 75px;
@@ -18,17 +18,17 @@ body *:focus {
     max-width: none;
 }
 
-.content .sidebar {
+.fixed-content .sidebar {
     height: 100%;
     padding: 0;
     overflow: auto;
 }
 
-.content .sidebar .icon-bar.vertical {
+.fixed-content .sidebar .icon-bar.vertical {
     width: 100%;
 }
 
-.content .dynamic {
+.fixed-content .dynamic-content {
     height: 100%;
     color: #fff;
     padding-top: 0.9375rem;
@@ -36,7 +36,7 @@ body *:focus {
     overflow: auto;
 }
 
-.content .dynamic .panel {
+.fixed-content .dynamic-content .panel {
     margin: 0;
 }
 
@@ -60,6 +60,24 @@ body *:focus {
 .top-bar-section .dropdown li:not(.has-form):not(.active):hover>a:not(.button),
 .sidebar .icon-bar a:hover {
     background-color: #292929 !important;
+}
+
+.top-bar-section ul li.spoozer,
+.top-bar-section ul li.spoozer>a,
+.sidebar .icon-bar a.spoozer,
+.sidebar .icon-bar a.spoozer i,
+.sidebar .icon-bar a.spoozer label {
+    background-color: #00c300 !important;
+    color: #000 !important;
+}
+
+.top-bar-section ul li.spoozer:hover:not(.has-form)>a,
+.top-bar-section .dropdown li.spoozer:not(.has-form):not(.active):hover>a:not(.button),
+.sidebar .icon-bar a.spoozer:hover,
+.sidebar .icon-bar a.spoozer:hover i,
+.sidebar .icon-bar a.spoozer:hover label {
+    background-color: #00ad00 !important;
+    color: #000 !important;
 }
 
 .top-bar .has-form .button {
@@ -127,4 +145,19 @@ body *:focus {
 
 .player .volume-slider {
     margin: 30px auto;
+}
+
+.tabs dd a {
+    background-color: #222;
+    color: #fff;
+}
+
+.tabs dd a:hover {
+    background-color: #292929;
+    color: #fff;
+}
+
+.tabs dd.active a {
+    background-color: #00c300;
+    color: #000;
 }

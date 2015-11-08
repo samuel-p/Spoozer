@@ -1,0 +1,52 @@
+<tabset>
+    <tab heading="Übersicht">
+        <table>
+            <tr>
+                <th>ID:</th>
+                <td ng-show="userDetails.id">{{userDetails.id}}</td>
+            </tr>
+            <tr>
+                <th>Username:</th>
+                <td ng-show="userDetails.username">{{userDetails.username}}</td>
+            </tr>
+            <tr>
+                <th>Passwort:</th>
+                <td>********</td>
+            </tr>
+            <tr>
+                <th>Name:</th>
+                <td ng-show="userDetails.name">{{userDetails.name}}</td>
+            </tr>
+            <tr>
+                <th>E-Mail:</th>
+                <td ng-show="userDetails.email">{{userDetails.email}}</td>
+            </tr>
+        </table>
+    </tab>
+    <tab heading="Bearbeiten">
+        <table>
+            <tr>
+                <th>Username:</th>
+                <td><input ng-model="edit.username"/></td>
+            </tr>
+            <tr>
+                <th>Passwort:</th>
+                <td><input ng-model="edit.password"/></td>
+            </tr>
+            <tr>
+                <th>Name:</th>
+                <td><input ng-model="edit.name"/></td>
+            </tr>
+            <tr>
+                <th>E-Mail:</th>
+                <td><input ng-model="edit.email"/></td>
+            </tr>
+        </table>
+    </tab>
+    <tab heading="Accounts">
+        Account settings comming soon...
+    </tab>
+    <tab heading="Einstellungen">
+        Settings comming soon...
+    </tab>
+</tabset>

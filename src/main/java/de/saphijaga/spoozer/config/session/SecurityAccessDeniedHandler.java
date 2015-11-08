@@ -2,6 +2,8 @@ package de.saphijaga.spoozer.config.session;
 
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandlerImpl;
+import org.springframework.security.web.csrf.InvalidCsrfTokenException;
+import org.springframework.security.web.csrf.MissingCsrfTokenException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,17 +17,18 @@ public class SecurityAccessDeniedHandler extends AccessDeniedHandlerImpl {
     private String errorPage;
 
     public SecurityAccessDeniedHandler(String errorPage) {
-        setErrorPage(errorPage);
+        this.errorPage = errorPage;
     }
 
     @Override
     public void setErrorPage(String errorPage) {
-        super.setErrorPage(errorPage);
         this.errorPage = errorPage;
     }
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
-        response.sendRedirect(errorPage);
+        if (accessDeniedException instanceof MissingCsrfTokenException || accessDeniedException instanceof InvalidCsrfTokenException) {
+            response.sendRedirect(errorPage);
+        }
     }
 }

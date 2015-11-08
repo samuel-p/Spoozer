@@ -17,7 +17,7 @@
     <nav class="top-bar spoozer-background" data-topbar="" role="navigation" ng-controller="MenuCtrl">
         <ul class="title-area">
             <li class="name">
-                <h1><a href=""><img src="img/logo.png"/><img src="img/spoozer-light.png"/></a></h1>
+                <h1><a href="#/"><img src="img/logo.png"/><img src="img/spoozer-light.png"/></a></h1>
             </li>
             <li class="toggle-topbar menu-icon"><a href="#"><span>Menü</span></a>
             </li>
@@ -43,16 +43,9 @@
             <!-- Right Nav Section -->
             <ul class="right">
                 <li class="divider"></li>
-                <li class="has-dropdown">
-                    <a href="#/">Profil</a>
-                    <ul class="dropdown">
-                        <li><a href="#/" ng-show="userDetails.id">{{userDetails.id}}</a>
-                        </li>
-                        <li><a href="#/" ng-show="userDetails.username">{{userDetails.username}}</a>
-                        </li>
-                        <li><a href="#/" ng-show="userDetails.email">{{userDetails.email}}</a>
-                        </li>
-                    </ul>
+                <li class="has-dropdown" ng-class="{spoozer: isActive('/profile')}">
+                    <a href="#/profile" ng-show="userDetails.username">{{userDetails.username}} <span
+                            class=""></span></a>
                 </li>
                 <li class="divider"></li>
                 <li class="has-form">
@@ -64,24 +57,24 @@
         </section>
     </nav>
 </div>
-<div class="content">
+<div class="fixed-content">
     <div class="large-1 medium-2 hide-for-small-only columns sidebar spoozer-background">
         <div class="icon-bar vertical spoozer-background">
-            <a class="item">
-                <i class="fi fi-home"></i>
+            <a href="#/" class="item" ng-class="{spoozer: isActive('/')}">
+                <i class="fi-home"></i>
                 <label>Home</label>
             </a>
-            <a class="item">
-                <i class="fi fi-star"></i>
+            <a href="#/" class="item">
+                <i class="fi-star"></i>
                 <label>Star</label>
             </a>
-            <a class="item">
-                <i class="fi fi-trophy"></i>
+            <a href="#/" class="item">
+                <i class="fi-trophy"></i>
                 <label>Trophy</label>
             </a>
         </div>
     </div>
-    <div class="large-11 medium-10 small-12 columns dynamic" ng-view="">
+    <div class="large-11 medium-10 small-12 columns dynamic-content" ng-view="">
     </div>
 </div>
 <div class="row player spoozer-background">
