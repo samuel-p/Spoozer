@@ -12,102 +12,30 @@
 </head>
 
 <body>
-<th:block th:replace="template/static :: require-js"></th:block>
+<th:block th:replace="template/global :: require-js"></th:block>
 <div class="fixed">
-    <nav class="top-bar spoozer-background" data-topbar="" role="navigation" ng-controller="MenuCtrl">
-        <ul class="title-area">
-            <li class="name">
-                <h1><a href="#/"><img src="img/logo.png"/><img src="img/spoozer-light.png"/></a></h1>
-            </li>
-            <li class="toggle-topbar menu-icon"><a href="#"><span>Menü</span></a>
-            </li>
-        </ul>
-
-        <section class="top-bar-section">
-            <!-- Left Nav Section -->
-            <ul class="left">
-                <li class="has-form search">
-                    <form class="row collapse" ng-submit="search()">
-                        <div class="large-10 small-10 columns">
-                            <input name="text" type="text" placeholder="Suchen..." ng-model="text" value="{{text}}"/>
+    <div class="off-canvas-wrap">
+        <div class="inner-wrap">
+            <th:block th:replace="template/menu :: top-small"></th:block>
+            <section class="main-section">
+                <div class="main-content" fullheight="">
+                    <th:block th:replace="template/menu :: top-large"></th:block>
+                    <div class="fixed-content">
+                        <div class="large-1 medium-2 hide-for-small-only columns sidebar spoozer-background">
+                            <th:block th:replace="template/menu :: left-large"></th:block>
                         </div>
-                        <div class="large-2 small-2 columns">
-                            <button href="#/" class="button spoozer expand" type="submit"><span
-                                    class="fi-page-search"></span>
-                            </button>
+                        <div class="large-11 medium-10 small-12 columns dynamic-content" ng-view="">
                         </div>
-                    </form>
-                </li>
-            </ul>
+                    </div>
+                    <div class="row player spoozer-background">
+                        <th:block th:replace="template/player :: main"></th:block>
+                    </div>
+                </div>
+            </section>
 
-            <!-- Right Nav Section -->
-            <ul class="right">
-                <li class="divider"></li>
-                <li class="has-dropdown" ng-class="{spoozer: isActive('/profile')}">
-                    <a href="#/profile" ng-show="userDetails.username">{{userDetails.username}} <span
-                            class=""></span></a>
-                </li>
-                <li class="divider"></li>
-                <li class="has-form">
-                    <form th:action="@{/logout}" method="post">
-                        <button type="submit" class="button spoozer">Abmelden</button>
-                    </form>
-                </li>
-            </ul>
-        </section>
-    </nav>
-</div>
-<div class="fixed-content">
-    <div class="large-1 medium-2 hide-for-small-only columns sidebar spoozer-background">
-        <div class="icon-bar vertical spoozer-background">
-            <a href="#/" class="item" ng-class="{spoozer: isActive('/')}">
-                <i class="fi-home"></i>
-                <label>Home</label>
-            </a>
-            <a href="#/" class="item">
-                <i class="fi-star"></i>
-                <label>Star</label>
-            </a>
-            <a href="#/" class="item">
-                <i class="fi-trophy"></i>
-                <label>Trophy</label>
-            </a>
+            <a class="exit-off-canvas"></a>
         </div>
     </div>
-    <div class="large-11 medium-10 small-12 columns dynamic-content" ng-view="">
-    </div>
-</div>
-<div class="row player spoozer-background">
-    <div class="large-3 medium-4 small-5 columns">
-        <span class="label spoozer track-info">Title</span>
-    </div>
-    <div class="large-2 hide-for-medium-only hide-for-small-only columns">
-        <div class="progress track-time-progress">
-            <span class="meter spoozer" style="width: 40%"></span>
-        </div>
-    </div>
-    <div class="large-2 medium-3 hide-for-small-only columns text-left">
-        <div class="track-time-text text-white">
-            <span>1:21 - 3:32</span>
-        </div>
-    </div>
-    <div class="large-3 medium-4 small-6 columns text-center">
-        <ul class="button-group round player-control">
-            <li><a href="#/" class="button spoozer small"><span class="fi-previous"></span></a>
-            </li>
-            <li><a href="#/" class="button spoozer small"><span class="fi-play"></span></a>
-            </li>
-            <li><a href="#/" class="button spoozer small"><span class="fi-next"></span></a>
-            </li>
-        </ul>
-    </div>
-    <div class="large-1 hide-for-medium-only columns">
-        <div class="range-slider volume-slider" data-slider="44">
-            <span class="range-slider-handle grey" role="slider" tabindex="0" aria-valuemin="0" aria-valuemax="100" aria-valuenow="44" style="transform: translateX(32.88px);"></span>
-            <span class="range-slider-active-segment spoozer" style="width: 44%;"></span>
-        </div>
-    </div>
-    <div class="large-1 medium-1 small-1"></div>
 </div>
 </body>
 

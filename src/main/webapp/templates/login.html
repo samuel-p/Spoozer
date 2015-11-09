@@ -11,9 +11,9 @@
 </head>
 
 <body>
-    <th:block th:replace="template/static :: require-js"></th:block>
-    <th:block th:replace="template/static :: heading"></th:block>
-    <th:block th:replace="template/static :: secure"></th:block>
+    <th:block th:replace="template/global :: require-js"></th:block>
+    <th:block th:replace="template/global :: heading"></th:block>
+    <th:block th:replace="template/global :: secure"></th:block>
     <div class="row">
         <div class="large-6 medium-8 small-11 large-centered small-centered columns">
             <form th:action="@{/login}" class="form-login" method="post">

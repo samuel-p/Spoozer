@@ -40,53 +40,104 @@ body *:focus {
     margin: 0;
 }
 
-.top-bar .title-area .name img {
+.top-bar .title-area .name img,
+.tab-bar .middle img {
     vertical-align: top;
     height: 35px;
     margin: 5px;
 }
 
-.spoozer-background{
+.spoozer-background {
     background-color: #222 !important;
 }
 
 .top-bar-section ul li,
-.top-bar-section ul li>a,
-.sidebar .icon-bar a {
+.top-bar-section ul li > a,
+.sidebar .icon-bar li,
+.tab-bar {
     background-color: #222 !important;
 }
 
-.top-bar-section ul li:hover:not(.has-form)>a,
-.top-bar-section .dropdown li:not(.has-form):not(.active):hover>a:not(.button),
-.sidebar .icon-bar a:hover {
+.top-bar-section ul li:hover:not(.has-form) > a,
+.top-bar-section .dropdown li:not(.has-form):not(.active):hover > a:not(.button),
+.sidebar .icon-bar li:hover {
     background-color: #292929 !important;
 }
 
 .top-bar-section ul li.spoozer,
-.top-bar-section ul li.spoozer>a,
-.sidebar .icon-bar a.spoozer,
-.sidebar .icon-bar a.spoozer i,
-.sidebar .icon-bar a.spoozer label {
+.top-bar-section ul li.spoozer > a,
+.sidebar .icon-bar li.spoozer,
+ul.off-canvas-list li.spoozer a {
     background-color: #00c300 !important;
     color: #000 !important;
 }
 
-.top-bar-section ul li.spoozer:hover:not(.has-form)>a,
-.top-bar-section .dropdown li.spoozer:not(.has-form):not(.active):hover>a:not(.button),
-.sidebar .icon-bar a.spoozer:hover,
-.sidebar .icon-bar a.spoozer:hover i,
-.sidebar .icon-bar a.spoozer:hover label {
+.top-bar-section ul li.spoozer:hover:not(.has-form) > a,
+.top-bar-section .dropdown li.spoozer:not(.has-form):not(.active):hover > a:not(.button),
+.sidebar .icon-bar li.spoozer:hover,
+ul.off-canvas-list li.spoozer a:hover {
     background-color: #00ad00 !important;
     color: #000 !important;
 }
 
-.top-bar .has-form .button {
-    font-size: 0.8125rem;
-    padding: 5px 13px;
+ul.icon-bar {
+    margin: 0;
+}
+
+ul.icon-bar li {
+    padding: 0;
+}
+
+ul.icon-bar li a {
+    display: block;
+    padding: 1.25rem;
+    color: #fff;
+}
+
+ul.icon-bar li.spoozer * {
+    color: #000;
+}
+
+.icon-bar > * .icon + .text {
+    margin-top: 0.0625rem;
+    font-size: 1rem;
+    display: block;
+}
+
+.icon-bar > * .icon {
+    font-size: 1.875rem;
+    display: block;
+    margin: 0px auto;
 }
 
 .top-bar .has-form.search {
     /*min-width: 30rem;*/
+}
+
+.top-bar input,
+.off-canvas-list input {
+    font-size: 0.8125rem;
+    height: 1.75rem;
+    position: relative;
+    top: 0.53125rem;
+    padding-bottom: 0.35rem;
+    padding-top: 0.35rem;
+    margin-bottom: 0;
+}
+
+.top-bar .has-form .button,
+.off-canvas-list .has-form .button {
+    font-size: 0.8125rem;
+    padding: 5px 13px;
+    height: 1.75rem;
+    position: relative;
+    top: 0.53125rem;
+}
+
+.off-canvas-list .has-form {
+    height: 2.8125rem;
+    padding: 0px 0.9375rem;
+    border-bottom: 1px solid #262626;
 }
 
 .player {
@@ -99,16 +150,16 @@ body *:focus {
     max-width: 100%;
 }
 
-.grey{
+.grey {
     background-color: #888;
 }
 
 .range-slider-handle:focus,
-.range-slider-handle:hover{
+.range-slider-handle:hover {
     background-color: #888;
 }
 
-.text-white{
+.text-white {
     color: #fff !important;
 }
 
@@ -116,7 +167,6 @@ body *:focus {
     padding: 0;
     height: 100%;
 }
-
 
 .player .track-info {
     display: block;
@@ -159,5 +209,10 @@ body *:focus {
 
 .tabs dd.active a {
     background-color: #00c300;
+    color: #000;
+}
+
+.tabs dd.active a:hover {
+    background-color: #00ad00;
     color: #000;
 }

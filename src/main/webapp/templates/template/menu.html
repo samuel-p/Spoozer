@@ -1,0 +1,118 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<th:block th:fragment="top-left">
+    <li class="has-form search" ng-controller="SearchInputCtrl">
+        <form class="row collapse" ng-submit="search()">
+            <div class="large-10 small-10 columns">
+                <input name="text" type="text" preventclickpagination="" placeholder="Suchen..." ng-model="text" value="{{text}}"/>
+            </div>
+            <div class="large-2 small-2 columns">
+                <button href="#/" class="button spoozer expand" type="submit"><span
+                        class="fi-page-search"></span>
+                </button>
+            </div>
+        </form>
+    </li>
+</th:block>
+<th:block th:fragment="top-right">
+    <li class="divider"></li>
+    <li ng-class="{spoozer: isActive('/profile')}">
+        <a href="#/profile">Profil</a>
+    </li>
+    <!--<li class="divider"></li>
+    <li class="has-dropdown">
+        <a href="#/">Accounts</a>
+        <ul class="dropdown">
+            <li><a href="#/">Spotify</a></li>
+            <li><a href="#/">Youtube</a></li>
+        </ul>
+    </li>-->
+    <li class="divider"></li>
+    <li class="has-form">
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="button spoozer small-12">Abmelden</button>
+        </form>
+    </li>
+</th:block>
+<th:block th:fragment="side">
+    <li class="item" ng-class="{spoozer: isActive('/')}">
+        <a href="#/">
+            <span class="icon fi-home"></span>
+            <span class="text">Home</span>
+        </a>
+    </li>
+    <li class="item" ng-class="{spoozer: isActive('/history')}">
+        <a href="#/history">
+            <span class="icon fi-star"></span>
+            <span class="text">Verlauf</span>
+        </a>
+    </li>
+    <li class="item" ng-class="{spoozer: isActive('/playlists')}">
+        <a href="#/playlists">
+            <span class="icon fi-trophy"></span>
+            <span class="text">Playlists</span>
+        </a>
+    </li>
+    <li class="item" ng-class="{spoozer: isActive('/friends')}">
+        <a href="#/friends">
+            <span class="icon fi-trophy"></span>
+            <span class="text">Freunde</span>
+        </a>
+    </li>
+</th:block>
+<th:block th:fragment="header">
+    <h1><a href="#/"><img th:src="@{/img/logo.png}"/><img th:src="@{/img/spoozer-light.png}"/></a></h1>
+</th:block>
+<th:block th:fragment="top-small">
+    <nav class="tab-bar show-for-small-only">
+        <section class="left-small">
+            <a class="left-off-canvas-toggle menu-icon"><span></span></a>
+        </section>
+
+        <section class="middle tab-bar-section">
+            <th:block th:replace="template/menu :: header"></th:block>
+        </section>
+    </nav>
+    <aside class="left-off-canvas-menu">
+        <th:block th:replace="template/menu :: left-small"></th:block>
+    </aside>
+</th:block>
+<th:block th:fragment="top-large">
+    <nav class="top-bar spoozer-background hide-for-small-only" data-topbar="" role="navigation">
+        <ul class="title-area">
+            <li class="name">
+                <th:block th:replace="template/menu :: header"></th:block>
+            </li>
+            <li class="toggle-topbar menu-icon"><a href="#"><span>Menü</span></a>
+            </li>
+        </ul>
+
+        <section class="top-bar-section">
+            <ul class="left">
+                <th:block th:replace="template/menu :: top-left"></th:block>
+            </ul>
+            <ul class="right">
+                <th:block th:replace="template/menu :: top-right"></th:block>
+            </ul>
+        </section>
+    </nav>
+</th:block>
+<th:block th:fragment="left-large">
+    <ul class="icon-bar vertical spoozer-background">
+        <th:block th:replace="template/menu :: side"></th:block>
+    </ul>
+</th:block>
+<th:block th:fragment="left-small">
+    <ul class="off-canvas-list">
+        <li><label>Spoozer</label></li>
+        <th:block th:replace="template/menu :: top-left"></th:block>
+        <th:block th:replace="template/menu :: top-right"></th:block>
+        <li><label>Menü</label></li>
+        <th:block th:replace="template/menu :: side"></th:block>
+    </ul>
+</th:block>
+</body>
+
+</html>

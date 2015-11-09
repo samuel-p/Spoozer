@@ -1,5 +1,5 @@
-var app = angular.module('spoozerApp', ['ngRoute', 'ngWs', 'mm.foundation']);
-app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+var app = angular.module('spoozerApp', ['ngRoute', 'ngWs', 'mm.foundation', 'ngAnimate']);
+app.config(function ($routeProvider, $locationProvider) {
     $routeProvider.
         when('/dashboard', {
             templateUrl: 'views/dashboard.html',
@@ -8,7 +8,7 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
         }).
         when('/search/:text', {
             templateUrl: 'views/search.html',
-            controller: 'SearchCtrl',
+            controller: 'SearchResultCtrl',
             caseInsensitiveMatch: true
         }).
         when('/profile', {
@@ -19,15 +19,22 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
         otherwise({
             redirectTo: '/dashboard'
         });
-}]);
-app.run(['$rootScope', '$location', function ($rootScope, $location) {
+});
+app.run(function ($rootScope, $location, $ws) {
     $rootScope.$on('$routeChangeSuccess', function (next, current) {
-        $rootScope.$applyAsync(function() {
+        $rootScope.$applyAsync(function () {
             $(document).foundation('reflow');
         });
     });
 
-    $rootScope.isActive = function(path) {
+    $ws.subscribe('/setUserDetails', function (payload, headers, res) {
+        $rootScope.$applyAsync(function () {
+            $rootScope.userDetails = payload.userDetails;
+        });
+    });
+    $ws.send('/getUserDetails');
+
+    $rootScope.isActive = function (path) {
         if (path == '/') {
             path = '/dashboard';
         }
@@ -43,4 +50,37 @@ app.run(['$rootScope', '$location', function ($rootScope, $location) {
             equalize_on_stack: true
         }
     });
-}]);
+
+    (function ($) {
+        $.each(['show', 'hide'], function (i, ev) {
+            var el = $.fn[ev];
+            $.fn[ev] = function () {
+                this.trigger(ev);
+                el.apply(this, arguments);
+                return el;
+            };
+        });
+    })(jQuery);
+});
+app.directive('preventclickpagination', function () {
+    return function (scope, element) {
+        element.bind('click touchend', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            element[0].focus();
+        });
+    };
+});
+app.directive('fullheight', function ($window) {
+    return function (scope, element) {
+        var changeHeight = function () {
+            if ($('.top-bar').is(':visible')) {
+                $('.off-canvas-wrap').foundation('offcanvas', 'hide', 'move-right');
+            }
+            var height = $window.innerHeight - $('.tab-bar').outerHeight();
+            element.css('height', height + 'px');
+        };
+        changeHeight();
+        angular.element($window).bind('resize', changeHeight);
+    }
+});
