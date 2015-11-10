@@ -1,37 +1,50 @@
 <tabset>
     <tab heading="Übersicht">
-        <table>
-            <tr>
-                <th>ID:</th>
-                <td ng-show="userDetails.id">{{userDetails.id}}</td>
-            </tr>
-            <tr>
-                <th>Username:</th>
-                <td ng-show="userDetails.username">{{userDetails.username}}</td>
-            </tr>
-            <tr>
-                <th>Passwort:</th>
-                <td>********</td>
-            </tr>
-            <tr>
-                <th>Name:</th>
-                <td ng-show="userDetails.name">{{userDetails.name}}</td>
-            </tr>
-            <tr>
-                <th>E-Mail:</th>
-                <td ng-show="userDetails.email">{{userDetails.email}}</td>
-            </tr>
-        </table>
+        <div class="row" data-equalizer="profile-overview">
+            <div class="medium-6 columns">
+                <div class="panel" data-equalizer-watch="profile-overview">
+                    <h4>Profil:</h4>
+                    <table>
+                        <tr>
+                            <th>ID:</th>
+                            <td ng-show="userDetails.id">{{userDetails.id}}</td>
+                        </tr>
+                        <tr>
+                            <th>Username:</th>
+                            <td ng-show="userDetails.username">{{userDetails.username}}</td>
+                        </tr>
+                        <tr>
+                            <th>Passwort:</th>
+                            <td>********</td>
+                        </tr>
+                        <tr>
+                            <th>Name:</th>
+                            <td ng-show="userDetails.name">{{userDetails.name}}</td>
+                        </tr>
+                        <tr>
+                            <th>E-Mail:</th>
+                            <td ng-show="userDetails.email">{{userDetails.email}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="medium-6 columns">
+                <div class="panel" data-equalizer-watch="profile-overview">
+                    <h4>Accounts:</h4>
+                    <ul>
+                        <li>Spotify</li>
+                        <li>Youtube</li>
+                        <li>Soundcloud</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </tab>
-    <tab heading="Bearbeiten">
+    <tab heading="Profil Bearbeiten">
         <table>
             <tr>
                 <th>Username:</th>
                 <td><input ng-model="edit.username"/></td>
-            </tr>
-            <tr>
-                <th>Passwort:</th>
-                <td><input ng-model="edit.password"/></td>
             </tr>
             <tr>
                 <th>Name:</th>
@@ -42,6 +55,9 @@
                 <td><input ng-model="edit.email"/></td>
             </tr>
         </table>
+    </tab>
+    <tab heading="Passwort ändern">
+        Account settings comming soon...
     </tab>
     <tab heading="Accounts">
         Account settings comming soon...
