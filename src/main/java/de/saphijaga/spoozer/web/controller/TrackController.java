@@ -5,6 +5,7 @@ import de.saphijaga.spoozer.web.domain.request.GetSearchResultRequest;
 import de.saphijaga.spoozer.web.domain.response.GetSearchResultResponse;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
@@ -17,7 +18,7 @@ import static java.util.Arrays.asList;
 @RestController
 public class TrackController {
     @MessageMapping("/getSearchResult")
-    @SendTo("/setSearchResult")
+    @SendToUser("/setSearchResult")
     public GetSearchResultResponse getSearchResult(GetSearchResultRequest request) {
         System.out.println("search: " + request.getSearch());
         Map<String, List<TrackDetails>> searchResult = new HashMap<>();

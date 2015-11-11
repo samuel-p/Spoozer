@@ -1,4 +1,4 @@
-var app = angular.module('spoozerApp', ['ngRoute', 'ngWs', 'mm.foundation', 'ngAnimate']);
+var app = angular.module('spoozerApp', ['ngRoute', 'ngWs', 'mm.foundation', 'ngAnimate', 'ngTouch']);
 app.config(function ($routeProvider, $locationProvider) {
     $routeProvider.
         when('/dashboard', {
@@ -20,15 +20,20 @@ app.config(function ($routeProvider, $locationProvider) {
             redirectTo: '/dashboard'
         });
 });
-app.run(function ($rootScope, $location, $ws) {
+app.run(function ($rootScope, $window, $location, $ws) {
     $rootScope.$on('$routeChangeSuccess', function (next, current) {
         $rootScope.$applyAsync(function () {
             $(document).foundation('reflow');
         });
     });
 
+    $ws.setOnDisconnected(function () {
+        $window.location.reload();
+    });
+
     $ws.subscribe('/setUserDetails', function (payload, headers, res) {
         $rootScope.$applyAsync(function () {
+            console.log(payload);
             $rootScope.userDetails = payload.userDetails;
         });
     });
@@ -51,16 +56,16 @@ app.run(function ($rootScope, $location, $ws) {
         }
     });
 
-    (function ($) {
-        $.each(['show', 'hide'], function (i, ev) {
-            var el = $.fn[ev];
-            $.fn[ev] = function () {
-                this.trigger(ev);
-                el.apply(this, arguments);
-                return el;
-            };
-        });
-    })(jQuery);
+    $rootScope.showSmallMenu = function() {
+        if (Foundation.utils.is_small_only()) {
+            $('.off-canvas-wrap').foundation('offcanvas', 'show', 'move-right');
+        }
+    };
+    $rootScope.hideSmallMenu = function() {
+        if (Foundation.utils.is_small_only()) {
+            $('.off-canvas-wrap').foundation('offcanvas', 'hide', 'move-right');
+        }
+    };
 });
 app.directive('preventclickpagination', function () {
     return function (scope, element) {
@@ -74,7 +79,7 @@ app.directive('preventclickpagination', function () {
 app.directive('fullheight', function ($window) {
     return function (scope, element) {
         var changeHeight = function () {
-            if ($('.top-bar').is(':visible')) {
+            if (Foundation.utils.is_small_only()) {
                 $('.off-canvas-wrap').foundation('offcanvas', 'hide', 'move-right');
             }
             var height = $window.innerHeight - $('.tab-bar').outerHeight();

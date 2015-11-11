@@ -51,6 +51,10 @@ dependencies {
 
     compile "org.springframework.security:spring-security-web:4.0.2.RELEASE"
     compile "org.springframework.security:spring-security-config:4.0.2.RELEASE"
+    compile "org.springframework.security:spring-security-messaging:4.0.2.RELEASE"
+    compile "org.springframework.security:spring-security-data:4.0.2.RELEASE"
+
+    compile "org.springframework.session:spring-session:1.0.2.RELEASE"
 
     compile "org.springframework.data:spring-data-jpa:1.9.0.RELEASE"
     compile "org.springframework.data:spring-data-mongodb:1.8.0.RELEASE"

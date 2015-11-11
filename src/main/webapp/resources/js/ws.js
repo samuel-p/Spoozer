@@ -1,23 +1,41 @@
-angular.module('ngWs', ['ngStomp']).service('$ws', ['$stomp', function ($stomp) {
+angular.module('ngWs', ['ngStomp']).service('$ws', ['$stomp', '$http', function ($stomp, $http) {
     this.connected = false;
     this.subscriptions = {};
     this.initSubscriptions = [];
     this.initSends = [];
 
-    this.init = function() {
+    $stomp.setDebug(function (args) {
+        console.log(args);
+    });
+
+    this.setOnDisconnected = function(callback) {
+        $stomp.setDisconnected(callback);
+    };
+
+    this.init = function(csrf) {
         var self = this;
-        $stomp.connect('/connect').then(function (frame) {
+        var header = {};
+        header[csrf.headerName] = csrf.token;
+        $stomp.connect('/connect', header).then(function (frame) {
             self.connected = true;
             self.initSubscriptions.forEach(function (s) {
-                self.subscribe(s.destination, s.callback, s.headers);
+                self.subscribeBroadcast(s.destination, s.callback, s.headers);
             });
             self.initSends.forEach(function (s) {
                 self.send(s.destination, s.body, s.headers);
-            })
+            });
         });
     };
+    var self = this;
+    $http.get('/csrf').then(function(csrf) {
+        self.init(csrf.data);
+    });
 
     this.subscribe = function (destination, callback, headers) {
+        this.subscribeBroadcast('/user' + destination, callback, headers);
+    };
+
+    this.subscribeBroadcast = function (destination, callback, headers) {
         if (this.connected) {
             if (this.subscriptions[destination] === undefined) {
                 this.subscriptions[destination] = [];
@@ -50,6 +68,4 @@ angular.module('ngWs', ['ngStomp']).service('$ws', ['$stomp', function ($stomp) 
             });
         }
     };
-
-    this.init();
 }]);

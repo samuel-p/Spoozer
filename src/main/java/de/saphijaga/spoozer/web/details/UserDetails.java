@@ -1,9 +1,11 @@
 package de.saphijaga.spoozer.web.details;
 
+import java.io.Serializable;
+
 /**
  * Created by samuel on 16.10.15.
  */
-public class UserDetails {
+public class UserDetails implements Serializable {
     private String id;
     private String username;
     private String email;

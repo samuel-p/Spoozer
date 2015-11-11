@@ -11,7 +11,7 @@
     <th:block th:replace="template/assets :: js-app"></th:block>
 </head>
 
-<body>
+<body ng-swipe-left="hideSmallMenu()" ng-swipe-right="showSmallMenu()">
 <th:block th:replace="template/global :: require-js"></th:block>
 <div class="fixed">
     <div class="off-canvas-wrap">
