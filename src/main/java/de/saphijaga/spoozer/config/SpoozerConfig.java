@@ -9,6 +9,5 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @ComponentScan("de.saphijaga.spoozer")
-@Import({SecurityConfig.class})
 public class SpoozerConfig {
 }

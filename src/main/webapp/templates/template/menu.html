@@ -21,14 +21,16 @@
     <li ng-class="{spoozer: isActive('/profile')}">
         <a href="#/profile">Profil</a>
     </li>
-    <!--<li class="divider"></li>
-    <li class="has-dropdown">
+    <li class="divider"></li>
+    <li class="has-dropdown" ng-controller="UserAccountCtrl">
         <a href="#/">Accounts</a>
-        <ul class="dropdown">
-            <li><a href="#/">Spotify</a></li>
-            <li><a href="#/">Youtube</a></li>
+        <ul class="dropdown" ng-repeat="(service, account) in userAccounts">
+            <li><a ng-href="{{account.url}}" target="_blank">{{account.serviceName}}</a></li>
         </ul>
-    </li>-->
+        <ul class="dropdown" ng-show="areUserAccountsEmpty()">
+            <li><a>Keine vorhanden!</a></li>
+        </ul>
+    </li>
     <li class="divider"></li>
     <li class="has-form">
         <form th:action="@{/logout}" method="post">

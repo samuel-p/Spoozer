@@ -6,11 +6,11 @@ package de.saphijaga.spoozer.web.details;
 public class SecurityDetails {
     private boolean isConnectionSecure;
 
-    public SecurityDetails(boolean isConnectionSecure) {
-        this.isConnectionSecure = isConnectionSecure;
-    }
-
     public boolean isConnectionSecure() {
         return isConnectionSecure;
+    }
+
+    public void setIsConnectionSecure(boolean isConnectionSecure) {
+        this.isConnectionSecure = isConnectionSecure;
     }
 }

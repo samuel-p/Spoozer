@@ -3,7 +3,7 @@
     <ul ng-repeat="(service, result) in searchResult">
         <li>{{service}}</li>
         <ul ng-repeat="track in result">
-            <li>ID: {{track.id}}</li>
+            <li><img src="{{track.coverUrl}}"/> {{track.title}} - {{parseTime(track.durationInMillis)}}</li>
         </ul>
     </ul>
 </div>

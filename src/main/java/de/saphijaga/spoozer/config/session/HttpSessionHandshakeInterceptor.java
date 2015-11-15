@@ -1,5 +1,6 @@
 package de.saphijaga.spoozer.config.session;
 
+import de.saphijaga.spoozer.web.authentication.Session;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpRequest;
@@ -17,9 +18,9 @@ public class HttpSessionHandshakeInterceptor implements HandshakeInterceptor {
             ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
             HttpSession session = servletRequest.getServletRequest().getSession(false);
             if (session != null) {
-                attributes.put("HTTPSESSIONID", session.getId());
-                attributes.put("HTTPSESSION", session);
-                attributes.put("user", session.getAttribute("user"));
+                attributes.put(Session.HTTP_SESSION_ID, session.getId());
+                attributes.put(Session.HTTP_SESSION, session);
+                attributes.put(Session.USER, session.getAttribute(Session.USER));
             }
         }
         return true;

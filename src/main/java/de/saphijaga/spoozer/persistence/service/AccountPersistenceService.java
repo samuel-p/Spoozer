@@ -8,6 +8,8 @@ import java.util.Optional;
  * Created by samuel on 27.10.15.
  */
 public interface AccountPersistenceService {
+    Optional<Account> getAccount(String id);
+
     Optional<Account> saveAccount(Account account);
 
     void deleteAccount(Account account);

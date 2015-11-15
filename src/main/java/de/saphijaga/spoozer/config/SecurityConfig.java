@@ -19,12 +19,19 @@ import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
+import org.springframework.security.web.header.writers.frameoptions.WhiteListedAllowFromStrategy;
+import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import org.springframework.session.web.http.HttpSessionStrategy;
 
+import javax.servlet.*;
+import java.io.IOException;
+import java.util.Arrays;
+
+import static java.util.Arrays.asList;
+
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -43,12 +50,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.headers().frameOptions().disable().xssProtection().disable().contentTypeOptions().disable();
+
         http.authorizeRequests()
                 .antMatchers("/js/**", "/css/**", "/img/**", "/lib/**", "/register"/*, "/"*/).permitAll().anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").successHandler(new SecurityAuthenticationSuccessHandler(userService)).permitAll()
                 .and()
-                .logout();
+                .logout().invalidateHttpSession(true);
 
         http.exceptionHandling().accessDeniedHandler(new SecurityAccessDeniedHandler("/login?expired"));
 

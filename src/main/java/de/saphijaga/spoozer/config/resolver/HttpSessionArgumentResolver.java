@@ -1,5 +1,6 @@
 package de.saphijaga.spoozer.config.resolver;
 
+import de.saphijaga.spoozer.web.authentication.Session;
 import org.springframework.core.MethodParameter;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.invocation.HandlerMethodArgumentResolver;
@@ -21,6 +22,6 @@ public class HttpSessionArgumentResolver implements HandlerMethodArgumentResolve
     @Override
     public Object resolveArgument(MethodParameter parameter, Message<?> message) throws Exception {
         Map<String, Object> session = getSessionAttributes(message.getHeaders());
-        return session.get("HTTPSESSION");
+        return session.get(Session.HTTP_SESSION);
     }
 }

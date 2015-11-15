@@ -1,23 +1,36 @@
 package de.saphijaga.spoozer.persistence.domain;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.persistence.Column;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by samuel on 14.10.15.
  */
+@Document(collection = "user")
 public class User {
     @Id
     private String id;
-    @Column(unique = true)
+    @Indexed(unique = true)
     private String username;
     private String password;
     private String name;
     private String email;
+    @DBRef
     private List<Playlist> playlists;
+    @DBRef
     private List<Account> accounts;
+
+    public User() {
+        playlists = new ArrayList<>();
+        accounts = new ArrayList<>();
+    }
 
     public String getId() {
         return id;

@@ -5,25 +5,25 @@
                 <div class="panel" data-equalizer-watch="profile-overview">
                     <h4>Profil:</h4>
                     <table>
-                        <tr>
+                        <tr ng-show="userDetails.id">
                             <th>ID:</th>
-                            <td ng-show="userDetails.id">{{userDetails.id}}</td>
+                            <td>{{userDetails.id}}</td>
                         </tr>
-                        <tr>
+                        <tr ng-show="userDetails.username">
                             <th>Username:</th>
-                            <td ng-show="userDetails.username">{{userDetails.username}}</td>
+                            <td>{{userDetails.username}}</td>
                         </tr>
                         <tr>
                             <th>Passwort:</th>
                             <td>********</td>
                         </tr>
-                        <tr>
+                        <tr ng-show="userDetails.name">
                             <th>Name:</th>
-                            <td ng-show="userDetails.name">{{userDetails.name}}</td>
+                            <td>{{userDetails.name}}</td>
                         </tr>
-                        <tr>
+                        <tr ng-show="userDetails.email">
                             <th>E-Mail:</th>
-                            <td ng-show="userDetails.email">{{userDetails.email}}</td>
+                            <td>{{userDetails.email}}</td>
                         </tr>
                     </table>
                 </div>
@@ -31,11 +31,10 @@
             <div class="medium-6 columns">
                 <div class="panel" data-equalizer-watch="profile-overview">
                     <h4>Accounts:</h4>
-                    <ul>
-                        <li>Spotify</li>
-                        <li>Youtube</li>
-                        <li>Soundcloud</li>
+                    <ul ng-repeat="(service, account) in userAccounts">
+                        <li><a ng-href="{{account.url}}" target="_blank">{{account.serviceName}}</a></li>
                     </ul>
+                    <p ng-show="areUserAccountsEmpty()">Keine vorhanden!</p>
                 </div>
             </div>
         </div>
@@ -57,10 +56,36 @@
         </table>
     </tab>
     <tab heading="Passwort ändern">
-        Account settings comming soon...
+        Password settings comming soon...
     </tab>
     <tab heading="Accounts">
-        Account settings comming soon...
+        <accordion close-others="true">
+            <accordion-group heading="Spotify">
+                <button class="round spotify" ng-click="spotifyLogin()" ng-hide="userAccounts.spotify">Anmelden</button>
+                <div ng-show="userAccounts.spotify">
+                    <table>
+                        <tr ng-show="userAccounts.spotify.displayname">
+                            <th>Name:</th>
+                            <td>{{userAccounts.spotify.displayname}}</td>
+                        </tr>
+                        <tr ng-show="userAccounts.spotify.username">
+                            <th>Benutzername:</th>
+                            <td>{{userAccounts.spotify.username}}</td>
+                        </tr>
+                        <tr ng-show="userAccounts.spotify.url">
+                            <th>Url:</th>
+                            <td><a ng-href="{{userAccounts.spotify.url}}"
+                                   target="_blank">{{userAccounts.spotify.url}}</a></td>
+                        </tr>
+                    </table>
+                    <button class="round spotify" ng-click="spotifyLogout()">Abmelden</button>
+                    <button class="round spotify">Playlists importieren</button>
+                </div>
+            </accordion-group>
+            <accordion-group heading="Soundcloud">
+                Soundcloud is comming soon...
+            </accordion-group>
+        </accordion>
     </tab>
     <tab heading="Einstellungen">
         Settings comming soon...

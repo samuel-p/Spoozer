@@ -30,7 +30,6 @@ body *:focus {
 
 .fixed-content .dynamic-content {
     height: 100%;
-    color: #fff;
     padding-top: 0.9375rem;
     padding-bottom: 0.9375rem;
     overflow: auto;
@@ -215,4 +214,15 @@ ul.icon-bar li.spoozer * {
 .tabs dd.active a:hover {
     background-color: #00ad00;
     color: #000;
+}
+
+.spotify {
+    color: #fff;
+    background-color: #2ebd59;
+    margin: 0;
+}
+
+.spotify:hover, .spotify:active, .spotify:focus {
+    color: #fff;
+    background-color: #1ed760;
 }

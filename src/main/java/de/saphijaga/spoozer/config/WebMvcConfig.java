@@ -6,6 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.FormHttpMessageConverter;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,6 +25,8 @@ import org.thymeleaf.templateresolver.TemplateResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -60,6 +66,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     public SecurityDetails securityDetails() {
         boolean isConnectionSecure = factory.getAdditionalTomcatConnectors().stream().anyMatch(c -> c.getSecure());
-        return new SecurityDetails(isConnectionSecure);
+        SecurityDetails securityDetails = new SecurityDetails();
+        securityDetails.setIsConnectionSecure(isConnectionSecure);
+        return securityDetails;
     }
 }

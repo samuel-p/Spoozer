@@ -1,6 +1,7 @@
 package de.saphijaga.spoozer.config.session;
 
 import de.saphijaga.spoozer.core.service.UserService;
+import de.saphijaga.spoozer.web.authentication.Session;
 import de.saphijaga.spoozer.web.details.SecurityUserDetails;
 import de.saphijaga.spoozer.web.details.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,17 @@ public class SecurityAuthenticationSuccessHandler implements AuthenticationSucce
         if (principal instanceof SecurityUserDetails) {
             String id = ((SecurityUserDetails) principal).getId();
             Optional<UserDetails> user = userService.getUserDetails(id);
-            request.getSession().setAttribute("user", user.orElse(null));
+            request.getSession().setAttribute(Session.USER, user.orElse(null));
+            request.getSession().setAttribute(Session.SERVER_URL, getServerUrl(request));
         }
         response.sendRedirect("/");
+    }
+
+    private String getServerUrl(HttpServletRequest request) {
+        String redirectUrl = request.getScheme() + "://" + request.getServerName();
+        if (request.getServerPort() != 80) {
+            redirectUrl += ":" + request.getServerPort();
+        }
+        return redirectUrl;
     }
 }

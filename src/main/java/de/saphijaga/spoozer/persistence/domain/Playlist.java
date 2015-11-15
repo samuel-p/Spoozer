@@ -1,12 +1,14 @@
 package de.saphijaga.spoozer.persistence.domain;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
 /**
  * Created by samuel on 27.10.15.
  */
+@Document
 public class Playlist {
     @Id
     private String id;

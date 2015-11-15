@@ -1,5 +1,5 @@
 var app = angular.module('spoozerApp', ['ngRoute', 'ngWs', 'mm.foundation', 'ngAnimate', 'ngTouch']);
-app.config(function ($routeProvider, $locationProvider) {
+app.config(function ($routeProvider) {
     $routeProvider.
         when('/dashboard', {
             templateUrl: 'views/dashboard.html',
@@ -21,6 +21,9 @@ app.config(function ($routeProvider, $locationProvider) {
         });
 });
 app.run(function ($rootScope, $window, $location, $ws) {
+    $rootScope.$watch(function $locationWatch() {
+        console
+    });
     $rootScope.$on('$routeChangeSuccess', function (next, current) {
         $rootScope.$applyAsync(function () {
             $(document).foundation('reflow');
@@ -33,11 +36,16 @@ app.run(function ($rootScope, $window, $location, $ws) {
 
     $ws.subscribe('/setUserDetails', function (payload, headers, res) {
         $rootScope.$applyAsync(function () {
-            console.log(payload);
             $rootScope.userDetails = payload.userDetails;
         });
     });
     $ws.send('/getUserDetails');
+    $ws.subscribe('/setUserAccounts', function (payload, headers, res) {
+        $rootScope.$applyAsync(function () {
+            $rootScope.userAccounts = payload.userAccounts;
+        });
+    });
+    $ws.send('/getUserAccounts');
 
     $rootScope.isActive = function (path) {
         if (path == '/') {
@@ -56,12 +64,12 @@ app.run(function ($rootScope, $window, $location, $ws) {
         }
     });
 
-    $rootScope.showSmallMenu = function() {
+    $rootScope.showSmallMenu = function () {
         if (Foundation.utils.is_small_only()) {
             $('.off-canvas-wrap').foundation('offcanvas', 'show', 'move-right');
         }
     };
-    $rootScope.hideSmallMenu = function() {
+    $rootScope.hideSmallMenu = function () {
         if (Foundation.utils.is_small_only()) {
             $('.off-canvas-wrap').foundation('offcanvas', 'hide', 'move-right');
         }
@@ -79,7 +87,7 @@ app.directive('preventclickpagination', function () {
 app.directive('fullheight', function ($window) {
     return function (scope, element) {
         var changeHeight = function () {
-            if (Foundation.utils.is_small_only()) {
+            if (!Foundation.utils.is_small_only()) {
                 $('.off-canvas-wrap').foundation('offcanvas', 'hide', 'move-right');
             }
             var height = $window.innerHeight - $('.tab-bar').outerHeight();
@@ -88,4 +96,17 @@ app.directive('fullheight', function ($window) {
         changeHeight();
         angular.element($window).bind('resize', changeHeight);
     }
+});
+app.directive('external', function () {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            element.bind('click', function(event) {
+                event.stopPropagation();
+            });
+            if(true) {
+                element.attr("target", "_self");
+            }
+        }
+    };
 });

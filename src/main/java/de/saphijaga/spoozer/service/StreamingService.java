@@ -1,0 +1,42 @@
+package de.saphijaga.spoozer.service;
+
+import de.saphijaga.spoozer.persistence.domain.Account;
+import de.saphijaga.spoozer.persistence.domain.SpotifyAccount;
+import de.saphijaga.spoozer.service.spotify.SpotifyApi;
+import de.saphijaga.spoozer.web.details.AccountDetails;
+import de.saphijaga.spoozer.web.details.SpotifyAccountDetails;
+
+/**
+ * Created by samuel on 13.11.15.
+ */
+public enum  StreamingService {
+    SPOTIFY("Spotify", SpotifyAccount.class, SpotifyAccountDetails.class, SpotifyApi.class);
+
+    private String name;
+    private Class<? extends Account> accountClass;
+    private Class<? extends AccountDetails> accountDetailsClass;
+    private Class<? extends Api> apiClass;
+
+    StreamingService(String name, Class<? extends Account> accountClass, Class<? extends AccountDetails> accountDetailsClass, Class<? extends Api> apiClass) {
+        this.name = name;
+        this.accountClass = accountClass;
+        this.accountDetailsClass = accountDetailsClass;
+        this.apiClass = apiClass;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Class<? extends Account> getAccountClass() {
+        return accountClass;
+    }
+
+    public Class<? extends AccountDetails> getAccountDetailsClass() {
+        return accountDetailsClass;
+    }
+
+    public Class<? extends Api> getApiClass() {
+        return apiClass;
+    }
+}

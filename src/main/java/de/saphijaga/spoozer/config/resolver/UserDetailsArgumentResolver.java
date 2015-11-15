@@ -1,5 +1,6 @@
 package de.saphijaga.spoozer.config.resolver;
 
+import de.saphijaga.spoozer.web.authentication.Session;
 import de.saphijaga.spoozer.web.details.UserDetails;
 import org.springframework.core.MethodParameter;
 import org.springframework.messaging.Message;
@@ -30,7 +31,7 @@ public class UserDetailsArgumentResolver implements HandlerMethodArgumentResolve
                     .getNativeRequest();
             HttpSession session = request.getSession(false);
             if (session != null) {
-                return session.getAttribute("user");
+                return session.getAttribute(Session.USER);
             }
         }
         return null;
@@ -39,6 +40,6 @@ public class UserDetailsArgumentResolver implements HandlerMethodArgumentResolve
     @Override
     public Object resolveArgument(MethodParameter parameter, Message<?> message) throws Exception {
         Map<String, Object> session = getSessionAttributes(message.getHeaders());
-        return session.get("user");
+        return session.get(Session.USER);
     }
 }
