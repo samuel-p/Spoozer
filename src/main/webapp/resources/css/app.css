@@ -226,3 +226,48 @@ ul.icon-bar li.spoozer * {
     color: #fff;
     background-color: #1ed760;
 }
+
+.result {
+    padding: 1rem 1rem 1rem 0;
+    display: table;
+
+}
+
+.result-background{
+    background-color: rgba(27, 25, 25, 0.81);
+}
+
+.result-service{
+    color: #fff;
+
+}
+
+.result-img {
+    width: 6rem;
+    margin: 0 auto 1rem;
+    display: table-cell;
+    width: auto;
+}
+
+.result-desc {
+    padding: 0 0 0 1rem;
+    text-align: left;
+    display: table-cell;
+    vertical-align: top;
+}
+
+.result-desc .result-desc-song {
+    color: #fff;
+    margin: 0 0 0.5rem 0;
+    padding: 0;
+}
+
+.result-desc .result-desc-dur {
+    color: #fff;
+    margin: 0 0 0.25rem;
+    padding: 0;
+}
+
+.result-desc .event-desc-time {
+    font-weight: bold;
+}

@@ -1,9 +1,25 @@
 <div>
     <a href="#/">Zurück</a>
     <ul ng-repeat="(service, result) in searchResult">
-        <li>{{service}}</li>
+        <h3 class="result-service">{{service}}</h3>
         <ul ng-repeat="track in result">
-            <li><img src="{{track.coverUrl}}"/> {{track.title}} - {{parseTime(track.durationInMillis)}}</li>
+            <div class="small-9 small-centered result-background">
+                <article class="result">
+
+                    <div class="result-img">
+                        <img src="{{track.coverUrl}}" height="60" width="60"/>
+                    </div>
+
+                    <div class="result-desc">
+                        <h4 class="result-desc-song">{{track.interpret}} - {{track.title}}</h4>
+
+                        <p class="result-desc-dur"><span class="event-desc-time"></span>{{parseTime(track.durationInMillis)}}
+                        </p>
+                        <a href="" class="spoozer button">Abspielen</a>
+                    </div>
+
+                </article>
+            </div>
         </ul>
     </ul>
 </div>
