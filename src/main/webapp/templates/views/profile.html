@@ -60,8 +60,11 @@
     </tab>
     <tab heading="Accounts">
         <accordion close-others="true">
-            <accordion-group heading="Spotify">
-                <button class="round spotify" ng-click="spotifyLogin()" ng-hide="userAccounts.spotify">Anmelden</button>
+            <accordion-group>
+                <accordion-heading>
+                    <img class="accordion-header" src="/img/spotify.png"/>
+                </accordion-heading>
+                <a class="button round spotify" target="_blank" href="/spotify/login" ng-hide="userAccounts.spotify">Anmelden</a>
                 <div ng-show="userAccounts.spotify">
                     <table>
                         <tr ng-show="userAccounts.spotify.displayname">
@@ -82,7 +85,10 @@
                     <button class="round spotify">Playlists importieren</button>
                 </div>
             </accordion-group>
-            <accordion-group heading="Soundcloud">
+            <accordion-group>
+                <accordion-heading>
+                    <img class="accordion-header" src="/img/soundcloud.png"/>
+                </accordion-heading>
                 Soundcloud is comming soon...
             </accordion-group>
         </accordion>

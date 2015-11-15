@@ -139,6 +139,20 @@ ul.icon-bar li.spoozer * {
     border-bottom: 1px solid #262626;
 }
 
+.off-canvas-list .has-dropdown .dropdown {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+.off-canvas-list .has-dropdown .dropdown li a {
+    padding-left: 2rem;
+}
+
+.off-canvas-list li a.active {
+    background-color: #242424;
+}
+
 .player {
     position: fixed;
     bottom: 0;
@@ -230,16 +244,21 @@ ul.icon-bar li.spoozer * {
 .result {
     padding: 1rem 1rem 1rem 0;
     display: table;
-
+    margin-bottom: 1rem;
 }
 
-.result-background{
-    background-color: rgba(27, 25, 25, 0.81);
+.result-background {
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
-.result-service{
+.result-service {
     color: #fff;
+}
 
+.result-service img {
+    height: 100px;
+    margin-left: 70px;
+    margin-bottom: 20px;
 }
 
 .result-img {
@@ -270,4 +289,8 @@ ul.icon-bar li.spoozer * {
 
 .result-desc .event-desc-time {
     font-weight: bold;
+}
+
+.accordion-header {
+    height: 50px;
 }

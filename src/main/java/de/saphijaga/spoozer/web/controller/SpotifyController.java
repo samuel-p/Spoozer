@@ -36,16 +36,6 @@ public class SpotifyController {
     @Autowired
     private SpotifyApi api;
 
-    @MessageMapping("/spotify/getLoginUrl")
-    @SendToUser("/spotify/setLoginUrl")
-    public SportiyLoginUrlResponse getLoginUrl(HttpSession session) throws IOException {
-        String state = UUID.randomUUID().toString();
-        session.setAttribute(Spotify.STATE, state);
-        String redirectUrl = (String) session.getAttribute("serverurl");
-        return new SportiyLoginUrlResponse(api.getLoginURL(redirectUrl, state));
-    }
-
-
     @RequestMapping("/spotify/login")
     public String login(HttpSession session) throws IOException {
         String state = UUID.randomUUID().toString();

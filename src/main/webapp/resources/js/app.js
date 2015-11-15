@@ -63,6 +63,13 @@ app.run(function ($rootScope, $window, $location, $ws) {
             equalize_on_stack: true
         }
     });
+    $('.off-canvas-list .has-dropdown .dropdown').hide();
+    $('.off-canvas-list .has-dropdown a').click(function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        $(this).parent().find('.dropdown').slideToggle('fast');
+        $(this).toggleClass('active');
+    });
 
     $rootScope.showSmallMenu = function () {
         if (Foundation.utils.is_small_only()) {

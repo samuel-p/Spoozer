@@ -1,9 +1,8 @@
 <div>
-    <a href="#/">Zurück</a>
-    <ul ng-repeat="(service, result) in searchResult">
-        <h3 class="result-service">{{service}}</h3>
-        <ul ng-repeat="track in result">
-            <div class="small-9 small-centered result-background">
+    <div ng-repeat="(service, result) in searchResult">
+        <h3 class="result-service"><img src="/img/{{service | lowercase}}-light.png"/></h3>
+        <div ng-repeat="track in result">
+            <div class="small-12 small-centered result-background">
                 <article class="result">
 
                     <div class="result-img">
@@ -20,6 +19,6 @@
 
                 </article>
             </div>
-        </ul>
-    </ul>
+        </div>
+    </div>
 </div>

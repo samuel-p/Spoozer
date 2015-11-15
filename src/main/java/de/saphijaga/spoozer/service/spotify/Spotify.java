@@ -5,7 +5,7 @@ package de.saphijaga.spoozer.service.spotify;
  */
 public class Spotify {
     public static final String CLIENT_ID = "65650c3edf994b7ba844f88fd05c2d6c";
-    public static final String CLIENT_SECRET = "";
+    public static final String CLIENT_SECRET = "d070b5bb1ba14c3eba80bfa05dce4985";
     public static final String LOGIN_URL = "https://accounts.spotify.com/authorize";
     public static final String TOKEN_URL = "https://accounts.spotify.com/api/token";
     public static final String API_URL = "https://api.spotify.com/v1";

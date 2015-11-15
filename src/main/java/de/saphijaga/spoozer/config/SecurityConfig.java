@@ -50,8 +50,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.headers().frameOptions().disable().xssProtection().disable().contentTypeOptions().disable();
-
         http.authorizeRequests()
                 .antMatchers("/js/**", "/css/**", "/img/**", "/lib/**", "/register"/*, "/"*/).permitAll().anyRequest().authenticated()
                 .and()
