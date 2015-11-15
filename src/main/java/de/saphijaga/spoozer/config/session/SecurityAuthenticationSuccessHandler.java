@@ -42,7 +42,7 @@ public class SecurityAuthenticationSuccessHandler implements AuthenticationSucce
         if (request.getScheme().equals("http") && request.getServerPort() != 80) {
             redirectUrl += ":" + request.getServerPort();
         }
-        if (request.getScheme().equals("https") && request.getServerPort() != 433) {
+        if (request.getScheme().equals("https") && request.getServerPort() != 443) {
             redirectUrl += ":" + request.getServerPort();
         }
         return redirectUrl;
