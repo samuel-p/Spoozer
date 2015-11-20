@@ -21,9 +21,6 @@ app.config(function ($routeProvider) {
         });
 });
 app.run(function ($rootScope, $window, $location, $ws) {
-    $rootScope.$watch(function $locationWatch() {
-        console
-    });
     $rootScope.$on('$routeChangeSuccess', function (next, current) {
         $rootScope.$applyAsync(function () {
             $(document).foundation('reflow');
@@ -64,12 +61,19 @@ app.run(function ($rootScope, $window, $location, $ws) {
         }
     });
     $('.off-canvas-list .has-dropdown .dropdown').hide();
-    $('.off-canvas-list .has-dropdown a').click(function(e) {
+    $('.off-canvas-list .has-dropdown a').click(function (e) {
         e.preventDefault();
         e.stopPropagation();
         $(this).parent().find('.dropdown').slideToggle('fast');
         $(this).toggleClass('active');
     });
+
+    $rootScope.showLoadingView = function () {
+        $('.loading-view').show();
+    };
+    $rootScope.hideLoadingView = function () {
+        $('.loading-view').hide();
+    };
 
     $rootScope.showSmallMenu = function () {
         if (Foundation.utils.is_small_only()) {
@@ -81,6 +85,7 @@ app.run(function ($rootScope, $window, $location, $ws) {
             $('.off-canvas-wrap').foundation('offcanvas', 'hide', 'move-right');
         }
     };
+    $rootScope.hideLoadingView();
 });
 app.directive('preventclickpagination', function () {
     return function (scope, element) {
@@ -103,17 +108,4 @@ app.directive('fullheight', function ($window) {
         changeHeight();
         angular.element($window).bind('resize', changeHeight);
     }
-});
-app.directive('external', function () {
-    return {
-        restrict: 'A',
-        link: function(scope, element, attrs) {
-            element.bind('click', function(event) {
-                event.stopPropagation();
-            });
-            if(true) {
-                element.attr("target", "_self");
-            }
-        }
-    };
 });

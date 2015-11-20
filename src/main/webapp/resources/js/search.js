@@ -1,8 +1,11 @@
-app.controller('SearchResultCtrl', function ($ws, $scope, $routeParams) {
+app.controller('SearchResultCtrl', function ($ws, $scope, $rootScope, $routeParams) {
+    $rootScope.text = decodeURIComponent($routeParams.text);
+    $scope.showLoadingView();
     // hide keyboard on mobile
     document.activeElement.blur();
     $ws.subscribe("/setSearchResult", function (payload, headers, res) {
         $scope.$applyAsync(function() {
+            $scope.hideLoadingView();
             $scope.searchResult = payload.searchResult;
         });
     });
@@ -22,4 +25,11 @@ app.controller('SearchResultCtrl', function ($ws, $scope, $routeParams) {
         var minutes = Math.floor(Math.floor(timeInMillis / 1000) / 60);
         return minutes + ':' + pad(seconds);
     }
+
+    $scope.isSearchResultEmpty = function() {
+        if (!angular.isDefined($scope.searchResult)) {
+            return false;
+        }
+        return Object.keys($scope.searchResult).length == 0;
+    };
 });

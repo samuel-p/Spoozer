@@ -30,13 +30,32 @@ body *:focus {
 
 .fixed-content .dynamic-content {
     height: 100%;
-    padding-top: 0.9375rem;
-    padding-bottom: 0.9375rem;
-    overflow: auto;
+    padding: 0;
 }
 
-.fixed-content .dynamic-content .panel {
-    margin: 0;
+.fixed-content .dynamic-content .view {
+    padding: 0.9375rem;
+    overflow: auto;
+    height: 100%;
+}
+
+.fixed-content .dynamic-content .loading-view {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.fixed-content .dynamic-content .loading-view img {
+    display: block;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 .top-bar .title-area .name img,
@@ -210,6 +229,10 @@ ul.icon-bar li.spoozer * {
     margin: 30px auto;
 }
 
+.tabs {
+    background-color: #222;
+}
+
 .tabs dd a {
     background-color: #222;
     color: #fff;
@@ -228,6 +251,20 @@ ul.icon-bar li.spoozer * {
 .tabs dd.active a:hover {
     background-color: #00ad00;
     color: #000;
+}
+
+.tabs-content {
+    margin-bottom: 1rem;
+    width: 100%;
+    height: 200px;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.3);
+    margin-top: 1rem;
+    color: #fff;
+}
+
+.tabs-content > .content {
+    padding: 0.9375rem;
 }
 
 .spotify {
@@ -293,4 +330,8 @@ ul.icon-bar li.spoozer * {
 
 .accordion-header {
     height: 50px;
+}
+
+.light-text {
+    color: #fff;
 }

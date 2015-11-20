@@ -23,6 +23,7 @@ body {
     background-color: #00c300 !important;
     border-color: #00ad00 !important;
     color: #000 !important;
+    margin: 0;
 }
 
 .button.spoozer:hover,

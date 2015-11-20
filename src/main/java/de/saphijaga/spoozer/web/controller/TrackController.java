@@ -27,7 +27,12 @@ public class TrackController {
     @SendToUser("/setSearchResult")
     public GetSearchResultResponse getSearchResult(UserDetails user, GetSearchResultRequest request) {
         Map<String, List<TrackDetails>> searchResult = new HashMap<>();
-        apiService.getApis().forEach(api -> searchResult.put(api.getService().name().toLowerCase(), api.getSearchResult(user, request.getSearch())));
+        apiService.getApis().forEach(api -> {
+            List<TrackDetails> apiResult = api.getSearchResult(user, request.getSearch());
+            if (!apiResult.isEmpty()) {
+                searchResult.put(api.getService().name().toLowerCase(), apiResult);
+            }
+        });
         return new GetSearchResultResponse(searchResult);
     }
 }

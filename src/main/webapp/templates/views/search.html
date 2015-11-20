@@ -1,12 +1,12 @@
 <div>
     <div ng-repeat="(service, result) in searchResult">
-        <h3 class="result-service"><img src="/img/{{service | lowercase}}-light.png"/></h3>
+        <h3 class="result-service"><img ng-src="img/{{service | lowercase}}-light.png"/></h3>
         <div ng-repeat="track in result">
             <div class="small-12 small-centered result-background">
                 <article class="result">
 
                     <div class="result-img">
-                        <img src="{{track.coverUrl}}" height="60" width="60"/>
+                        <img ng-src="{{track.coverUrl}}" height="60" width="60"/>
                     </div>
 
                     <div class="result-desc">
@@ -21,4 +21,5 @@
             </div>
         </div>
     </div>
+    <p class="light-text" ng-show="isSearchResultEmpty()">Keine Ergebnisse gefunden!</p>
 </div>

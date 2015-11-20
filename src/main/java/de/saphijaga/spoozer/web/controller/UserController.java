@@ -5,6 +5,7 @@ import de.saphijaga.spoozer.web.details.UserDetails;
 import de.saphijaga.spoozer.web.domain.response.GetUserDetailsResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SendToUser;
@@ -27,7 +28,7 @@ public class UserController {
 
     @MessageMapping("/saveUserDetails")
     @SendToUser("/setUserDetails")
-    public GetUserDetailsResponse saveUserDetails(UserDetails user) {
+    public GetUserDetailsResponse saveUserDetails(@Payload UserDetails user) {
         // TODO save UserDetails
         return new GetUserDetailsResponse(user);
     }

@@ -5,11 +5,7 @@
                 <div class="panel" data-equalizer-watch="profile-overview">
                     <h4>Profil:</h4>
                     <table>
-                        <tr ng-show="userDetails.id">
-                            <th>ID:</th>
-                            <td>{{userDetails.id}}</td>
-                        </tr>
-                        <tr ng-show="userDetails.username">
+                        <tr>
                             <th>Username:</th>
                             <td>{{userDetails.username}}</td>
                         </tr>
@@ -17,15 +13,19 @@
                             <th>Passwort:</th>
                             <td>********</td>
                         </tr>
-                        <tr ng-show="userDetails.name">
+                        <tr>
                             <th>Name:</th>
                             <td>{{userDetails.name}}</td>
                         </tr>
-                        <tr ng-show="userDetails.email">
+                        <tr>
                             <th>E-Mail:</th>
                             <td>{{userDetails.email}}</td>
                         </tr>
                     </table>
+                    <ul class="button-group even-2">
+                        <li><button class="button spoozer">Bearbeiten</button></li>
+                        <li><button class="button spoozer">Passwort ändern</button></li>
+                    </ul>
                 </div>
             </div>
             <div class="medium-6 columns">
@@ -39,7 +39,7 @@
             </div>
         </div>
     </tab>
-    <tab heading="Profil Bearbeiten">
+    <tab heading="Profil bearbeiten">
         <table>
             <tr>
                 <th>Username:</th>
@@ -62,7 +62,7 @@
         <accordion close-others="true">
             <accordion-group>
                 <accordion-heading>
-                    <img class="accordion-header" src="/img/spotify.png"/>
+                    <img class="accordion-header" src="img/spotify.png"/>
                 </accordion-heading>
                 <a class="button round spotify" target="_blank" href="/spotify/login" ng-hide="userAccounts.spotify">Anmelden</a>
                 <div ng-show="userAccounts.spotify">
@@ -87,7 +87,7 @@
             </accordion-group>
             <accordion-group>
                 <accordion-heading>
-                    <img class="accordion-header" src="/img/soundcloud.png"/>
+                    <img class="accordion-header" src="img/soundcloud.png"/>
                 </accordion-heading>
                 Soundcloud is comming soon...
             </accordion-group>
