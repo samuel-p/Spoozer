@@ -182,8 +182,8 @@ ul.icon-bar li.spoozer * {
     max-width: 100%;
 }
 
-.grey {
-    background-color: #888;
+.gray {
+    background-color: #888 !important;
 }
 
 .range-slider-handle:focus,
@@ -205,11 +205,12 @@ ul.icon-bar li.spoozer * {
     font-size: 12pt;
     margin: 20px 30px;
     line-height: 27px;
+    overflow: hidden;
 }
 
 .player .track-time-progress {
-    margin: 20px 15px 20px 30px;
-    height: 35px;
+    margin: 25px 15px 25px 30px;
+    height: 25px;
 }
 
 .player .track-time-text {

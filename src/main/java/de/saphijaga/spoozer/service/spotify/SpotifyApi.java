@@ -169,6 +169,8 @@ public class SpotifyApi implements Api {
         trackDetails.setInterpret(String.join(", ", artists));
         trackDetails.setAlbum(track.getAlbum().getName());
         trackDetails.setCoverUrl(track.getAlbum().getImages().stream().findAny().map(SpotifyImageResponse::getUrl).orElse(null));
+        trackDetails.setUrl(track.getPreviewUrl());
+        trackDetails.setExternalUrl(track.getUri());
         return trackDetails;
     }
 }

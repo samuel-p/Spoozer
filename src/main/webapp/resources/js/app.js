@@ -1,4 +1,4 @@
-var app = angular.module('spoozerApp', ['ngRoute', 'ngWs', 'mm.foundation', 'ngAnimate', 'ngTouch']);
+var app = angular.module('spoozerApp', ['ngRoute', 'ngWs', 'mm.foundation', 'ngAnimate', 'ngTouch', 'ngPlayer']);
 app.config(function ($routeProvider) {
     $routeProvider.
         when('/dashboard', {
@@ -87,25 +87,24 @@ app.run(function ($rootScope, $window, $location, $ws) {
     };
     $rootScope.hideLoadingView();
 });
-app.directive('preventclickpagination', function () {
-    return function (scope, element) {
-        element.bind('click touchend', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            element[0].focus();
-        });
+app.filter('timeFromMillisFilter', function () {
+    return function (value) {
+        var seconds = Math.floor(value / 1000) % 60;
+        var minutes = Math.floor(value / 1000 / 60);
+        return minutes + ':' + pad(seconds);
     };
 });
-app.directive('fullheight', function ($window) {
-    return function (scope, element) {
-        var changeHeight = function () {
-            if (!Foundation.utils.is_small_only()) {
-                $('.off-canvas-wrap').foundation('offcanvas', 'hide', 'move-right');
-            }
-            var height = $window.innerHeight - $('.tab-bar').outerHeight();
-            element.css('height', height + 'px');
-        };
-        changeHeight();
-        angular.element($window).bind('resize', changeHeight);
-    }
+app.filter('timeFromSecondsFilter', function () {
+    return function (value) {
+        var seconds = Math.floor(value) % 60;
+        var minutes = Math.floor(value / 60);
+        return minutes + ':' + pad(seconds);
+    };
 });
+
+function pad(num) {
+    if (num < 10) {
+        return '0' + num;
+    }
+    return num;
+}
