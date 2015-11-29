@@ -22,9 +22,13 @@ app.config(function ($routeProvider) {
 });
 app.run(function ($rootScope, $window, $location, $ws) {
     $rootScope.$on('$routeChangeSuccess', function (next, current) {
+        $rootScope.hideLoadingView();
         $rootScope.$applyAsync(function () {
             $(document).foundation('reflow');
         });
+    });
+    $rootScope.$on('$routeChangeStart', function (next, current) {
+        $rootScope.showLoadingView();
     });
 
     $ws.setOnDisconnected(function () {
@@ -86,6 +90,20 @@ app.run(function ($rootScope, $window, $location, $ws) {
         }
     };
     $rootScope.hideLoadingView();
+    function checkOrientaion() {
+        var orientaion = 'landscape';
+        if ($window.innerHeight > $window.innerWidth) {
+            orientaion = 'portrait';
+        }
+        if ($window.orientation != orientaion) {
+            $window.orientation = orientaion;
+            $rootScope.orientation = orientaion;
+            $window.dispatchEvent(new Event('orientationchange'));
+        }
+    }
+
+    angular.element($window).bind('resize', checkOrientaion);
+    checkOrientaion();
 });
 app.filter('timeFromMillisFilter', function () {
     return function (value) {

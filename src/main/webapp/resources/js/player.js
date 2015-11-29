@@ -51,7 +51,7 @@ angular.module('ngPlayer', []).service('$player', [function () {
             onplay: function () {
                 self.setRunning(true);
                 self.showPlayerView();
-                self.scope.update(track);
+                self.scope.update(self.get());
             },
             onpause: function () {
                 self.setRunning(false);
@@ -94,7 +94,6 @@ angular.module('ngPlayer', []).service('$player', [function () {
 
     this.setVolume = function (value) {
         Howler.volume(value);
-        //this.playing.volume(value);
     };
 
     this.get = function () {
@@ -103,7 +102,7 @@ angular.module('ngPlayer', []).service('$player', [function () {
         }
         var track = this.queue[this.index];
         return {
-            trackTitle: track.title,
+            track: track,
             trackPosition: this.playing.pos(),
             trackLength: this.playing._duration,
             volume: this.playing.volume()

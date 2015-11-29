@@ -3,7 +3,12 @@
 <body>
 <th:block th:fragment="main">
     <div class="large-3 medium-4 small-12 columns">
-        <span class="label spoozer track-info radius ">{{player.trackTitle}}</span>
+        <img class="track-cover hide-for-small-only" ng-src="{{player.track.coverUrl}}"/>
+
+        <div class="label track-info spoozer radius" ng-click="(shouldOpenSmallPlayer() ? openPlayer() : noop())"
+             ng-class="{'cursor-hand': shouldOpenSmallPlayer()}">
+            {{player.track.title}}
+        </div>
     </div>
     <div class="large-2 hide-for-medium-only hide-for-small-only columns">
         <div class="progress track-time-progress radius">
@@ -16,12 +21,17 @@
         </div>
     </div>
     <div class="large-3 medium-4 hide-for-small-only columns text-center">
-        <ul class="button-group round player-control">
-            <li><button ng-click="previousTrack()" class="button spoozer small"><span class="fi-previous"></span></button>
+        <ul class="button-group radius player-control">
+            <li>
+                <button ng-click="previousTrack()" class="button spoozer small"><span class="fi-previous"></span>
+                </button>
             </li>
-            <li><button ng-click="(isPlaying() ? pauseTrack() : resumeTrack())" class="button spoozer small"><span ng-class="(isPlaying() ? 'fi-pause' : 'fi-play')"></span></button>
+            <li>
+                <button ng-click="(isPlaying() ? pauseTrack() : resumeTrack())" class="button spoozer small"><span
+                        ng-class="(isPlaying() ? 'fi-pause' : 'fi-play')"></span></button>
             </li>
-            <li><button ng-click="nextTrack()" class="button spoozer small"><span class="fi-next"></span></button>
+            <li>
+                <button ng-click="nextTrack()" class="button spoozer small"><span class="fi-next"></span></button>
             </li>
         </ul>
     </div>
@@ -31,7 +41,21 @@
             <span class="range-slider-active-segment spoozer"></span>
         </div>
     </div>
-    <div class="large-1 medium-1 hide-for-small-only"></div>
+    <div class="large-1 medium-1 hide-for-small-only columns">
+        <a class="open-player show-for-medium-only" ng-click="(shouldOpenMediumPlayer() ? openPlayer() : noop())">
+            <span></span>
+        </a>
+    </div>
+    <script type="text/ng-template" id="PlayerModalContent.html">
+        <h3>Player</h3>
+        <div ng-show="orientation == 'landscape'">
+            <p>Landscape</p>
+        </div>
+        <div ng-show="orientation == 'portrait'">
+            <p>Portrait</p>
+        </div>
+        <a class="close-reveal-modal" ng-click="cancel()">&#215;</a>
+    </script>
 </th:block>
 </body>
 

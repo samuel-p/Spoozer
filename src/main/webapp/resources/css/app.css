@@ -208,6 +208,12 @@ ul.icon-bar li.spoozer * {
     overflow: hidden;
 }
 
+.player .track-cover {
+    float: left;
+    height: 55px;
+    margin: 10px;
+}
+
 .player .track-time-progress {
     margin: 25px 15px 25px 30px;
     height: 25px;
@@ -228,6 +234,31 @@ ul.icon-bar li.spoozer * {
 
 .player .volume-slider {
     margin: 30px auto;
+}
+
+.player .open-player {
+    color: #FFF;
+    display: block;
+    height: 2.8125rem;
+    padding: 0px;
+    position: relative;
+    text-indent: 2.1875rem;
+    transform: translate3d(0px, 0px, 0px);
+    width: 2.8125rem;
+    margin: 1rem;
+    float: right;
+}
+
+.player .open-player span::after {
+    content: "";
+    display: block;
+    height: 0px;
+    position: absolute;
+    top: 50%;
+    margin-top: -0.5rem;
+    left: 0.90625rem;
+    box-shadow: 0px 0px 0px 1px #FFF, 0px 7px 0px 1px #FFF, 0px 14px 0px 1px #FFF;
+    width: 1rem;
 }
 
 .tabs {
@@ -257,7 +288,6 @@ ul.icon-bar li.spoozer * {
 .tabs-content {
     margin-bottom: 1rem;
     width: 100%;
-    height: 200px;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.3);
     margin-top: 1rem;
@@ -334,5 +364,101 @@ ul.icon-bar li.spoozer * {
 }
 
 .light-text {
+    color: #fff;
+}
+
+.fill {
+    width: 100%;
+    max-width: inherit;
+}
+
+ul.list {
+    list-style: none;
+    margin: 0 0 1rem;
+    background: #ddd;
+    border: 1px solid #999;
+}
+
+ul.list.radius {
+    border-radius: 3px;
+}
+
+ul.list li {
+    border-bottom: 1px solid #777;
+    /*padding: 10px;*/
+    list-style: none;
+}
+
+ul.list li:last-child {
+    border-bottom: none;
+}
+
+ul.list li:hover {
+    background-color: #ccc;
+    /*padding: 10px;*/
+}
+
+ul.list li > a {
+    display: block;
+    padding: 10px;
+    color: #000;
+}
+
+/* Container DIV - automatically generated */
+.simply-scroll-container {
+    position: relative;
+}
+
+/* Clip DIV - automatically generated */
+.simply-scroll-clip {
+    position: relative;
+    overflow: hidden;
+}
+
+/* UL/OL/DIV - the element that simplyScroll is inited on
+Class name automatically added to element */
+.simply-scroll-list {
+    /*overflow: hidden;*/
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.simply-scroll-list li {
+    padding: 0;
+    margin: 0 50px 0 0;
+    list-style: none;
+    float: left;
+}
+
+img.grayscale {
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+
+.panel .to-bottom {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    right: 1rem;
+}
+
+.cursor-hand {
+    cursor: pointer;
+}
+
+.reveal-modal {
+    background-color: #333;
+    border: 1px solid #aaa;
+    -webkit-box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.4);
+    -moz-box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.4);
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.4);
+    color: #fff;
+}
+
+.reveal-modal h3 {
     color: #fff;
 }
