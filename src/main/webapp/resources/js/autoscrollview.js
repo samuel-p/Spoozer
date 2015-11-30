@@ -28,12 +28,14 @@ function AutoScrollView(view, text) {
     }
 
     function fill() {
-        while (innerView.outerWidth(true) < outerView.innerWidth() * 2) {
+        var count = 0;
+        while (innerView.outerWidth(true) < outerView.innerWidth() * 2 && count < 100) {
             innerView.append(content);
+            count++;
         }
     }
 
-    $(window).resize(function() {
+    $(window).resize(function () {
         setTimeout(function () {
             fill();
         }, 0);

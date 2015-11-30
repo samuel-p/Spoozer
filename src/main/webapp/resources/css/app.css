@@ -261,6 +261,53 @@ ul.icon-bar li.spoozer * {
     width: 1rem;
 }
 
+.modal-player .track-info {
+    display: block;
+    font-size: 12pt;
+    line-height: 27px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.modal-player .player-landscape {
+    display: block;
+    margin-left: 220px;
+}
+
+.modal-player .track-cover.landscape {
+    float: left;
+    width: 200px;
+}
+
+.modal-player .track-cover.portrait {
+    display: block;
+    height: 200px;
+    margin: 0 auto 10px;
+}
+
+.modal-player .track-time-text {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.modal-player .player-landscape .track-time-text {
+    text-align: left;
+}
+
+.modal-player .player-control {
+    height: 48px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.modal-player .volume-slider {
+    margin: 0 0 10px;
+}
+
+.modal-player .clearfix.landscape {
+    margin-bottom: 10px;
+}
+
 .tabs {
     background-color: #222;
 }
@@ -402,33 +449,6 @@ ul.list li > a {
     display: block;
     padding: 10px;
     color: #000;
-}
-
-/* Container DIV - automatically generated */
-.simply-scroll-container {
-    position: relative;
-}
-
-/* Clip DIV - automatically generated */
-.simply-scroll-clip {
-    position: relative;
-    overflow: hidden;
-}
-
-/* UL/OL/DIV - the element that simplyScroll is inited on
-Class name automatically added to element */
-.simply-scroll-list {
-    /*overflow: hidden;*/
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-.simply-scroll-list li {
-    padding: 0;
-    margin: 0 50px 0 0;
-    list-style: none;
-    float: left;
 }
 
 img.grayscale {

@@ -1,10 +1,16 @@
 angular.module('ngPlayer', []).service('$player', [function () {
-    this.scope = angular.element($('.player')).scope();
+    this.listeners = {
+        'change': [],
+        'update': [],
+        'start': [],
+        'stop': []
+    };
     this.queue = [];
     this.index = 0;
     this.playing = null;
     this.running = null;
     this.loop = false;
+    this.volume = 1;
 
     this.play = function (playlist) {
         this.queue = playlist.tracks;
@@ -47,11 +53,14 @@ angular.module('ngPlayer', []).service('$player', [function () {
         this.playing = new Howl({
             urls: [track.url],
             buffer: true,
+            volume: this.volume,
             format: 'mp3',
             onplay: function () {
+                if (this.running == null) {
+                    self.firePlayerEvent('start');
+                }
                 self.setRunning(true);
-                self.showPlayerView();
-                self.scope.update(self.get());
+                self.firePlayerEvent('change');
             },
             onpause: function () {
                 self.setRunning(false);
@@ -59,7 +68,7 @@ angular.module('ngPlayer', []).service('$player', [function () {
             onend: function () {
                 self.setRunning(false);
                 if (self.index == self.queue.length - 1 && !self.loop) {
-                    self.hidePlayerView();
+                    self.firePlayerEvent('stop');
                 } else {
                     self.next();
                 }
@@ -68,11 +77,26 @@ angular.module('ngPlayer', []).service('$player', [function () {
         this.playing.play();
     };
 
-    this.setRunning = function(playing) {
+    this.bind = function (event, listener) {
+        if (event in this.listeners) {
+            this.listeners[event].push(listener);
+        }
+    };
+
+    this.unbind = function (event, listener) {
+        if (event in this.listeners) {
+            var index = this.listeners[event].indexOf(listener);
+            if (index > -1) {
+                this.listeners[event].splice(index, 1);
+            }
+        }
+    };
+
+    this.setRunning = function (playing) {
         if (playing) {
             var self = this;
-            this.running = setInterval(function() {
-                self.scope.updateBuffer(self.get());
+            this.running = setInterval(function () {
+                self.firePlayerEvent('update');
             }, 100);
         } else {
             clearInterval(this.running);
@@ -80,12 +104,13 @@ angular.module('ngPlayer', []).service('$player', [function () {
         }
     };
 
-    this.showPlayerView = function () {
-        this.scope.show();
-    };
-
-    this.hidePlayerView = function () {
-        this.scope.hide();
+    this.firePlayerEvent = function (event) {
+        if (event in this.listeners) {
+            var self = this;
+            this.listeners[event].forEach(function (listener) {
+                listener.call(self, self.get());
+            });
+        }
     };
 
     this.setPosition = function (value) {
@@ -93,7 +118,9 @@ angular.module('ngPlayer', []).service('$player', [function () {
     };
 
     this.setVolume = function (value) {
-        Howler.volume(value);
+        this.volume = value;
+        this.playing.volume(value);
+        this.firePlayerEvent('change');
     };
 
     this.get = function () {

@@ -18,10 +18,9 @@ function PlayerSlider(slider) {
 
     this.set = function (value) {
         changeable = false;
-        slider.attr('data-slider', value);
-        slider.foundation('slider', 'reflow');
+        slider.foundation('slider', 'set_value', value);
         setTimeout(function () {
             changeable = true;
-        }, 10);
+        }, 20);
     };
 }
