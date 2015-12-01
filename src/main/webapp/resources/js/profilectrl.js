@@ -1,4 +1,21 @@
 app.controller('ProfileCtrl', function ($ws, $scope, $modal, $window, $rootScope) {
+    $scope.tabs = {
+        overview: {
+            active: true
+        },
+        editProfile: {
+            active: false
+        },
+        changePassword: {
+            active: false
+        },
+        accounts: {
+            active: false
+        },
+        settings: {
+            active: false
+        }
+    };
     $scope.edit = $rootScope.userDetails;
 
     $scope.spotifyLogout = function () {
@@ -7,7 +24,7 @@ app.controller('ProfileCtrl', function ($ws, $scope, $modal, $window, $rootScope
 
     $scope.areUserAccountsEmpty = function () {
         return !angular.isDefined($rootScope.userAccounts) || Object.keys($rootScope.userAccounts).length == 0;
-    }
+    };
 
     var changeHeight = function () {
         var element = $('.tabs-content');
@@ -20,31 +37,26 @@ app.controller('ProfileCtrl', function ($ws, $scope, $modal, $window, $rootScope
     };
     $scope.$applyAsync(function () {
         changeHeight();
-        angular.element($window).bind('resize', changeHeight);
+        $('.view').bind('DOMSubtreeModified', changeHeight);
     });
 
     $scope.saveUserDetails = function() {
         $ws.send('/saveUserDetails', $scope.edit);
-    }
+    };
 
     $ws.subscribe("/getUserSave", function (payload, headers, res) {
         $rootScope.$applyAsync(function () {
-            switchToOverview();
+            $scope.tabs.overview.active = true;
         });
     });
 
-    var switchToOverview = function() {
-        $scope.active = {};
-        $scope.active['tabs.overview.active'] = true;
-    }
-
     $scope.changePassword = function(){
         $ws.send("/changePassword", $scope.edit);
-    }
+    };
 
     $ws.subscribe("/getPasswordChange", function (payload, headers, res) {
         $rootScope.$applyAsync(function () {
-            switchToOverview();
+            $scope.tabs.overview.active = true;
         });
     });
 });

@@ -34,6 +34,6 @@ public class MongoConfig {
 
     @Bean
     public Mongo mongo() throws Exception {
-        return new MongoClient("spoozer.de");
+        return new MongoClient("localhost");
     }
 }
