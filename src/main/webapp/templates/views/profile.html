@@ -1,4 +1,4 @@
-<tabset>
+<tabset xmlns:th="http://www.thymeleaf.org">
     <tab heading="Übersicht" active="tabs.overview.active">
         <div class="row fill" data-equalizer="profile-overview">
             <div class="medium-6 columns">
@@ -40,24 +40,40 @@
             </div>
         </div>
     </tab>
-    <tab heading="Profil bearbeiten" active="tabs.editProfile.active">
-        <table>
-            <tr>
-                <th>Username:</th>
-                <td><input ng-model="edit.username"/></td>
-            </tr>
-            <tr>
-                <th>Name:</th>
-                <td><input ng-model="edit.name"/></td>
-            </tr>
-            <tr>
-                <th>E-Mail:</th>
-                <td><input ng-model="edit.email"/></td>
-            </tr>
-        </table>
+    <tab heading="Profil Bearbeiten" active="tabs.editProfile.active">
+        <form ng-submit="saveUserDetails()">
+            <fieldset>
+                <table>
+                    <tr>
+                        <th>Username:</th>
+                        <td><input ng-model="edit.username"/></td>
+                    </tr>
+                    <tr>
+                        <th>Name:</th>
+                        <td><input ng-model="edit.name"/></td>
+                    </tr>
+                    <tr>
+                        <th>E-Mail:</th>
+                        <td><input ng-model="edit.email"/></td>
+                    </tr>
+                </table>
+                <button type="submit" class="button spoozer">Speichern</button>
+            </fieldset>
+        </form>
     </tab>
     <tab heading="Passwort ändern" active="tabs.changePassword.active">
-        Password settings comming soon...
+        <form ng-submit="changePassword()">
+            <fieldset>
+                <h3>Passwort ändern</h3>
+                <label for="password">Altes Passwort</label>
+                <input type="password" id="oldpassword" name="oldpassword" ng-model="edit.oldpassword" required="required"/>
+                <label for="password">Neues Passwort</label>
+                <input type="password" id="password" name="password" ng-model="edit.password" required="required"/>
+                <label for="password2">Neues Passwort wiederholden</label>
+                <input type="password" id="password2" name="password2" ng-model="edit.password2" required="required"/>
+                <button type="submit" class="button spoozer">Speichern</button>
+            </fieldset>
+        </form>
     </tab>
     <tab heading="Accounts" active="tabs.accounts.active">
         <accordion close-others="true">

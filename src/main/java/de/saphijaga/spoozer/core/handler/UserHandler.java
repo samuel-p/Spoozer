@@ -4,7 +4,9 @@ import de.saphijaga.spoozer.core.service.UserService;
 import de.saphijaga.spoozer.persistence.domain.User;
 import de.saphijaga.spoozer.persistence.service.UserPersistenceService;
 import de.saphijaga.spoozer.web.details.UserDetails;
+import de.saphijaga.spoozer.web.domain.request.ChangePasswordRequest;
 import de.saphijaga.spoozer.web.domain.request.RegisterUserRequest;
+import de.saphijaga.spoozer.web.domain.request.SaveUserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -63,4 +65,36 @@ public class UserHandler implements UserService {
         details.setName(user.get().getName());
         return of(details);
     }
+
+
+    @Override
+    public Optional<UserDetails> saveUserDetails(UserDetails userDetails, SaveUserRequest request) {
+        Optional<User> user = userService.getUser(userDetails.getId());
+        if (user.isPresent()) {
+            updateUser(user.get(), request);
+        }
+        Optional<User> userUpdate = userService.saveUser(user.get());
+
+        return toUserDetails(userUpdate);
+    }
+
+    @Override
+    public Optional<UserDetails> changeUserPassword(UserDetails userDetails, ChangePasswordRequest changePasswordRequest) {
+        Optional<User> user = userService.getUser(userDetails.getId());
+        Optional<User> userUpdate = userService.getUser(userDetails.getId());
+        if (user.isPresent()) {
+            if (passwordEncoder.matches(changePasswordRequest.getOldpassword(), user.get().getPassword())){
+                user.get().setPassword(passwordEncoder.encode(changePasswordRequest.getPassword()));
+                userUpdate = userService.saveUser(user.get());
+            }
+        }
+        return toUserDetails(userUpdate);
+    }
+
+    private void updateUser(User user, SaveUserRequest request) {
+        user.setName(request.getName());
+        user.setEmail(request.getEmail());
+        user.setUsername(request.getUsername());
+    }
+
 }
