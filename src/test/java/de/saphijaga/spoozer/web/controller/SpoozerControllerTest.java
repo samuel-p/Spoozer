@@ -6,7 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static de.saphijaga.spoozer.web.controller.MockMvcIntegration.viewResolver;
+import static de.saphijaga.spoozer.web.controller.BaseIntegration.viewResolver;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
