@@ -16,6 +16,9 @@ public class SpotifyTrackResponse {
     private List<SpotifyArtistResponse> artists;
     @JsonProperty("duration_ms")
     private long durationInMillis;
+    @JsonProperty("preview_url")
+    private String previewUrl;
+    private String uri;
 
     public String getId() {
         return id;
@@ -55,5 +58,21 @@ public class SpotifyTrackResponse {
 
     public void setDurationInMillis(long durationInMillis) {
         this.durationInMillis = durationInMillis;
+    }
+
+    public String getPreviewUrl() {
+        return previewUrl;
+    }
+
+    public void setPreviewUrl(String previewUrl) {
+        this.previewUrl = previewUrl;
+    }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 }

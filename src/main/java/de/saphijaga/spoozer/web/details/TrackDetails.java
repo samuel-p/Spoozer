@@ -13,6 +13,8 @@ public class TrackDetails {
     private String interpret;
     private String album;
     private String coverUrl;
+    private String externalUrl;
+    private String url;
 
     public StreamingService getService() {
         return service;
@@ -68,5 +70,21 @@ public class TrackDetails {
 
     public void setCoverUrl(String coverUrl) {
         this.coverUrl = coverUrl;
+    }
+
+    public String getExternalUrl() {
+        return externalUrl;
+    }
+
+    public void setExternalUrl(String externalUrl) {
+        this.externalUrl = externalUrl;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

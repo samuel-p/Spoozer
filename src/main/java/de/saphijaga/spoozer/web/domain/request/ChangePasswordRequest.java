@@ -1,19 +1,17 @@
 package de.saphijaga.spoozer.web.domain.request;
 
-import de.saphijaga.spoozer.web.authentication.*;
+import de.saphijaga.spoozer.web.authentication.ComplexPassword;
+import de.saphijaga.spoozer.web.authentication.PasswordChangeMatches;
+import de.saphijaga.spoozer.web.authentication.PasswordMatches;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
 
 /**
- * Created by samuel on 15.10.15.
+ * Created by xce35l5 on 29.11.2015.
  */
-@PasswordMatches(message = "Die Passwörter stimmen nicht überein")
-public class RegisterUserRequest {
-    @NotNull
-    @NotEmpty
-    @UsernameNotInUse(message = "Dieser Benutzername wird bereits verwendet")
-    private String username;
+@PasswordChangeMatches(message = "Die Passwörter stimmen nicht überein")
+public class ChangePasswordRequest {
     @NotNull
     @NotEmpty
     @ComplexPassword(message = "Das Passwort muss Groß- und Keinbuchstaben, sowie Zahlen enthalten")
@@ -23,16 +21,7 @@ public class RegisterUserRequest {
     private String password2;
     @NotNull
     @NotEmpty
-    @ValidEmail
-    private String email;
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
+    private String oldpassword;
 
     public String getPassword() {
         return password;
@@ -50,11 +39,11 @@ public class RegisterUserRequest {
         this.password2 = password2;
     }
 
-    public String getEmail() {
-        return email;
+    public String getOldpassword() {
+        return oldpassword;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setOldpassword(String oldpassword) {
+        this.oldpassword = oldpassword;
     }
 }

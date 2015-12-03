@@ -20,7 +20,7 @@
             <section class="main-section">
                 <div class="main-content" fullheight="">
                     <th:block th:replace="template/menu :: top-large"></th:block>
-                    <div class="fixed-content">
+                    <div class="fixed-content" fitplayerheight="">
                         <div class="large-1 medium-2 hide-for-small-only columns sidebar spoozer-background">
                             <th:block th:replace="template/menu :: left-large"></th:block>
                         </div>
@@ -29,7 +29,7 @@
                             <div class="loading-view"><img src="img/load.gif"/></div>
                         </div>
                     </div>
-                    <div class="row player spoozer-background">
+                    <div class="row player spoozer-background" ng-controller="PlayerCtrl">
                         <th:block th:replace="template/player :: main"></th:block>
                     </div>
                 </div>

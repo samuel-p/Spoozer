@@ -4,17 +4,15 @@
         <div ng-repeat="track in result">
             <div class="small-12 small-centered result-background">
                 <article class="result">
-
                     <div class="result-img">
                         <img ng-src="{{track.coverUrl}}" height="60" width="60"/>
                     </div>
-
                     <div class="result-desc">
                         <h4 class="result-desc-song">{{track.interpret}} - {{track.title}}</h4>
 
                         <p class="result-desc-dur"><span class="event-desc-time"></span>{{parseTime(track.durationInMillis)}}
                         </p>
-                        <a href="" class="spoozer button">Abspielen</a>
+                        <button ng-click="playTrack(track)" class="spoozer button">Abspielen</button>
                     </div>
 
                 </article>
