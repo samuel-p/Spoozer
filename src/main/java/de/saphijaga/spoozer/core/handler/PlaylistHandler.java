@@ -14,8 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
+import static java.util.Collections.emptyList;
 
 /**
  * Created by xce35l5 on 04.12.2015.
@@ -32,8 +35,7 @@ public class PlaylistHandler implements PlaylistService {
     @Override
     public void addPlaylist(UserDetails userDetails, AddPlaylistRequest request) {
         Optional<User> user = userService.getUser(userDetails.getId());
-
-        if(user.isPresent()){
+        if (user.isPresent()) {
             Playlist playlist = toPlaylist(request);
             Optional<Playlist> savedList = playlistService.savePlaylist(playlist);
             user.get().getPlaylists().add(savedList.get());
@@ -63,7 +65,7 @@ public class PlaylistHandler implements PlaylistService {
         plist.setTracks(tracks);
         playlistService.savePlaylist(plist);
         saveUserPlaylist(user, plist);
-   }
+    }
 
     private void saveUserPlaylist(UserDetails userDetails, Playlist plist) {
         User user = userService.getUser(userDetails.getId()).get();
@@ -81,12 +83,12 @@ public class PlaylistHandler implements PlaylistService {
         User user = userService.getUser(userDetails.getId()).get();
         Playlist playlist = playlistService.getPlaylist(playlistDetails.getId()).get();
         Playlist dellist = null;
-        for(Playlist list : user.getPlaylists()){
-            if(list.getId().equals(playlist.getId())){
+        for (Playlist list : user.getPlaylists()) {
+            if (list.getId().equals(playlist.getId())) {
                 dellist = list;
             }
         }
-        if(dellist != null){
+        if (dellist != null) {
             user.getPlaylists().remove(dellist);
         }
         userService.saveUser(user);
@@ -101,12 +103,11 @@ public class PlaylistHandler implements PlaylistService {
     }
 
     @Override
-    public List<PlaylistDetails> getPlaylists(UserDetails user) {
-        List<PlaylistDetails> detailslist = new ArrayList<>();
-        for (Playlist playlist : userService.getUser(user.getId()).get().getPlaylists()){
-            detailslist.add(toPlaylistDetails(playlist));
-        }
-        return detailslist;
+    public List<PlaylistDetails> getPlaylists(UserDetails userDetails) {
+        Optional<User> user = userService.getUser(userDetails.getId());
+        List<PlaylistDetails> detailsList = new ArrayList<>();
+        user.map(User::getPlaylists).orElse(emptyList()).forEach(playlist -> detailsList.add(toPlaylistDetails(playlist)));
+        return detailsList;
     }
 
     private PlaylistDetails toPlaylistDetails(Playlist playlist) {

@@ -30,44 +30,36 @@ public class PlaylistController {
     private PlaylistService playlistService;
 
     @MessageMapping("/addPlaylist")
-    @SendToUser("/getPlaylists")
-    public GetUserDetailsResponse addPlaylist(UserDetails user, @Payload @Valid AddPlaylistRequest addPlaylistRequest){
-        System.out.println(addPlaylistRequest.getName());
-        if(userService.getUserDetails(user.getId()).isPresent()) {
-            playlistService.addPlaylist(user, addPlaylistRequest);
-            System.out.println("playlist added");
-        }
-        return new GetUserDetailsResponse(user);
+    @SendToUser("/setPlaylists")
+    public GetPlaylistsResponse addPlaylist(UserDetails user, @Payload @Valid AddPlaylistRequest addPlaylistRequest) {
+        playlistService.addPlaylist(user, addPlaylistRequest);
+        return getPlaylists(user);
+    }
+
+    @MessageMapping("/getPlaylists")
+    @SendToUser("/setPlaylists")
+    public GetPlaylistsResponse getPlaylists(UserDetails user) {
+        return new GetPlaylistsResponse(playlistService.getPlaylists(user));
+    }
+
+    @MessageMapping("/deletePlaylist")
+    @SendToUser("/setPlaylists")
+    public GetPlaylistsResponse deletePlaylist(UserDetails user, PlaylistDetails playlistDetails) {
+        playlistService.deletePlaylist(user, playlistDetails);
+        return getPlaylists(user);
     }
 
     @MessageMapping("/addSongToPlaylist")
     @SendToUser("/addedSongToPlaylist")
-    public void addSongToPlaylist(UserDetails user, SongRequest request){
-        if(userService.getUserDetails(user.getId()).isPresent()){
+    public void addSongToPlaylist(UserDetails user, SongRequest request) {
+        if (userService.getUserDetails(user.getId()).isPresent()) {
             playlistService.addSongToPlaylist(user, request);
         }
-    }
-    @MessageMapping("/getUserPlaylists")
-    @SendToUser("/getPlaylists")
-    public GetPlaylistsResponse getPlaylists(UserDetails user){
-        if(userService.getUserDetails(user.getId()).isPresent()){
-            GetPlaylistsResponse response = new GetPlaylistsResponse();
-            System.out.println("getting playlists");
-            response.setPlaylists(playlistService.getPlaylists(user));
-            return response;
-        }
-        return new GetPlaylistsResponse();
-    }
-
-    @MessageMapping("/deletePlaylist")
-    @SendToUser("/getPlaylists")
-    public void deletePlaylist(UserDetails user, PlaylistDetails playlistDetails){
-        playlistService.deletePlaylist(user, playlistDetails);
     }
 
     @MessageMapping("/getPlaylist")
     @SendToUser("/playPlaylist")
-    public Playlist getPlaylist(UserDetails user, PlaylistDetails details){
+    public Playlist getPlaylist(UserDetails user, PlaylistDetails details) {
         return playlistService.getPlaylist(user, details);
     }
 }

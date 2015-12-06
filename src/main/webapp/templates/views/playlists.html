@@ -1,15 +1,44 @@
-<div>
-    <p class="light-text" ng-show="isSearchResultEmpty()">Keine Playlists vorhanden!</p>
-    <div ng-repeat="list in playlists">
-        <p class="light-text">{{list.name}} - {{list.trackCount}} Tracks</p>
-        <button class="button spoozer" ng-click="playList(list)">Playlist abspielen</button>
-        <button class="button spoozer" ng-click="deletePlaylist(list)">löschen</button>
+<div class="row fill">
+    <div class="large-6 medium-6 small-12 columns no-padding">
+        <p class="light-text" ng-show="arePlaylistsEmpty()">Keine Playlists vorhanden!</p>
+        <table ng-hide="arePlaylistsEmpty()" class="playlists">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Songs</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="list in playlists | orderBy:'name'" ng-click="showPlaylist(list)">
+                <td>{{list.name}}</td>
+                <td>{{list.trackCount}}</td>
+                <td>
+                    <ul class="button-group radius right">
+                        <li>
+                            <button class="button spoozer small" ng-click="playPlaylist($event, list)"><span
+                                    class="fi-play"></span>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="button spoozer small" ng-click="deletePlaylist($event, list)"><span
+                                    class="fi-trash"></span>
+                            </button>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <form class="add-playlist" ng-submit="addPlaylist()">
+            <div class="row fill">
+                <div ng-show="showAddPlaylistInput" class="large-12 medium-12 small-12">
+                    <input id="add-playlist-input" class="radius" type="text" ng-model="name" placeholder="Name..."/>
+                </div>
+                <div ng-hide="showAddPlaylistInput" class="large-1 medium-1 small-2 left">
+                    <button class="button spoozer tiny radius" ng-click="showAddPlaylist()" type="button"><span class="fi-plus"></span></button>
+                </div>
+            </div>
+        </form>
     </div>
-    <form ng-submit="addPlaylist()">
-        <fieldset>
-            <label for="name">Playlist-Name</label>
-            <input type="text" id="name" name="name" ng-model="name" placeholder="Name..." required="required"/>
-            <button type="submit" class="button spoozer">Playlist hinzufügen</button>
-        </fieldset>
-    </form>
 </div>

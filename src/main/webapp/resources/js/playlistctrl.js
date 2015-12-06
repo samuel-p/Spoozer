@@ -1,35 +1,48 @@
 app.controller('PlaylistCtrl', function ($ws, $scope, $rootScope, $player) {
-    $scope.user = $rootScope.userDetails;
-    console.log("ich heisse marvin");
-    $ws.send('/getUserPlaylists',$rootScope.userDetails);
-    $scope.addPlaylist = function() {
-        $ws.send('/addPlaylist',{name: $scope.name}
-        );
-    };
-    $ws.subscribe("/getPlaylists", function (payload, headers, res) {
-        $scope.$applyAsync(function() {
+    $scope.showLoadingView();
+    $ws.subscribe("/setPlaylists", function (payload, headers, res) {
+        $scope.$applyAsync(function () {
             $scope.hideLoadingView();
             $scope.playlists = payload.playlists;
         });
     });
+    $ws.send('/getPlaylists');
 
-    $scope.arePlaylistsDefined = function() {
-        if (!angular.isDefined($scope.playlists)) {
-            return false;
+    $scope.showAddPlaylist = function () {
+        $scope.showAddPlaylistInput = true;
+        setTimeout(function () {
+            $('#add-playlist-input').focus();
+        }, 20);
+    };
+
+    $scope.addPlaylist = function () {
+        if (angular.isDefined($scope.name)) {
+            $ws.send('/addPlaylist', {
+                name: $scope.name
+            });
         }
-        return $scope.playlists.length == 0;
+        $scope.name = '';
+        $scope.showAddPlaylistInput = false;
+    };
+    $scope.deletePlaylist = function (event, list) {
+        event.stopPropagation();
+        $ws.send('/deletePlaylist', list);
+    };
+    $scope.showPlaylist = function (list) {
+        alert(list.id);
     };
 
-    $scope.deletePlaylist = function(list){
-        $ws.send('/deletePlaylist',list);
+    $scope.arePlaylistsEmpty = function () {
+        return !angular.isDefined($scope.playlists) || $scope.playlists.length == 0;
     };
 
-    $scope.playList = function(list){
-        $ws.send('/getPlaylist',list);
-    }
+    $scope.playPlaylist = function (event, list) {
+        event.stopPropagation();
+        $ws.send('/getPlaylist', list);
+    };
 
     $ws.subscribe("/playPlaylist", function (payload, headers, res) {
-        $scope.$applyAsync(function() {
+        $scope.$applyAsync(function () {
             console.log(payload);
             $player.play(payload.tracks);
         });
