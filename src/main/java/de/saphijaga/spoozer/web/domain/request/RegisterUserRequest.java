@@ -1,6 +1,9 @@
 package de.saphijaga.spoozer.web.domain.request;
 
-import de.saphijaga.spoozer.web.authentication.*;
+import de.saphijaga.spoozer.web.authentication.ComplexPassword;
+import de.saphijaga.spoozer.web.authentication.PasswordMatches;
+import de.saphijaga.spoozer.web.authentication.UsernameNotInUse;
+import de.saphijaga.spoozer.web.authentication.ValidEmail;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;

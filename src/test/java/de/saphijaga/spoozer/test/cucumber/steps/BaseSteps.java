@@ -1,18 +1,19 @@
-package de.saphijaga.spoozer.cucumber.steps;
+package de.saphijaga.spoozer.test.cucumber.steps;
 
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
-import de.saphijaga.spoozer.cucumber.BrowserHolder;
+import de.saphijaga.spoozer.test.cucumber.BrowserHolder;
+import de.saphijaga.spoozer.test.cucumber.SpringBootTest;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static de.saphijaga.spoozer.cucumber.BaseIntegration.TIMEOUT;
-import static de.saphijaga.spoozer.cucumber.BaseIntegration.chromeDriver;
+import static de.saphijaga.spoozer.test.cucumber.BaseIntegration.TIMEOUT;
+import static de.saphijaga.spoozer.test.cucumber.BaseIntegration.chromeDriver;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -20,7 +21,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by samuel on 02.12.15.
  */
-public class BaseSteps {
+public class BaseSteps extends SpringBootTest {
     @Autowired
     private BrowserHolder browser;
 

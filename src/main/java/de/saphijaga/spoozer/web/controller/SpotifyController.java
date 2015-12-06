@@ -1,21 +1,17 @@
 package de.saphijaga.spoozer.web.controller;
 
-import de.saphijaga.spoozer.core.service.AccountService;
 import de.saphijaga.spoozer.service.spotify.Spotify;
+import de.saphijaga.spoozer.core.service.AccountService;
 import de.saphijaga.spoozer.service.StreamingService;
 import de.saphijaga.spoozer.service.spotify.SpotifyApi;
-import de.saphijaga.spoozer.web.authentication.Session;
 import de.saphijaga.spoozer.web.details.AccountDetails;
+import de.saphijaga.spoozer.web.authentication.Session;
 import de.saphijaga.spoozer.web.details.UserDetails;
-import de.saphijaga.spoozer.web.domain.response.SportiyLoginUrlResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;

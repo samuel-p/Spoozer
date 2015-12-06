@@ -1,7 +1,6 @@
 package de.saphijaga.spoozer.web.authentication;
 
 import de.saphijaga.spoozer.core.service.UserService;
-import de.saphijaga.spoozer.persistence.domain.User;
 import de.saphijaga.spoozer.web.details.UserDetails;
 import de.saphijaga.spoozer.web.domain.request.SaveUserRequest;
 import org.springframework.beans.factory.annotation.Autowired;

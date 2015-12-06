@@ -2,8 +2,6 @@ package de.saphijaga.spoozer.service.spotify.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.util.List;
-
 /**
  * Created by samuel on 15.11.15.
  */

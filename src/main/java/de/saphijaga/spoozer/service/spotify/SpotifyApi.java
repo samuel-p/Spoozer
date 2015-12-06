@@ -1,12 +1,12 @@
 package de.saphijaga.spoozer.service.spotify;
 
 import de.saphijaga.spoozer.core.service.AccountAccessService;
+import de.saphijaga.spoozer.service.spotify.response.*;
 import de.saphijaga.spoozer.core.service.AccountService;
 import de.saphijaga.spoozer.service.Api;
 import de.saphijaga.spoozer.service.ApiActions;
 import de.saphijaga.spoozer.service.StreamingService;
 import de.saphijaga.spoozer.service.spotify.request.RefreshSpotifyAccessTokensRequest;
-import de.saphijaga.spoozer.service.spotify.response.*;
 import de.saphijaga.spoozer.service.utils.ApiService;
 import de.saphijaga.spoozer.service.utils.Get;
 import de.saphijaga.spoozer.service.utils.Post;
@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 
-import static de.saphijaga.spoozer.service.spotify.Spotify.*;
 import static java.lang.String.join;
 import static java.util.Collections.emptyList;
 import static org.springframework.util.Base64Utils.encodeToString;
@@ -49,12 +48,12 @@ public class SpotifyApi implements Api {
     }
 
     public String getLoginURL(String serverUrl, String state) throws UnsupportedEncodingException {
-        return LOGIN_URL + "?client_id=" + CLIENT_ID + "&redirect_uri=" + encode(getRedirectUrl(serverUrl), "utf8")
-                + "&scope=" + encode(join(" ", SCOPES), "utf8") + "&state=" + state + "&response_type=code";
+        return Spotify.LOGIN_URL + "?client_id=" + Spotify.CLIENT_ID + "&redirect_uri=" + encode(getRedirectUrl(serverUrl), "utf8")
+                + "&scope=" + encode(String.join(" ", Spotify.SCOPES), "utf8") + "&state=" + state + "&response_type=code";
     }
 
     public String getRedirectUrl(String serverUrl) {
-        return serverUrl + REDIRECT_URL_PATH;
+        return serverUrl + Spotify.REDIRECT_URL_PATH;
     }
 
     public SpotifyAccountDetails login(UserDetails user, String code, String serverUrl) throws IOException {
@@ -108,7 +107,7 @@ public class SpotifyApi implements Api {
     }
 
     private String getApiUrl(ApiActions api) {
-        return API_URL + api.getSpotify();
+        return Spotify.API_URL + api.getSpotify();
     }
 
     @Override

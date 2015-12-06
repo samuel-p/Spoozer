@@ -1,4 +1,4 @@
-package de.saphijaga.spoozer.cucumber;
+package de.saphijaga.spoozer.test.cucumber;
 
 import org.openqa.selenium.WebDriver;
 

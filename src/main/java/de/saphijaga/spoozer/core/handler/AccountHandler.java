@@ -1,10 +1,10 @@
 package de.saphijaga.spoozer.core.handler;
 
-import de.saphijaga.spoozer.core.service.AccountService;
-import de.saphijaga.spoozer.persistence.domain.Account;
 import de.saphijaga.spoozer.persistence.domain.SpotifyAccount;
 import de.saphijaga.spoozer.persistence.domain.User;
 import de.saphijaga.spoozer.persistence.service.AccountPersistenceService;
+import de.saphijaga.spoozer.core.service.AccountService;
+import de.saphijaga.spoozer.persistence.domain.Account;
 import de.saphijaga.spoozer.persistence.service.UserPersistenceService;
 import de.saphijaga.spoozer.service.StreamingService;
 import de.saphijaga.spoozer.web.details.AccountDetails;

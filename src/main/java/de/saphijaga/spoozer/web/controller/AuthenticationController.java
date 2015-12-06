@@ -2,8 +2,8 @@ package de.saphijaga.spoozer.web.controller;
 
 import de.saphijaga.spoozer.core.service.UserService;
 import de.saphijaga.spoozer.web.authentication.PasswordMatches;
-import de.saphijaga.spoozer.web.details.UserDetails;
 import de.saphijaga.spoozer.web.domain.request.RegisterUserRequest;
+import de.saphijaga.spoozer.web.details.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,6 +28,7 @@ import java.util.Optional;
 public class AuthenticationController {
     @Autowired
     private AuthenticationManager authenticationManager;
+
     @Autowired
     private UserService userService;
 

@@ -1,7 +1,6 @@
 package de.saphijaga.spoozer.web.authentication;
 
 import de.saphijaga.spoozer.web.domain.request.ChangePasswordRequest;
-import de.saphijaga.spoozer.web.domain.request.RegisterUserRequest;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
