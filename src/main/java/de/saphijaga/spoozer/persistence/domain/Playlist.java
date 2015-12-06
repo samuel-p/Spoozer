@@ -3,6 +3,7 @@ package de.saphijaga.spoozer.persistence.domain;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,6 +15,10 @@ public class Playlist {
     private String id;
     private String name;
     private List<Track> tracks;
+
+    public Playlist(){
+        tracks = new ArrayList<>();
+    }
 
     public String getId() {
         return id;

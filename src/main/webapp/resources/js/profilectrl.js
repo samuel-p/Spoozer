@@ -44,9 +44,17 @@ app.controller('ProfileCtrl', function ($ws, $scope, $modal, $window, $rootScope
         $ws.send('/saveUserDetails', $scope.edit);
     };
 
-    $ws.subscribe("/getUserSave", function (payload, headers, res) {
+    $ws.subscribe("/savedUserDetails", function (payload, headers, res) {
         $rootScope.$applyAsync(function () {
             $scope.tabs.overview.active = true;
+        });
+    });
+
+    $ws.subscribe("/errorSaveUserDetails", function (payload, headers, res) {
+        $rootScope.$applyAsync(function () {
+            console.log("Errors found");
+            console.log($rootScope.result.get(0));
+            console.log(res.get(0));
         });
     });
 

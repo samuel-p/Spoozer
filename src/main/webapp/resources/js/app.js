@@ -16,6 +16,11 @@ app.config(function ($routeProvider) {
             controller: 'ProfileCtrl',
             caseInsensitiveMatch: true
         }).
+        when('/playlists', {
+            templateUrl: 'views/playlists.html',
+            controller: 'PlaylistCtrl',
+            caseInsensitiveMatch: true
+        }).
         otherwise({
             redirectTo: '/dashboard'
         });

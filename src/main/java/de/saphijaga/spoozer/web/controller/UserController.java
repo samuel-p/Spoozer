@@ -3,7 +3,6 @@ package de.saphijaga.spoozer.web.controller;
 import de.saphijaga.spoozer.core.service.UserService;
 import de.saphijaga.spoozer.web.authentication.PasswordMatches;
 import de.saphijaga.spoozer.web.authentication.UpdateNameNotInUse;
-import de.saphijaga.spoozer.web.authentication.ValidEmail;
 import de.saphijaga.spoozer.web.details.UserDetails;
 import de.saphijaga.spoozer.web.domain.request.ChangePasswordRequest;
 import de.saphijaga.spoozer.web.domain.request.SaveUserRequest;
@@ -11,15 +10,11 @@ import de.saphijaga.spoozer.web.domain.response.GetUserDetailsResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SendToUser;
-import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -33,6 +28,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
+
     @MessageMapping("/getUserDetails")
     @SendToUser("/setUserDetails")
     public GetUserDetailsResponse getUserDetails(UserDetails user) {
@@ -40,20 +38,20 @@ public class UserController {
     }
 
     @MessageMapping("/saveUserDetails")
-    @SendToUser("/getUserSave")
-    public GetUserDetailsResponse saveUserDetails(UserDetails user, @Payload @Valid SaveUserRequest saveUserRequest) {
-        if (user.getId().equals(saveUserRequest.getId()))
-            userService.saveUserDetails(user, saveUserRequest);
-        /*if(result.hasErrors()){
-            Optional<ObjectError> error = result.getAllErrors().stream().filter(e -> e.getCode().equals(UpdateNameNotInUse.class.getSimpleName())).findAny();
+    @SendToUser("/savedUserDetails")
+    public GetUserDetailsResponse saveUserDetails(UserDetails user,@Valid @Payload SaveUserRequest saveUserRequest, BindingResult result) {
+        if(result.hasErrors()){
+            System.out.println("errors found");
+            /*Optional<ObjectError> error = result.getAllErrors().stream().filter(e -> e.getCode().equals(UpdateNameNotInUse.class.getSimpleName())).findAny();
             if (error.isPresent()) {
-                result.addError(new FieldError("user", "username", error.get().getDefaultMessage()));
+                result.addError(new FieldError("user", "nameError", error.get().getDefaultMessage()));
             }
-            error = result.getAllErrors().stream().filter(e -> e.getCode().equals(ValidEmail.class.getSimpleName())).findAny();
-            if (error.isPresent()) {
-                result.addError(new FieldError("user", "email", error.get().getDefaultMessage()));
-            }
-        }*/
+            messagingTemplate.convertAndSendToUser(user.getUsername(), "/errorSaveUserDetails", result.getFieldErrors());*/
+        }else{
+            System.out.println("no errors in input");
+            if (user.getId().equals(saveUserRequest.getId()))
+                userService.saveUserDetails(user, saveUserRequest);
+        }
         return new GetUserDetailsResponse(user);
     }
 

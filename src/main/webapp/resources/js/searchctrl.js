@@ -26,4 +26,10 @@ app.controller('SearchResultCtrl', function ($ws, $scope, $rootScope, $routePara
             tracks: [track]
         });
     };
+    $scope.addToPlaylist = function(track) {
+        $player.play({
+            name: track.title,
+            tracks: [track]
+        });
+    };
 });

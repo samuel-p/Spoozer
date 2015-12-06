@@ -21,6 +21,7 @@ public class SaveUserRequest {
     @ValidEmail
     private String email;
 
+    @NotNull
     private String name;
 
     @NotEmpty
