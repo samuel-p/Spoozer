@@ -27,9 +27,9 @@ app.controller('SearchResultCtrl', function ($ws, $scope, $rootScope, $routePara
         });
     };
     $scope.addToPlaylist = function(track) {
-        $player.play({
-            name: track.title,
-            tracks: [track]
+        $ws.send('/addSongToPlaylist',{
+            playListName: 'asdf',
+            tracks: track
         });
     };
 });

@@ -2,7 +2,9 @@ package de.saphijaga.spoozer.web.controller;
 
 import de.saphijaga.spoozer.core.service.PlaylistService;
 import de.saphijaga.spoozer.core.service.UserService;
+import de.saphijaga.spoozer.persistence.domain.Playlist;
 import de.saphijaga.spoozer.persistence.service.UserPersistenceService;
+import de.saphijaga.spoozer.web.details.PlaylistDetails;
 import de.saphijaga.spoozer.web.details.UserDetails;
 import de.saphijaga.spoozer.web.domain.request.AddPlaylistRequest;
 import de.saphijaga.spoozer.web.domain.request.SongRequest;
@@ -25,13 +27,10 @@ public class PlaylistController {
     private UserService userService;
 
     @Autowired
-    private UserPersistenceService userPersistenceService;
-
-    @Autowired
     private PlaylistService playlistService;
 
     @MessageMapping("/addPlaylist")
-    @SendToUser("/playlistAdded")
+    @SendToUser("/getPlaylists")
     public GetUserDetailsResponse addPlaylist(UserDetails user, @Payload @Valid AddPlaylistRequest addPlaylistRequest){
         System.out.println(addPlaylistRequest.getName());
         if(userService.getUserDetails(user.getId()).isPresent()) {
@@ -45,7 +44,7 @@ public class PlaylistController {
     @SendToUser("/addedSongToPlaylist")
     public void addSongToPlaylist(UserDetails user, SongRequest request){
         if(userService.getUserDetails(user.getId()).isPresent()){
-
+            playlistService.addSongToPlaylist(user, request);
         }
     }
     @MessageMapping("/getUserPlaylists")
@@ -58,5 +57,17 @@ public class PlaylistController {
             return response;
         }
         return new GetPlaylistsResponse();
+    }
+
+    @MessageMapping("/deletePlaylist")
+    @SendToUser("/getPlaylists")
+    public void deletePlaylist(UserDetails user, PlaylistDetails playlistDetails){
+        playlistService.deletePlaylist(user, playlistDetails);
+    }
+
+    @MessageMapping("/getPlaylist")
+    @SendToUser("/playPlaylist")
+    public Playlist getPlaylist(UserDetails user, PlaylistDetails details){
+        return playlistService.getPlaylist(user, details);
     }
 }

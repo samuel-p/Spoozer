@@ -1,8 +1,9 @@
 <div>
     <p class="light-text" ng-show="isSearchResultEmpty()">Keine Playlists vorhanden!</p>
     <div ng-repeat="list in playlists">
-        <p class="light-text">{{list.name}}</p>
-        <button class="button spoozer">löschen</button>
+        <p class="light-text">{{list.name}} - {{list.trackCount}} Tracks</p>
+        <button class="button spoozer" ng-click="playList(list)">Playlist abspielen</button>
+        <button class="button spoozer" ng-click="deletePlaylist(list)">löschen</button>
     </div>
     <form ng-submit="addPlaylist()">
         <fieldset>

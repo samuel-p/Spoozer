@@ -1,4 +1,4 @@
-app.controller('PlaylistCtrl', function ($ws, $scope, $rootScope) {
+app.controller('PlaylistCtrl', function ($ws, $scope, $rootScope, $player) {
     $scope.user = $rootScope.userDetails;
     console.log("ich heisse marvin");
     $ws.send('/getUserPlaylists',$rootScope.userDetails);
@@ -20,9 +20,18 @@ app.controller('PlaylistCtrl', function ($ws, $scope, $rootScope) {
         return $scope.playlists.length == 0;
     };
 
-    $ws.subscribe("/playlistAdded", function(payload, headers, res){
+    $scope.deletePlaylist = function(list){
+        $ws.send('/deletePlaylist',list);
+    };
+
+    $scope.playList = function(list){
+        $ws.send('/getPlaylist',list);
+    }
+
+    $ws.subscribe("/playPlaylist", function (payload, headers, res) {
         $scope.$applyAsync(function() {
-            $ws.send('/getUserPlaylists',$rootScope.userDetails);
+            console.log(payload);
+            $player.play(payload.tracks);
         });
     });
 });

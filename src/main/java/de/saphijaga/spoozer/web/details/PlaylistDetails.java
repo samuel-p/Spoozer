@@ -6,6 +6,7 @@ package de.saphijaga.spoozer.web.details;
 public class PlaylistDetails {
     private String id;
     private String name;
+    private int trackCount;
 
     public String getId() {
         return id;
@@ -21,5 +22,13 @@ public class PlaylistDetails {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getTrackCount() {
+        return trackCount;
+    }
+
+    public void setTrackCount(int trackCount) {
+        this.trackCount = trackCount;
     }
 }

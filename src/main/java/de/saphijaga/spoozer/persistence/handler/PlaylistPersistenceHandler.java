@@ -35,4 +35,9 @@ public class PlaylistPersistenceHandler implements PlaylistPersistenceService {
     public void deletePlaylist(Playlist playlist) {
         playlistRepository.delete(playlist);
     }
+
+    @Override
+    public Optional<Playlist> getPlaylist(String id) {
+        return ofNullable(playlistRepository.findOne(id));
+    }
 }

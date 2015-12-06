@@ -57,6 +57,7 @@ public class PlaylistHandler implements PlaylistService {
     public void addSongToPlaylist(UserDetails user, SongRequest request) {
         Optional<Playlist> playlist = userService.getUser(user.getId()).get().getPlaylists().stream().filter(p -> p.getName().equals(request.getPlayListName())).findAny();
         Playlist plist = playlist.get();
+        System.out.println(request.getTrack().getId());
         List<Track> tracks = plist.getTracks();
         tracks.add(request.getTrack());
         plist.setTracks(tracks);
@@ -76,10 +77,22 @@ public class PlaylistHandler implements PlaylistService {
 
 
     @Override
-    public void deletePlaylist(UserDetails user, PlaylistDetails playlist) {
-
-
+    public void deletePlaylist(UserDetails userDetails, PlaylistDetails playlistDetails) {
+        User user = userService.getUser(userDetails.getId()).get();
+        Playlist playlist = playlistService.getPlaylist(playlistDetails.getId()).get();
+        Playlist dellist = null;
+        for(Playlist list : user.getPlaylists()){
+            if(list.getId().equals(playlist.getId())){
+                dellist = list;
+            }
+        }
+        if(dellist != null){
+            user.getPlaylists().remove(dellist);
+        }
+        userService.saveUser(user);
+        playlistService.deletePlaylist(playlist);
     }
+
 
     @Override
     public Playlist getPlaylist(UserDetails userDetails, PlaylistDetails playlist) {
@@ -100,6 +113,7 @@ public class PlaylistHandler implements PlaylistService {
         PlaylistDetails details = new PlaylistDetails();
         details.setName(playlist.getName());
         details.setId(playlist.getId());
+        details.setTrackCount(playlist.getTracks().size());
         return details;
     }
 

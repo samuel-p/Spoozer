@@ -13,4 +13,6 @@ public interface PlaylistPersistenceService {
     Optional<Playlist> savePlaylist(Playlist playlist);
 
     void deletePlaylist(Playlist playlist);
+
+    Optional<Playlist> getPlaylist(String id);
 }
