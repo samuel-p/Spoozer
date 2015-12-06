@@ -1,7 +1,6 @@
 package de.saphijaga.spoozer.persistence.handler;
 
 import de.saphijaga.spoozer.persistence.domain.Account;
-import de.saphijaga.spoozer.persistence.domain.User;
 import de.saphijaga.spoozer.persistence.repository.AccountRepository;
 import de.saphijaga.spoozer.persistence.service.AccountPersistenceService;
 import org.springframework.beans.factory.annotation.Autowired;

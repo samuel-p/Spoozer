@@ -1,4 +1,4 @@
-package de.saphijaga.spoozer.web.controller;
+package de.saphijaga.spoozer.test.web.controller;
 
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 

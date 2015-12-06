@@ -1,7 +1,7 @@
 package de.saphijaga.spoozer.core.handler;
 
-import de.saphijaga.spoozer.core.service.UserService;
 import de.saphijaga.spoozer.persistence.domain.User;
+import de.saphijaga.spoozer.core.service.UserService;
 import de.saphijaga.spoozer.persistence.service.UserPersistenceService;
 import de.saphijaga.spoozer.web.details.UserDetails;
 import de.saphijaga.spoozer.web.domain.request.ChangePasswordRequest;

@@ -1,23 +1,20 @@
-package de.saphijaga.spoozer.cucumber.steps;
+package de.saphijaga.spoozer.test.cucumber.steps;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import de.saphijaga.spoozer.cucumber.BrowserHolder;
-import org.junit.Assert;
+import de.saphijaga.spoozer.test.cucumber.BrowserHolder;
+import de.saphijaga.spoozer.test.cucumber.SpringBootTest;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static de.saphijaga.spoozer.cucumber.BaseIntegration.TIMEOUT;
 import static org.junit.Assert.assertEquals;
 import static org.openqa.selenium.By.cssSelector;
 
 /**
  * Created by samuel on 02.12.15.
  */
-public class SearchSteps {
+public class SearchSteps extends SpringBootTest {
     @Autowired
     private BrowserHolder browser;
 

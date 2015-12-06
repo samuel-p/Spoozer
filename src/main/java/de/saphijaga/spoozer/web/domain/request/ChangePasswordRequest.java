@@ -2,7 +2,6 @@ package de.saphijaga.spoozer.web.domain.request;
 
 import de.saphijaga.spoozer.web.authentication.ComplexPassword;
 import de.saphijaga.spoozer.web.authentication.PasswordChangeMatches;
-import de.saphijaga.spoozer.web.authentication.PasswordMatches;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
