@@ -356,16 +356,6 @@ ul.icon-bar li.spoozer * {
     background-color: #1ed760;
 }
 
-.result {
-    padding: 1rem 1rem 1rem 0;
-    display: table;
-    margin-bottom: 1rem;
-}
-
-.result-background {
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
 .result-service {
     color: #fff;
 }
@@ -376,34 +366,35 @@ ul.icon-bar li.spoozer * {
     margin-bottom: 20px;
 }
 
-.result-img {
-    width: 6rem;
-    margin: 0 auto 1rem;
-    display: table-cell;
-    width: auto;
-}
-
-.result-desc {
-    padding: 0 0 0 1rem;
-    text-align: left;
-    display: table-cell;
-    vertical-align: top;
-}
-
-.result-desc .result-desc-song {
+.search-result {
     color: #fff;
-    margin: 0 0 0.5rem 0;
-    padding: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid #4E4E4E;
 }
 
-.result-desc .result-desc-dur {
+.search-result thead {
+    background: #222;
+}
+
+.search-result thead th {
     color: #fff;
-    margin: 0 0 0.25rem;
-    padding: 0;
 }
 
-.result-desc .event-desc-time {
-    font-weight: bold;
+.search-result tbody tr:nth-child(even) {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.search-result tbody tr {
+    border-top: 1px solid #4E4E4E;
+}
+
+.search-result td {
+    color: #fff;
+}
+
+.search-result .search-result-track img {
+    height: 60px;
 }
 
 .accordion-header {
@@ -449,6 +440,10 @@ ul.list li > a {
     display: block;
     padding: 10px;
     color: #000;
+}
+
+ul.list li.selected {
+    background-color: #00c300;
 }
 
 img.grayscale {

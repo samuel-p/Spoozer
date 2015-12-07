@@ -10,7 +10,6 @@ import java.util.List;
  * Created by samuel on 14.11.15.
  */
 public interface Api {
-
     StreamingService getService();
 
     AccountDetails updateAccountDetails(UserDetails userDetails);

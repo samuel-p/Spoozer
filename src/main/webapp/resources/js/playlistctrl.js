@@ -29,8 +29,16 @@ app.controller('PlaylistCtrl', function ($ws, $scope, $rootScope, $player) {
         $ws.send('/deletePlaylist', list);
     };
     $scope.showPlaylist = function (list) {
-        alert(list.id);
+        $ws.send('/getPlaylist', {
+            id: list.id
+        });
     };
+
+    $ws.subscribe("/setPlaylist", function (payload, headers, res) {
+        $scope.$applyAsync(function () {
+            $scope.playlist = payload.playlist;
+        });
+    });
 
     $scope.arePlaylistsEmpty = function () {
         return !angular.isDefined($scope.playlists) || $scope.playlists.length == 0;

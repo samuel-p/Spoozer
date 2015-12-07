@@ -160,6 +160,7 @@ public class SpotifyApi implements Api {
 
     private TrackDetails trackToDetails(SpotifyTrackResponse track) {
         TrackDetails trackDetails = new TrackDetails();
+        trackDetails.setService(StreamingService.SPOTIFY);
         trackDetails.setId(track.getId());
         trackDetails.setTitle(track.getName());
         trackDetails.setDurationInMillis(track.getDurationInMillis());
