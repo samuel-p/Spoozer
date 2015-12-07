@@ -1,7 +1,7 @@
 <div>
     <div ng-repeat="(service, result) in searchResult">
         <h3 class="result-service"><img ng-src="img/{{service | lowercase}}-light.png"/></h3>
-        <table class="search-result fill">
+        <table class="search-result table fill">
             <thead>
             <tr>
                 <th></th>
@@ -45,7 +45,7 @@
                 <a ng-click="selected.playlist = playlist">{{playlist.name}}</a>
             </li>
         </ul>
-        <button class="button spoozer" ng-click="ok()">OK</button>
+        <button class="button spoozer" ng-click="ok()" ng-disabled="!selected.playlist">OK</button>
         <a class="close-reveal-modal" ng-click="cancel()">&#215;</a>
     </script>
 </div>

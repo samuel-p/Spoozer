@@ -366,33 +366,6 @@ ul.icon-bar li.spoozer * {
     margin-bottom: 20px;
 }
 
-.search-result {
-    color: #fff;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid #4E4E4E;
-}
-
-.search-result thead {
-    background: #222;
-}
-
-.search-result thead th {
-    color: #fff;
-}
-
-.search-result tbody tr:nth-child(even) {
-    background: rgba(0, 0, 0, 0.2);
-}
-
-.search-result tbody tr {
-    border-top: 1px solid #4E4E4E;
-}
-
-.search-result td {
-    color: #fff;
-}
-
 .search-result .search-result-track img {
     height: 60px;
 }
@@ -478,36 +451,39 @@ img.grayscale {
     color: #fff;
 }
 
-.playlists {
+.table {
     color: #fff;
     width: 100%;
     background: rgba(0, 0, 0, 0.3);
     border: 1px solid #4E4E4E;
 }
 
-.playlists thead {
+.table thead {
     background: #222;
 }
 
-.playlists thead th {
+.table thead th {
     color: #fff;
 }
 
-.playlists tbody tr:nth-child(even) {
+.table tbody tr:nth-child(even) {
     background: rgba(0, 0, 0, 0.2);
 }
 
-.playlists tbody tr {
+.table td {
+    color: #fff;
+}
+
+.table tbody tr {
     border-top: 1px solid #4E4E4E;
+}
+
+.playlists tbody tr {
     cursor: pointer;
 }
 
 .playlists tbody tr:hover {
     background: #2a2a2a;
-}
-
-.playlists td {
-    color: #fff;
 }
 
 .add-playlist {
@@ -517,6 +493,20 @@ img.grayscale {
     padding: 0 1rem;
 }
 
-.no-padding {
-    padding: 0;
+.playlist-container {
+    padding: 0 0.5rem 0 0;
+    color: #fff;
+}
+
+.tracklist-container {
+    padding: 0 0 0 0.5rem;
+    color: #fff;
+}
+
+.tracklist-container h3 {
+    color: #fff;
+}
+
+.tracklist img {
+    height: 60px;
 }

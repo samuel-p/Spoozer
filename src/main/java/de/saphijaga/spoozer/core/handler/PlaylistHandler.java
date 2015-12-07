@@ -6,25 +6,26 @@ import de.saphijaga.spoozer.persistence.domain.Track;
 import de.saphijaga.spoozer.persistence.domain.User;
 import de.saphijaga.spoozer.persistence.service.PlaylistPersistenceService;
 import de.saphijaga.spoozer.persistence.service.UserPersistenceService;
-import de.saphijaga.spoozer.service.StreamingService;
 import de.saphijaga.spoozer.web.details.PlaylistDetails;
+import de.saphijaga.spoozer.web.details.TrackDetails;
+import de.saphijaga.spoozer.web.details.TracklistDetails;
 import de.saphijaga.spoozer.web.details.UserDetails;
 import de.saphijaga.spoozer.web.domain.request.AddPlaylistRequest;
-import de.saphijaga.spoozer.web.domain.request.SongRequest;
+import de.saphijaga.spoozer.web.domain.request.TrackRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
 
-import static de.saphijaga.spoozer.service.StreamingService.*;
 import static java.util.Collections.emptyList;
+import static java.util.Optional.empty;
+import static java.util.Optional.of;
 
 /**
  * Created by xce35l5 on 04.12.2015.
  */
 @Component
 public class PlaylistHandler implements PlaylistService {
-
     @Autowired
     private UserPersistenceService userService;
 
@@ -49,59 +50,78 @@ public class PlaylistHandler implements PlaylistService {
     }
 
     @Override
-    public <T extends PlaylistDetails> Optional<T> savePlaylist(UserDetails user, PlaylistDetails playlist) {
-
-        return null;
+    public void addSongToPlaylist(UserDetails userDetails, String id, TrackDetails trackDetails) {
+        Optional<User> user = userService.getUser(userDetails.getId());
+        Optional<Playlist> playlist = playlistService.getPlaylist(id);
+        if (user.isPresent() && playlist.isPresent()) {
+            List<Track> tracks = playlist.map(Playlist::getTracks).orElse(emptyList());
+            tracks.add(toTrack(trackDetails));
+            playlistService.savePlaylist(playlist.get());
+        }
     }
 
-    @Override
-    public void addSongToPlaylist(UserDetails user, SongRequest request) {
-        Optional<Playlist> playlist = userService.getUser(user.getId()).get().getPlaylists().stream().filter(p -> p.getId().equals(request.getPlayListID())).findAny();
-        Playlist plist = playlist.get();
-        List<Track> tracks = plist.getTracks();
+    private Track toTrack(TrackDetails trackDetails) {
         Track track = new Track();
         track.setId(UUID.randomUUID().toString());
-        track.setStreamingId(request.getTrackID());
-        track.setStreamingService(request.getStreamingService());
-        tracks.add(track);
-        plist.setTracks(tracks);
-        playlistService.savePlaylist(plist);
-        saveUserPlaylist(user, plist);
+        track.setServiceId(trackDetails.getId());
+        track.setService(trackDetails.getService());
+        track.setTitle(trackDetails.getTitle());
+        track.setDurationInMillis(trackDetails.getDurationInMillis());
+        track.setInterpret(trackDetails.getInterpret());
+        track.setAlbum(trackDetails.getAlbum());
+        track.setCoverUrl(trackDetails.getCoverUrl());
+        track.setUrl(trackDetails.getUrl());
+        track.setExternalUrl(trackDetails.getUrl());
+        return track;
     }
-
-    private void saveUserPlaylist(UserDetails userDetails, Playlist plist) {
-        User user = userService.getUser(userDetails.getId()).get();
-        List<Playlist> playlists = user.getPlaylists();
-        playlists.remove(playlists.stream().filter(p -> p.getId().equals(plist.getId())).findAny().get());
-        playlists.add(plist);
-        user.setPlaylists(playlists);
-        userService.saveUser(user);
-
-    }
-
 
     @Override
-    public void deletePlaylist(UserDetails userDetails, PlaylistDetails playlistDetails) {
-        User user = userService.getUser(userDetails.getId()).get();
-        Playlist playlist = playlistService.getPlaylist(playlistDetails.getId()).get();
-        Playlist dellist = null;
-        for (Playlist list : user.getPlaylists()) {
-            if (list.getId().equals(playlist.getId())) {
-                dellist = list;
+    public void deletePlaylist(UserDetails userDetails, String id) {
+        Optional<User> user = userService.getUser(userDetails.getId());
+        if (user.isPresent()) {
+            Optional<Playlist> playlist = playlistService.getPlaylist(id);
+            if (playlist.isPresent()) {
+                playlistService.deletePlaylist(playlist.get());
+            }
+            user.get().getPlaylists().removeIf(p -> p.getId().equals(id));
+            userService.saveUser(user.get());
+        }
+    }
+
+    @Override
+    public Optional<TracklistDetails> getPlaylist(UserDetails userDetails, String id) {
+        Optional<User> user = userService.getUser(userDetails.getId());
+        if (user.isPresent()) {
+            Optional<Playlist> playlist = playlistService.getPlaylist(id);
+            if (playlist.isPresent()) {
+                return of(toTracklistDetals(playlist.get()));
             }
         }
-        if (dellist != null) {
-            user.getPlaylists().remove(dellist);
-        }
-        userService.saveUser(user);
-        playlistService.deletePlaylist(playlist);
+        return empty();
     }
 
+    private TracklistDetails toTracklistDetals(Playlist playlist) {
+        TracklistDetails tracklist = new TracklistDetails();
+        tracklist.setId(playlist.getId());
+        tracklist.setName(playlist.getName());
+        List<TrackDetails> tracks = new ArrayList<>();
+        playlist.getTracks().forEach(track -> tracks.add(toTrackDetails(track)));
+        tracklist.setTracks(tracks);
+        return tracklist;
+    }
 
-    @Override
-    public Playlist getPlaylist(UserDetails userDetails, PlaylistDetails playlist) {
-        User user = userService.getUser(userDetails.getId()).get();
-        return user.getPlaylists().stream().filter(p -> p.getId().equals(playlist.getId())).findAny().get();
+    private TrackDetails toTrackDetails(Track track) {
+        TrackDetails trackDetails = new TrackDetails();
+        trackDetails.setId(track.getServiceId());
+        trackDetails.setService(track.getService());
+        trackDetails.setTitle(track.getTitle());
+        trackDetails.setDurationInMillis(track.getDurationInMillis());
+        trackDetails.setInterpret(track.getInterpret());
+        trackDetails.setAlbum(track.getAlbum());
+        trackDetails.setCoverUrl(track.getCoverUrl());
+        trackDetails.setUrl(track.getUrl());
+        trackDetails.setExternalUrl(track.getUrl());
+        return trackDetails;
     }
 
     @Override
@@ -121,13 +141,13 @@ public class PlaylistHandler implements PlaylistService {
     }
 
     @Override
-    public void removeSongFromPlaylist(UserDetails user, SongRequest request) {
-        Optional<Playlist> playlist = userService.getUser(user.getId()).get().getPlaylists().stream().filter(p -> p.getId().equals(request.getPlayListID())).findAny();
-        Playlist plist = playlist.get();
-        List<Track> tracks = plist.getTracks();
-        plist.setTracks(tracks);
-        playlistService.savePlaylist(plist);
+    public void deleteSongFromPlaylist(UserDetails userDetails, TrackRequest request) {
+        Optional<User> user = userService.getUser(userDetails.getId());
+        if (user.isPresent()) {
+            Optional<Playlist> playlist = playlistService.getPlaylist(request.getPlaylistId());
+            playlist.map(Playlist::getTracks).orElse(emptyList()).removeIf(track -> track.getServiceId().equals(request.getTrackId()) && track.getService().equals(request.getService()));
+            playlistService.savePlaylist(playlist.get());
+        }
         //TODO delete empty playlist
-        saveUserPlaylist(user, plist);
     }
 }

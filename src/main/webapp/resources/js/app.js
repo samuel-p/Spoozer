@@ -21,11 +21,16 @@ app.config(function ($routeProvider) {
             controller: 'PlaylistCtrl',
             caseInsensitiveMatch: true
         }).
+        when('/playlists/:playlist', {
+            templateUrl: 'views/playlists.html',
+            controller: 'PlaylistCtrl',
+            caseInsensitiveMatch: true
+        }).
         otherwise({
             redirectTo: '/dashboard'
         });
 });
-app.run(function ($rootScope, $window, $location, $ws) {
+app.run(function ($rootScope, $window, $location, $ws, $route) {
     $rootScope.$on('$routeChangeSuccess', function (next, current) {
         $rootScope.hideLoadingView();
         $rootScope.$applyAsync(function () {
@@ -109,6 +114,18 @@ app.run(function ($rootScope, $window, $location, $ws) {
 
     angular.element($window).bind('resize', checkOrientaion);
     checkOrientaion();
+
+    var originalPath = $location.path;
+    $location.path = function (path, reload) {
+        if (reload === false) {
+            var lastRoute = $route.current;
+            var un = $rootScope.$on('$locationChangeSuccess', function () {
+                $route.current = lastRoute;
+                un();
+            });
+        }
+        return originalPath.apply($location, [path]);
+    };
 });
 app.filter('timeFromMillisFilter', function () {
     return function (value) {

@@ -39,15 +39,15 @@ public class UserController {
 
     @MessageMapping("/saveUserDetails")
     @SendToUser("/savedUserDetails")
-    public GetUserDetailsResponse saveUserDetails(UserDetails user,@Valid @Payload SaveUserRequest saveUserRequest, BindingResult result) {
-        if(result.hasErrors()){
+    public GetUserDetailsResponse saveUserDetails(UserDetails user, @Valid @Payload SaveUserRequest saveUserRequest, BindingResult result) {
+        if (result.hasErrors()) {
             System.out.println("errors found");
             /*Optional<ObjectError> error = result.getAllErrors().stream().filter(e -> e.getCode().equals(UpdateNameNotInUse.class.getSimpleName())).findAny();
             if (error.isPresent()) {
                 result.addError(new FieldError("user", "nameError", error.get().getDefaultMessage()));
             }
             messagingTemplate.convertAndSendToUser(user.getUsername(), "/errorSaveUserDetails", result.getFieldErrors());*/
-        }else{
+        } else {
             System.out.println("no errors in input");
             if (user.getId().equals(saveUserRequest.getId()))
                 userService.saveUserDetails(user, saveUserRequest);
@@ -57,8 +57,8 @@ public class UserController {
 
     @MessageMapping("/changePassword")
     @SendToUser("/getPasswordChange")
-    public GetUserDetailsResponse changePassword(UserDetails user, @Payload @Valid ChangePasswordRequest changePasswordRequest){
-        if(userService.getUserDetails(user.getId()).isPresent()){
+    public GetUserDetailsResponse changePassword(UserDetails user, @Payload @Valid ChangePasswordRequest changePasswordRequest) {
+        if (userService.getUserDetails(user.getId()).isPresent()) {
             userService.changeUserPassword(user, changePasswordRequest);
         }
         return new GetUserDetailsResponse(user);

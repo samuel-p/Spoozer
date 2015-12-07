@@ -50,11 +50,16 @@ angular.module('ngWs', ['ngStomp']).service('$ws', ['$stomp', '$http', function 
         }
     };
 
-    this.unsubscribe = this.off = function (destination) {
-        this.subscriptions[destination].forEach(function (subscription) {
-            $stomp.unsubscribe(subscription);
-        });
-        this.subscriptions[destination] = undefined;
+    this.unsubscribe = this.off = function (destination, callback) {
+        var subscription = this.subscriptions[destination];
+        if (angular.isDefined(subscription)) {
+            subscription.forEach(function (subscription) {
+                if (!angular.isDefined(callback) || subscription == callback) {
+                    $stomp.unsubscribe(subscription);
+                }
+            });
+            this.subscriptions[destination] = undefined;
+        }
     };
 
     this.send = function (destination, body, headers) {

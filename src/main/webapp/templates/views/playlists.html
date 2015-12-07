@@ -1,7 +1,7 @@
 <div class="row fill">
-    <div class="large-6 medium-6 small-12 columns no-padding">
+    <div class="playlist-container large-6 medium-6 small-12 columns">
         <p class="light-text" ng-show="arePlaylistsEmpty()">Keine Playlists vorhanden!</p>
-        <table ng-hide="arePlaylistsEmpty()" class="playlists">
+        <table ng-hide="arePlaylistsEmpty()" class="playlists table">
             <thead>
             <tr>
                 <th>Name</th>
@@ -42,6 +42,52 @@
             </div>
         </form>
     </div>
-    <div class="large-6 medium-6 hide-for-small-only columns no-padding">
+    <div class="tracklist-container large-6 medium-6 hide-for-small-only columns no-padding">
+        <p class="light-text" ng-hide="playlist">Playlist auswählen!</p>
+        <h3 ng-show="playlist">{{playlist.name}}</h3>
+        <p class="light-text" ng-hide="!playlist || playlist.tracks.length > 0">Keine Songs vorhanden!</p>
+        <table ng-show="playlist.tracks.length > 0" class="tracklist table">
+            <thead>
+            <tr>
+                <th></th>
+                <th>Titel</th>
+                <th>Interpret</th>
+                <th>Länge</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="track in playlist.tracks" ng-click="showPlaylist(list)">
+                <td>
+                    <img ng-src="{{track.coverUrl}}"/>
+                </td>
+                <td>{{track.title}}</td>
+                <td>{{track.interpret}}</td>
+                <td>{{track.durationInMillis | timeFromMillisFilter}}</td>
+                <td>
+                    <ul class="button-group radius right">
+                        <!--
+                        <li>
+                            <button class="button spoozer small" ng-click="playPlaylist(playlist, track)"><span
+                                    class="fi-play"></span>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="button spoozer small"><span
+                                    class="fi-plus"></span>
+                            </button>
+                        </li>
+                        -->
+                        <li>
+                            <button class="button spoozer small" ng-click="deleteTrackFromPlaylist($event, track)"><span
+                                    class="fi-trash"></span>
+                            </button>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <button ng-click="back()" class="button spoozer small radius show-for-small-only"><span class="fi-arrow-left"></span> Zurück</button>
     </div>
 </div>

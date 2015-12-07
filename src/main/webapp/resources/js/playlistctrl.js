@@ -1,4 +1,5 @@
-app.controller('PlaylistCtrl', function ($ws, $scope, $rootScope, $player) {
+app.controller('PlaylistCtrl', function ($ws, $scope, $rootScope, $player, $routeParams, $location, $route) {
+    var playAfterSet = false;
     $scope.showLoadingView();
     $ws.subscribe("/setPlaylists", function (payload, headers, res) {
         $scope.$applyAsync(function () {
@@ -29,16 +30,42 @@ app.controller('PlaylistCtrl', function ($ws, $scope, $rootScope, $player) {
         $ws.send('/deletePlaylist', list);
     };
     $scope.showPlaylist = function (list) {
+        $location.path('/playlists/' + list.id, false);
+        $routeParams.playlist = list.id;
         $ws.send('/getPlaylist', {
             id: list.id
         });
     };
+    if ($routeParams.playlist) {
+        $ws.send('/getPlaylist', {
+            id: $routeParams.playlist
+        });
+    }
 
     $ws.subscribe("/setPlaylist", function (payload, headers, res) {
         $scope.$applyAsync(function () {
-            $scope.playlist = payload.playlist;
+            if (playAfterSet) {
+                playAfterSet = false;
+                $player.play(payload.playlist);
+            } else {
+                $scope.hideLoadingView();
+                $scope.playlist = payload.playlist;
+                if (Foundation.utils.is_small_only()) {
+                    $('.tracklist-container').addClass('small-12');
+                    $('.tracklist-container').removeClass('hide-for-small-only');
+                    $('.playlist-container').addClass('hide-for-small-only');
+                    $('.playlist-container').removeClass('small-12');
+                }
+            }
         });
     });
+
+    $scope.back = function () {
+        $('.tracklist-container').removeClass('small-12');
+        $('.tracklist-container').addClass('hide-for-small-only');
+        $('.playlist-container').removeClass('hide-for-small-only');
+        $('.playlist-container').addClass('small-12');
+    };
 
     $scope.arePlaylistsEmpty = function () {
         return !angular.isDefined($scope.playlists) || $scope.playlists.length == 0;
@@ -46,13 +73,18 @@ app.controller('PlaylistCtrl', function ($ws, $scope, $rootScope, $player) {
 
     $scope.playPlaylist = function (event, list) {
         event.stopPropagation();
-        $ws.send('/getPlaylist', list);
+        playAfterSet = true;
+        $ws.send('/getPlaylist', {
+            id: list.id
+        });
     };
 
-    $ws.subscribe("/playPlaylist", function (payload, headers, res) {
-        $scope.$applyAsync(function () {
-            console.log(payload);
-            $player.play(payload.tracks);
+    $scope.deleteTrackFromPlaylist = function (event, track) {
+        event.stopPropagation();
+        $ws.send('/deleteSongFromPlaylist', {
+            playlistId: $scope.playlist.id,
+            trackId: track.id,
+            service: track.service
         });
-    });
+    }
 });

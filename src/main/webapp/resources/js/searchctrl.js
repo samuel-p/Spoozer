@@ -33,21 +33,16 @@ app.controller('SearchResultCtrl', function ($ws, $scope, $rootScope, $routePara
         });
 
         modalInstance.result.then(function (playlist) {
-            $ws.send('/addSongToPlaylist', {
-                playListID: playlist.id,
-                trackID: track.id,
-                streamingService: track.service
-            });
+            if (angular.isDefined(playlist)) {
+                $ws.send('/addSongToPlaylist', {
+                    playlistId: playlist.id,
+                    trackId: track.id,
+                    service: track.service
+                });
+            }
         });
     };
-
-    $ws.subscribe("/setPlaylists", function (payload, headers, res) {
-        $scope.$applyAsync(function () {
-            $scope.playlists = payload.playlists;
-        });
-    });
-})
-;
+});
 app.controller('AddTrackToPlaylistCtrl', function ($scope, $modalInstance, $ws) {
     $scope.selected = {
         playlist: null

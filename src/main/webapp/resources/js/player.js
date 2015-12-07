@@ -13,20 +13,27 @@ angular.module('ngPlayer', []).service('$player', [function () {
     this.volume = 1;
 
     this.play = function (playlist) {
+        this.stop();
         this.queue = playlist.tracks;
         this.index = 0;
         this.playCurrent();
     };
 
     this.pause = function () {
-        if (angular.isDefined(this.playing)) {
+        if (this.playing != null) {
             this.playing.pause();
         }
     };
 
     this.resume = function () {
-        if (angular.isDefined(this.playing)) {
+        if (this.playing != null) {
             this.playing.play();
+        }
+    };
+
+    this.stop = function () {
+        if (this.playing != null) {
+            this.playing.stop();
         }
     };
 

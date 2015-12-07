@@ -32,7 +32,7 @@ public class SslConfig {
         } catch (IllegalStateException e) {
             logger.warn("Ssl encryption failed to load!", e);
         }
-        factory.setSessionTimeout(10, TimeUnit.MINUTES);
+        factory.setSessionTimeout(1, TimeUnit.HOURS);
         factory.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/notfound.html"));
         return factory;
     }
