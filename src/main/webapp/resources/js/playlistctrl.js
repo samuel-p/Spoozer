@@ -48,7 +48,6 @@ app.controller('PlaylistCtrl', function ($ws, $scope, $rootScope, $player, $rout
                 playAfterSet = false;
                 $player.play(payload.playlist);
             } else {
-                $scope.hideLoadingView();
                 $scope.playlist = payload.playlist;
                 if (Foundation.utils.is_small_only()) {
                     $('.tracklist-container').addClass('small-12');
@@ -61,6 +60,7 @@ app.controller('PlaylistCtrl', function ($ws, $scope, $rootScope, $player, $rout
     });
 
     $scope.back = function () {
+        $location.path('/playlists', false);
         $('.tracklist-container').removeClass('small-12');
         $('.tracklist-container').addClass('hide-for-small-only');
         $('.playlist-container').removeClass('hide-for-small-only');

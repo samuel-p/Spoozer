@@ -120,6 +120,7 @@ app.run(function ($rootScope, $window, $location, $ws, $route) {
         if (reload === false) {
             var lastRoute = $route.current;
             var un = $rootScope.$on('$locationChangeSuccess', function () {
+                $rootScope.hideLoadingView();
                 $route.current = lastRoute;
                 un();
             });
