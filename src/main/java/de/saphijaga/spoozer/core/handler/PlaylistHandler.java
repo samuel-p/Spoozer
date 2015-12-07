@@ -62,7 +62,7 @@ public class PlaylistHandler implements PlaylistService {
         Track track = new Track();
         track.setId(UUID.randomUUID().toString());
         track.setStreamingId(request.getTrackID());
-        track.setStreamingService(valueOf(request.getStreamingService()));
+        track.setStreamingService(request.getStreamingService());
         tracks.add(track);
         plist.setTracks(tracks);
         playlistService.savePlaylist(plist);

@@ -4,7 +4,9 @@ import de.saphijaga.spoozer.core.service.PlaylistService;
 import de.saphijaga.spoozer.core.service.UserService;
 import de.saphijaga.spoozer.persistence.domain.Playlist;
 import de.saphijaga.spoozer.persistence.service.UserPersistenceService;
+import de.saphijaga.spoozer.service.utils.ApiService;
 import de.saphijaga.spoozer.web.details.PlaylistDetails;
+import de.saphijaga.spoozer.web.details.TrackDetails;
 import de.saphijaga.spoozer.web.details.UserDetails;
 import de.saphijaga.spoozer.web.domain.request.AddPlaylistRequest;
 import de.saphijaga.spoozer.web.domain.request.SongRequest;
@@ -24,10 +26,10 @@ import javax.validation.Valid;
 @RestController
 public class PlaylistController {
     @Autowired
-    private UserService userService;
+    private PlaylistService playlistService;
 
     @Autowired
-    private PlaylistService playlistService;
+    private ApiService api;
 
     @MessageMapping("/addPlaylist")
     @SendToUser("/setPlaylists")
@@ -52,12 +54,11 @@ public class PlaylistController {
     @MessageMapping("/addSongToPlaylist")
     @SendToUser("/addedSongToPlaylist")
     public void addSongToPlaylist(UserDetails user, SongRequest request) {
-        if (userService.getUserDetails(user.getId()).isPresent()) {
-            System.out.println(request.getTrackID());
-            System.out.println(request.getPlayListID());
-            System.out.println(request.getStreamingService());
-            playlistService.addSongToPlaylist(user, request);
-        }
+        TrackDetails trackDetails = api.getApi(request.getStreamingService()).getTrack(user, request.getTrackID());
+        System.out.println(request.getTrackID());
+        System.out.println(request.getPlayListID());
+        System.out.println(request.getStreamingService());
+        playlistService.addSongToPlaylist(user, request);
     }
 
     @MessageMapping("/getPlaylist")

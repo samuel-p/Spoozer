@@ -18,9 +18,8 @@ public class SongRequest {
     @NotNull
     private String trackID;
 
-    @NotEmpty
     @NotNull
-    private String streamingService;
+    private StreamingService streamingService;
 
     public String getTrackID() {
         return trackID;
@@ -38,11 +37,11 @@ public class SongRequest {
         this.playListID = playListID;
     }
 
-    public String getStreamingService() {
+    public StreamingService getStreamingService() {
         return streamingService;
     }
 
-    public void setStreamingService(String streamingService) {
+    public void setStreamingService(StreamingService streamingService) {
         this.streamingService = streamingService;
     }
 }

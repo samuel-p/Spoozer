@@ -16,5 +16,5 @@ public interface Api {
 
     List<TrackDetails> getSearchResult(UserDetails user, String search);
 
-    TrackDetails getTrack(String id);
+    TrackDetails getTrack(UserDetails user, String id);
 }

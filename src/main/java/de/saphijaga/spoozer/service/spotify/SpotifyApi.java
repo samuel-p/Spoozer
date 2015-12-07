@@ -175,17 +175,26 @@ public class SpotifyApi implements Api {
     }
 
     @Override
-    public TrackDetails getTrack(String id) {
-        TrackDetails details = new TrackDetails();
-        details.setService(StreamingService.SPOTIFY);
-        details.setId("3ZFwuJwUpIl0GeXsvF1ELf");
-        details.setTitle("Nothing Else Matters");
-        details.setDurationInMillis(388733);
-        details.setInterpret("Metallica");
-        details.setAlbum("Metallica");
-        details.setCoverUrl("https://i.scdn.co/image/bbd1f19477ee2cb30c1ae9cece461b156d2bb48d");
-        details.setExternalUrl("spotify:track:3ZFwuJwUpIl0GeXsvF1ELf");
-        details.setUrl("https://p.scdn.co/mp3-preview/a2a9c13416fc981d035e75f16ec63b0d8e6486ba");
-        return details;
+    public TrackDetails getTrack(UserDetails user, String id) {
+        return getTrack(user, id, true);
+    }
+
+    private TrackDetails getTrack(UserDetails user, String id, boolean retry) {
+        Optional<SpotifyAccessDetails> accessDetails = accessService.getAccessDetails(user, StreamingService.SPOTIFY);
+        if (!accessDetails.isPresent()) {
+            return null;
+        }
+        String url = getApiUrl(ApiActions.GET_TRACK) + id;
+        try {
+            SpotifyTrackResponse trackResponse = Get.forObject(url, getHeader(accessDetails.get()), SpotifyTrackResponse.class);
+            return trackToDetails(trackResponse);
+        } catch (IOException e) {
+            e.printStackTrace();
+            if (e.getMessage().contains("401") && retry) {
+                refreshAccessDetails(user, accessDetails.get());
+                return getTrack(user, id, false);
+            }
+        }
+        return null;
     }
 }
