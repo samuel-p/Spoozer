@@ -1,6 +1,7 @@
 package de.saphijaga.spoozer.web.domain.request;
 
 import de.saphijaga.spoozer.persistence.domain.Track;
+import de.saphijaga.spoozer.service.StreamingService;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
@@ -11,25 +12,37 @@ import javax.validation.constraints.NotNull;
 public class SongRequest {
     @NotNull
     @NotEmpty
-    private String playListName;
+    private String playListID;
 
     @NotEmpty
     @NotNull
-    private Track track;
+    private String trackID;
 
-    public Track getTrack() {
-        return track;
+    @NotEmpty
+    @NotNull
+    private String streamingService;
+
+    public String getTrackID() {
+        return trackID;
     }
 
-    public void setTrack(Track track) {
-        this.track = track;
+    public void setTrackID(String trackID) {
+        this.trackID = trackID;
     }
 
-    public String getPlayListName() {
-        return playListName;
+    public String getPlayListID() {
+        return playListID;
     }
 
-    public void setPlayListName(String playListName) {
-        this.playListName = playListName;
+    public void setPlayListID(String playListID) {
+        this.playListID = playListID;
+    }
+
+    public String getStreamingService() {
+        return streamingService;
+    }
+
+    public void setStreamingService(String streamingService) {
+        this.streamingService = streamingService;
     }
 }

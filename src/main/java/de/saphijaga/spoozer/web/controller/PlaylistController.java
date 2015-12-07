@@ -53,6 +53,9 @@ public class PlaylistController {
     @SendToUser("/addedSongToPlaylist")
     public void addSongToPlaylist(UserDetails user, SongRequest request) {
         if (userService.getUserDetails(user.getId()).isPresent()) {
+            System.out.println(request.getTrackID());
+            System.out.println(request.getPlayListID());
+            System.out.println(request.getStreamingService());
             playlistService.addSongToPlaylist(user, request);
         }
     }

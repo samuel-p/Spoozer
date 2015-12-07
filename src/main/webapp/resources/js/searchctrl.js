@@ -27,9 +27,28 @@ app.controller('SearchResultCtrl', function ($ws, $scope, $rootScope, $routePara
         });
     };
     $scope.addToPlaylist = function(track) {
+        console.log(track.url);
+        var e = document.getElementById("test");
+        var listid = e.options[e.selectedIndex].text;
         $ws.send('/addSongToPlaylist',{
-            playListName: 'asdf',
-            tracks: track
+            playListID: listid,
+            trackID: track.id,
+            streamingService: track.service
         });
+        $scope.showAddToPlaylistInput = false;
     };
+
+    $scope.showAddToPlaylist = function (id) {
+        $scope.showAddToPlaylistInput = true;
+        setTimeout(function () {
+            $('#add-to-playlist-input').focus();
+        }, 20);
+        $ws.send('/getPlaylists');
+    };
+
+    $ws.subscribe("/setPlaylists", function (payload, headers, res) {
+        $scope.$applyAsync(function() {
+            $scope.playlists = payload.playlists;
+        });
+    });
 });

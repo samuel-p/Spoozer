@@ -6,6 +6,7 @@ import de.saphijaga.spoozer.persistence.domain.Track;
 import de.saphijaga.spoozer.persistence.domain.User;
 import de.saphijaga.spoozer.persistence.service.PlaylistPersistenceService;
 import de.saphijaga.spoozer.persistence.service.UserPersistenceService;
+import de.saphijaga.spoozer.service.StreamingService;
 import de.saphijaga.spoozer.web.details.PlaylistDetails;
 import de.saphijaga.spoozer.web.details.UserDetails;
 import de.saphijaga.spoozer.web.domain.request.AddPlaylistRequest;
@@ -13,11 +14,9 @@ import de.saphijaga.spoozer.web.domain.request.SongRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
+import static de.saphijaga.spoozer.service.StreamingService.*;
 import static java.util.Collections.emptyList;
 
 /**
@@ -57,11 +56,14 @@ public class PlaylistHandler implements PlaylistService {
 
     @Override
     public void addSongToPlaylist(UserDetails user, SongRequest request) {
-        Optional<Playlist> playlist = userService.getUser(user.getId()).get().getPlaylists().stream().filter(p -> p.getName().equals(request.getPlayListName())).findAny();
+        Optional<Playlist> playlist = userService.getUser(user.getId()).get().getPlaylists().stream().filter(p -> p.getId().equals(request.getPlayListID())).findAny();
         Playlist plist = playlist.get();
-        System.out.println(request.getTrack().getId());
         List<Track> tracks = plist.getTracks();
-        tracks.add(request.getTrack());
+        Track track = new Track();
+        track.setId(UUID.randomUUID().toString());
+        track.setStreamingId(request.getTrackID());
+        track.setStreamingService(valueOf(request.getStreamingService()));
+        tracks.add(track);
         plist.setTracks(tracks);
         playlistService.savePlaylist(plist);
         saveUserPlaylist(user, plist);
@@ -120,10 +122,9 @@ public class PlaylistHandler implements PlaylistService {
 
     @Override
     public void removeSongFromPlaylist(UserDetails user, SongRequest request) {
-        Optional<Playlist> playlist = userService.getUser(user.getId()).get().getPlaylists().stream().filter(p -> p.getName().equals(request.getPlayListName())).findAny();
+        Optional<Playlist> playlist = userService.getUser(user.getId()).get().getPlaylists().stream().filter(p -> p.getId().equals(request.getPlayListID())).findAny();
         Playlist plist = playlist.get();
         List<Track> tracks = plist.getTracks();
-        tracks.remove(request.getTrack());
         plist.setTracks(tracks);
         playlistService.savePlaylist(plist);
         //TODO delete empty playlist
