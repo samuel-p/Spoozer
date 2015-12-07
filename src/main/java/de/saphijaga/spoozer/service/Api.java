@@ -15,4 +15,6 @@ public interface Api {
     AccountDetails updateAccountDetails(UserDetails userDetails);
 
     List<TrackDetails> getSearchResult(UserDetails user, String search);
+
+    TrackDetails getTrack(String id);
 }

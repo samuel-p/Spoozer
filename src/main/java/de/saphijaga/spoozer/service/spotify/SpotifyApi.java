@@ -173,4 +173,19 @@ public class SpotifyApi implements Api {
         trackDetails.setExternalUrl(track.getUri());
         return trackDetails;
     }
+
+    @Override
+    public TrackDetails getTrack(String id) {
+        TrackDetails details = new TrackDetails();
+        details.setService(StreamingService.SPOTIFY);
+        details.setId("3ZFwuJwUpIl0GeXsvF1ELf");
+        details.setTitle("Nothing Else Matters");
+        details.setDurationInMillis(388733);
+        details.setInterpret("Metallica");
+        details.setAlbum("Metallica");
+        details.setCoverUrl("https://i.scdn.co/image/bbd1f19477ee2cb30c1ae9cece461b156d2bb48d");
+        details.setExternalUrl("spotify:track:3ZFwuJwUpIl0GeXsvF1ELf");
+        details.setUrl("https://p.scdn.co/mp3-preview/a2a9c13416fc981d035e75f16ec63b0d8e6486ba");
+        return details;
+    }
 }
