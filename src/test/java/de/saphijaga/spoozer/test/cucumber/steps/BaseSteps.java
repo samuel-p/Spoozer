@@ -29,43 +29,44 @@ public class BaseSteps extends SpringBootTest {
     private LoginSteps login;
 
     @Before
-    public void setUp() {
+    public void set_up() {
         browser.setDriver(chromeDriver());
         browser.getDriver().get("http://localhost:8080/login");
     }
 
     @Given("^the user with username \"([^\"]*)\" and password \"([^\"]*)\" is logged in$")
-    public void theUserIsLoggedIn(String username, String password) throws Exception {
-        login.theUsernameIsAndThePasswordIs(username, password);
-        login.theLoginButtonIsClicked();
+    public void the_user_is_logged_in(String username, String password) throws Exception {
+        login.the_username_is(username);
+        login.the_password_is(password);
+        login.the_login_button_is_clicked();
     }
 
     @Given("^a view is shown$")
-    public void aViewIsShown() {
+    public void a_view_is_shown() {
         ExpectedCondition<Boolean> pageLoadCondition = driver -> ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete");
         WebDriverWait wait = new WebDriverWait(browser.getDriver(), 30);
         wait.until(pageLoadCondition);
     }
 
     @Then("^the ([a-z]*) is shown$")
-    public void theViewIsShown(String view) throws Exception {
+    public void the_view_is_shown(String view) throws Exception {
         assertEquals("Application title invalid", "Spoozer", browser.getDriver().getTitle());
         new WebDriverWait(browser.getDriver(), TIMEOUT).until(ExpectedConditions.urlContains(view));
         assertTrue("View invalid", browser.getDriver().getCurrentUrl().contains(view));
     }
 
     @Then("^the ([a-z]*) is not shown$")
-    public void theViewIsNotShown(String view) throws Exception {
+    public void the_view_is_not_shown(String view) throws Exception {
         assertFalse("View invalid", browser.getDriver().getCurrentUrl().contains(view));
     }
 
     @Then("^the ([a-z]*) page is shown$")
-    public void thePageIsShown(String page) throws Exception {
-        assertTrue("View invalid", browser.getDriver().getCurrentUrl().endsWith(page + "?error"));
+    public void the_page_is_shown(String page) throws Exception {
+        assertTrue("View invalid", browser.getDriver().getCurrentUrl().contains(page));
     }
 
     @After
-    public void tearDown() {
+    public void tear_down() {
         browser.getDriver().quit();
     }
 

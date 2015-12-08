@@ -18,21 +18,25 @@ public class LoginSteps extends SpringBootTest {
     @Autowired
     private BrowserHolder browser;
 
-    @Given("^the username is \"([^\"]*)\" and the password is \"([^\"]*)\"$")
-    public void theUsernameIsAndThePasswordIs(String username, String password) throws Exception {
+    @Given("^the username is \"([^\"]*)\"$")
+    public void the_username_is(String username) throws Exception {
         browser.getDriver().findElement(name("username")).sendKeys(username);
+    }
+
+    @Given("^the password is \"([^\"]*)\"$")
+    public void the_password_is(String password) throws Exception {
         browser.getDriver().findElement(name("password")).sendKeys(password);
     }
 
     @When("^the login button is clicked$")
-    public void theLoginButtonIsClicked() throws Exception {
+    public void the_login_button_is_clicked() throws Exception {
         WebElement loginForm = browser.getDriver().findElement(className("form-login"));
         loginForm.submit();
         new WebDriverWait(browser.getDriver(), BaseIntegration.TIMEOUT).until(ExpectedConditions.stalenessOf(loginForm));
     }
 
-    @Then("^the error message is \"([^\"]*)\"")
-    public void theErrorMessageIsShown(String message) throws Exception {
+    @Then("^the alert message is \"([^\"]*)\"")
+    public void the_alert_message_is_shown(String message) throws Exception {
         WebElement alertBox = browser.getDriver().findElement(cssSelector(".alert-box.alert"));
         assertEquals("Message is invalid", alertBox.getText(), message);
     }
