@@ -132,11 +132,11 @@ public class SpotifyApi implements Api {
             searchResponse.getTracks().getItems().forEach(track -> tracks.add(trackToDetails(track)));
             return tracks;
         } catch (IOException e) {
-            e.printStackTrace();
             if (e.getMessage().contains("401") && retry) {
                 refreshAccessDetails(user, accessDetails.get());
                 return getSearchResult(user, search, false);
             }
+            e.printStackTrace();
         }
         return emptyList();
     }
@@ -189,11 +189,11 @@ public class SpotifyApi implements Api {
             SpotifyTrackResponse trackResponse = Get.forObject(url, getHeader(accessDetails.get()), SpotifyTrackResponse.class);
             return trackToDetails(trackResponse);
         } catch (IOException e) {
-            e.printStackTrace();
             if (e.getMessage().contains("401") && retry) {
                 refreshAccessDetails(user, accessDetails.get());
                 return getTrack(user, id, false);
             }
+            e.printStackTrace();
         }
         return null;
     }
