@@ -23,18 +23,23 @@ app.controller('PlayerCtrl', function ($player, $scope, $modal, $window) {
         return $player.isPlaying();
     };
     $scope.show = function () {
+        $('.player').trigger('beforeshow');
         $('.player').animate({
             height: '75px'
         }, 1000, function () {
             $scope.$applyAsync(function () {
                 $(document).foundation('reflow');
+                $('.player').trigger('aftershow');
             });
         });
     };
     $scope.hide = function () {
+        $('.player').trigger('beforehide');
         $('.player').animate({
             height: '0px'
-        }, 1000);
+        }, 1000, function () {
+            $('.player').trigger('afterhide');
+        });
     };
     $scope.hide();
 

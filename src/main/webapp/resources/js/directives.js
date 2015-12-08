@@ -26,6 +26,18 @@ app.directive('fitplayerheight', function ($window) {
         var changeHeight = function () {
             element.css('bottom', player.height() + 'px');
         };
-        player.bind('DOMSubtreeModified', changeHeight);
+        player.bind('aftershow afterhide', changeHeight);
+        var animateHeightIn = function () {
+            element.animate({
+                bottom: '75px'
+            }, 1000);
+        };
+        player.bind('beforeshow', animateHeightIn);
+        var animateHeightOut = function () {
+            element.animate({
+                bottom: '0'
+            }, 1000);
+        };
+        player.bind('beforehide', animateHeightOut);
     }
 });
