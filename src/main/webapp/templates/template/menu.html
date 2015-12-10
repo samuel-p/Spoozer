@@ -10,7 +10,7 @@
             </div>
             <div class="large-2 small-2 columns">
                 <button href="#/" class="button spoozer expand" type="submit"><span
-                        class="fi-magnifying-glass"></span>
+                        class="fa fa-search"></span>
                 </button>
             </div>
         </form>
@@ -19,7 +19,7 @@
 <th:block th:fragment="top-right">
     <li class="divider"></li>
     <li ng-class="{spoozer: isActive('/profile')}">
-        <a href="#/profile">Profil</a>
+        <a href="#/profile"><span class="fa fa-user fa-fw"></span> {{userDetails.name || 'Profil'}}</a>
     </li>
     <li class="divider"></li>
     <li class="has-dropdown" ng-controller="UserAccountCtrl">
@@ -41,19 +41,19 @@
 <th:block th:fragment="side">
     <li class="item" ng-class="{spoozer: isActive('/')}">
         <a href="#/">
-            <span class="icon fi-home"></span>
+            <span class="icon fa fa-home fa-fw"></span>
             <span class="text">Home</span>
         </a>
     </li>
     <li class="item" ng-class="{spoozer: isActive('/playlists')}">
         <a href="#/playlists">
-            <span class="icon fi-music"></span>
+            <span class="icon fa fa-music fa-fw"></span>
             <span class="text">Playlists</span>
         </a>
     </li>
     <li class="item" ng-class="{spoozer: isActive('/history')}">
         <a href="#/history">
-            <span class="icon fi-clock"></span>
+            <span class="icon fa fa-history fa-fw"></span>
             <span class="text">Verlauf</span>
         </a>
     </li>

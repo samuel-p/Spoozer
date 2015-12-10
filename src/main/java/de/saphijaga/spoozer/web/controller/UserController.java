@@ -46,11 +46,11 @@ public class UserController {
             userService.saveUserDetails(user, saveUserRequest);
         }
         //        }
-        return new GetUserDetailsResponse(user);
+        return new GetUserDetailsResponse(userService.getUserDetails(user.getId()).orElse(user));
     }
 
-    @MessageMapping("/changePassword")
-    @SendToUser("/getPasswordChange")
+    @MessageMapping("/savePassword")
+    @SendToUser("/savedPassword")
     public GetUserDetailsResponse changePassword(UserDetails user, @Payload @Valid ChangePasswordRequest changePasswordRequest) {
         if (userService.getUserDetails(user.getId()).isPresent()) {
             userService.changeUserPassword(user, changePasswordRequest);

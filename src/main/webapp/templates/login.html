@@ -5,9 +5,9 @@
     <th:block th:replace="template/assets :: meta"></th:block>
     <title>Spoozer - Anmeldung</title>
     <th:block th:replace="template/assets :: favicon"></th:block>
-    <th:block th:replace="template/assets :: css-foundation"></th:block>
+    <th:block th:replace="template/assets :: css-lib"></th:block>
     <th:block th:replace="template/assets :: css-login"></th:block>
-    <th:block th:replace="template/assets :: js-foundation"></th:block>
+    <th:block th:replace="template/assets :: js-lib"></th:block>
 </head>
 
 <body>
@@ -34,8 +34,8 @@
                     <input type="password" id="password" name="password" required="required" />
 
                     <div class="clearfix">
-                        <button type="submit" class="button left large-4 medium-4 small-12 spoozer">Anmelden</button>
-                        <a th:href="@{/register}" class="button secondary right large-5 medium-5 small-12">Registrieren</a>
+                        <button type="submit" class="button left large-5 medium-5 small-12 spoozer"><span class="fa fa-sign-in fa-fw"></span> Anmelden</button>
+                        <a th:href="@{/register}" class="button secondary right large-5 medium-5 small-12"><span class="fa fa-user-plus fa-fw"></span> Registrieren</a>
                     </div>
                 </fieldset>
             </form>

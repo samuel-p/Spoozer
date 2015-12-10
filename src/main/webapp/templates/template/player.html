@@ -24,15 +24,15 @@
     <div class="large-3 medium-4 hide-for-small-only columns text-center">
         <ul class="button-group radius player-control">
             <li>
-                <button ng-click="previousTrack()" class="button spoozer small"><span class="fi-previous"></span>
+                <button ng-click="previousTrack()" class="button spoozer small"><span class="fa fa-step-backward fa-fw"></span>
                 </button>
             </li>
             <li>
-                <button ng-click="(isPlaying() ? pauseTrack() : resumeTrack())" class="button spoozer small"><span
-                        ng-class="(isPlaying() ? 'fi-pause' : 'fi-play')"></span></button>
+                <button ng-click="(isPlaying() ? pauseTrack() : resumeTrack())" class="button spoozer small"><span class="fa fa-fw"
+                        ng-class="(isPlaying() ? 'fa-pause' : 'fa-play')"></span></button>
             </li>
             <li>
-                <button ng-click="nextTrack()" class="button spoozer small"><span class="fi-next"></span></button>
+                <button ng-click="nextTrack()" class="button spoozer small"><span class="fa fa-step-forward fa-fw"></span></button>
             </li>
         </ul>
     </div>
@@ -64,16 +64,16 @@
                 <ul class="button-group radius player-control">
                     <li>
                         <button ng-click="previousTrack()" class="button spoozer small"><span
-                                class="fi-previous"></span>
+                                class="fa fa-step-backward fa-fw"></span>
                         </button>
                     </li>
                     <li>
                         <button ng-click="(isPlaying() ? pauseTrack() : resumeTrack())"
-                                class="button spoozer small"><span
-                                ng-class="(isPlaying() ? 'fi-pause' : 'fi-play')"></span></button>
+                                class="button spoozer small"><span class="fa fa-fw"
+                                ng-class="(isPlaying() ? 'fa-pause' : 'fa-play')"></span></button>
                     </li>
                     <li>
-                        <button ng-click="nextTrack()" class="button spoozer small"><span class="fi-next"></span>
+                        <button ng-click="nextTrack()" class="button spoozer small"><span class="fa fa-step-forward fa-fw"></span>
                         </button>
                     </li>
                 </ul>
@@ -83,7 +83,7 @@
                 </div>
             </div>
             <div class="clearfix {{orientation}}"></div>
-            <a class="button spoozer" ng-click="cancel()"><span class="fi-arrow-left"></span> Zurück</a>
+            <a class="button spoozer" ng-click="cancel()"><span class="fa fa-chevron-left"></span> Zurück</a>
         </div>
     </script>
 </th:block>

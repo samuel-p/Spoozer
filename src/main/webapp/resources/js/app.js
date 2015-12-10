@@ -68,7 +68,7 @@ app.run(function ($rootScope, $window, $location, $ws, $route) {
     $(document).foundation({
         topbar: {
             custom_back_text: true,
-            back_text: '<span class="fi-arrow-left"/> Zurück'
+            back_text: '<span class="fa-chevron-left"/> Zurück'
         },
         equalizer: {
             equalize_on_stack: true

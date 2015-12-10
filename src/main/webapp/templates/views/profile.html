@@ -23,8 +23,8 @@
                         </tr>
                     </table>
                     <ul class="button-group even-2">
-                        <li><button class="button spoozer" ng-click="tabs.editProfile.active = true">Bearbeiten</button></li>
-                        <li><button class="button spoozer" ng-click="tabs.changePassword.active = true">Passwort ändern</button></li>
+                        <li><button class="button spoozer" ng-click="tabs.profile.active = true">Bearbeiten</button></li>
+                        <li><button class="button spoozer" ng-click="tabs.password.active = true">Passwort ändern</button></li>
                     </ul>
                 </div>
             </div>
@@ -40,37 +40,37 @@
             </div>
         </div>
     </tab>
-    <tab heading="Profil Bearbeiten" active="tabs.editProfile.active">
+    <tab heading="Profil Bearbeiten" active="tabs.profile.active">
         <form ng-submit="saveUserDetails()">
             <fieldset>
                 <table>
                     <tr>
                         <th>Username:</th>
-                        <td><input ng-model="edit.username"/></td>
+                        <td><input ng-model="editProfile.username"/></td>
                     </tr>
                     <tr>
                         <th>Name:</th>
-                        <td><input ng-model="edit.name"/></td>
+                        <td><input ng-model="editProfile.name"/></td>
                     </tr>
                     <tr>
                         <th>E-Mail:</th>
-                        <td><input ng-model="edit.email"/></td>
+                        <td><input ng-model="editProfile.email"/></td>
                     </tr>
                 </table>
                 <button type="submit" class="button spoozer">Speichern</button>
             </fieldset>
         </form>
     </tab>
-    <tab heading="Passwort ändern" active="tabs.changePassword.active">
+    <tab heading="Passwort ändern" active="tabs.password.active">
         <form ng-submit="changePassword()">
             <fieldset>
                 <h3>Passwort ändern</h3>
                 <label for="password">Altes Passwort</label>
-                <input type="password" id="oldpassword" name="oldpassword" ng-model="edit.oldpassword" required="required"/>
+                <input type="password" id="oldpassword" name="oldpassword" ng-model="editPassword.oldpassword" required="required"/>
                 <label for="password">Neues Passwort</label>
-                <input type="password" id="password" name="password" ng-model="edit.password" required="required"/>
+                <input type="password" id="password" name="password" ng-model="editPassword.password" required="required"/>
                 <label for="password2">Neues Passwort wiederholden</label>
-                <input type="password" id="password2" name="password2" ng-model="edit.password2" required="required"/>
+                <input type="password" id="password2" name="password2" ng-model="editPassword.password2" required="required"/>
                 <button type="submit" class="button spoozer">Speichern</button>
             </fieldset>
         </form>

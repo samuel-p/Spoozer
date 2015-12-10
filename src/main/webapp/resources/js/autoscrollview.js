@@ -1,5 +1,5 @@
 function AutoScrollView(view, text) {
-    var content = '<span style="margin-right: 50px;">' + text + '</span><span style="margin-right: 50px;" class="fi-music" />';
+    var content = '<span style="margin-right: 50px;">' + text + '</span><span style="margin-right: 50px;" class="fa fa-music" />';
     var outerView = $('<div>').css({
         'width': '100%',
         'white-space': 'nowrap',

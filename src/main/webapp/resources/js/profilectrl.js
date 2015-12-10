@@ -3,10 +3,10 @@ app.controller('ProfileCtrl', function ($ws, $scope, $modal, $window, $rootScope
         overview: {
             active: true
         },
-        editProfile: {
+        profile: {
             active: false
         },
-        changePassword: {
+        password: {
             active: false
         },
         accounts: {
@@ -16,7 +16,7 @@ app.controller('ProfileCtrl', function ($ws, $scope, $modal, $window, $rootScope
             active: false
         }
     };
-    $scope.edit = $rootScope.userDetails;
+    $scope.editProfile = angular.copy($rootScope.userDetails);
 
     $scope.spotifyLogout = function () {
         $ws.send('/spotify/logout');
@@ -41,17 +41,18 @@ app.controller('ProfileCtrl', function ($ws, $scope, $modal, $window, $rootScope
     });
 
     $scope.saveUserDetails = function() {
-        $ws.send('/saveUserDetails', $scope.edit);
+        $ws.send('/saveUserDetails', $scope.editProfile);
     };
 
     $ws.subscribe("/savedUserDetails", function (payload, headers, res) {
-        $rootScope.$applyAsync(function () {
+        $scope.$applyAsync(function () {
+            $rootScope.userDetails = payload.userDetails;
             $scope.tabs.overview.active = true;
         });
     });
 
     $ws.subscribe("/errorSaveUserDetails", function (payload, headers, res) {
-        $rootScope.$applyAsync(function () {
+        $scope.$applyAsync(function () {
             console.log("Errors found");
             console.log($rootScope.result.get(0));
             console.log(res.get(0));
@@ -59,11 +60,11 @@ app.controller('ProfileCtrl', function ($ws, $scope, $modal, $window, $rootScope
     });
 
     $scope.changePassword = function(){
-        $ws.send("/changePassword", $scope.edit);
+        $ws.send("/savePassword", $scope.editPassword);
     };
 
-    $ws.subscribe("/getPasswordChange", function (payload, headers, res) {
-        $rootScope.$applyAsync(function () {
+    $ws.subscribe("/savedPassword", function (payload, headers, res) {
+        $scope.$applyAsync(function () {
             $scope.tabs.overview.active = true;
         });
     });
