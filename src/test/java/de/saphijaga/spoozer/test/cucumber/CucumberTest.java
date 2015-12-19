@@ -7,6 +7,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(plugin = "pretty", glue = "de.saphijaga.spoozer.test.cucumber.steps", features = "classpath:features")
+@CucumberOptions(plugin = "pretty", glue = "de.saphijaga.spoozer.test.cucumber.steps", features = "classpath:features/manage-account.feature")
 public class CucumberTest {
 }
