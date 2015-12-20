@@ -1,18 +1,16 @@
 package de.saphijaga.spoozer.test.cucumber.steps;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import de.saphijaga.spoozer.test.cucumber.BaseIntegration;
 import de.saphijaga.spoozer.test.cucumber.SpringBootTest;
-import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.Arrays;
 
+import static de.saphijaga.spoozer.test.cucumber.BaseIntegration.TIMEOUT;
 import static org.junit.Assert.assertTrue;
 import static org.openqa.selenium.By.cssSelector;
 import static org.openqa.selenium.By.name;
@@ -46,16 +44,31 @@ public class ProfileSteps extends SpringBootTest {
         driver.findElement(name("password2")).sendKeys(password);
     }
 
-    @And("^the save button is clicked$")
-    public void theSaveButtonIsClicked() throws Throwable {
-        WebElement changePasswordForm = driver.findElement(cssSelector("form[ng-submit=\"changePassword()\"]"));
-        changePasswordForm.submit();
-        new WebDriverWait(driver, BaseIntegration.TIMEOUT).until(ExpectedConditions.visibilityOf(changePasswordForm));
+    @And("^the save password button is clicked$")
+    public void theSavePasswordButtonIsClicked() throws Throwable {
+        driver.findElement(cssSelector("form[ng-submit=\"changePassword()\"]")).submit();
+        new WebDriverWait(driver, TIMEOUT).until(ExpectedConditions.invisibilityOfElementLocated(cssSelector("form[ng-submit=\"changePassword()\"]")));
     }
 
-    @Then("^the password is changed$")
+    @Then("^the profile overview is shown$")
     public void thePasswordIsChanged() throws Throwable {
         WebElement element = driver.findElement(cssSelector("dd[active=\"tabs.overview.active\"]"));
         assertTrue(Arrays.stream(element.getAttribute("class").split(" ")).anyMatch(c -> c.equals("active")));
+    }
+
+    @And("^the update profile button is clicked$")
+    public void theUpdateProfileButtonIsClicked() throws Throwable {
+        driver.findElement(cssSelector("dd[active=\"tabs.profile.active\"] a")).click();
+    }
+
+    @When("^the displayed name is \"([^\"]*)\"$")
+    public void theDisplayedNameIs(String name) throws Throwable {
+        driver.findElement(cssSelector("input[ng-model=\"editProfile.name\"]")).sendKeys(name);
+    }
+
+    @And("^the save profile button is clicked$")
+    public void theSaveProfileButtonIsClicked() throws Throwable {
+        driver.findElement(cssSelector("form[ng-submit=\"saveUserDetails()\"]")).submit();
+        new WebDriverWait(driver, TIMEOUT).until(ExpectedConditions.invisibilityOfElementLocated(cssSelector("form[ng-submit=\"saveUserDetails()\"]")));
     }
 }

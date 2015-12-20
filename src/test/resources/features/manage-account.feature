@@ -17,5 +17,15 @@ Feature: Manage Account
     When the old password is "Test1234"
     And the new password is "Test1234"
     And the confirmed password is "Test1234"
-    And the save button is clicked
-    Then the password is changed
+    And the save password button is clicked
+    Then the profile overview is shown
+
+  Scenario: Update Profile success
+    Given the user with username "test" and password "Test1234" is logged in
+    And a view is shown
+    And the profile button is clicked
+    And the profile is shown
+    And the update profile button is clicked
+    When the displayed name is "Test Account"
+    And the save profile button is clicked
+    Then the profile overview is shown
