@@ -6,9 +6,13 @@ import cucumber.api.java.en.When;
 import de.saphijaga.spoozer.test.cucumber.SpringBootTest;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
+import static de.saphijaga.spoozer.test.cucumber.BaseIntegration.TIMEOUT;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.openqa.selenium.By.*;
@@ -26,6 +30,7 @@ public class PlaylistsSteps extends SpringBootTest {
 
     @When("^the add playlist button is clicked$")
     public void theAddPlaylistButtonIsClicked() throws Throwable {
+        new WebDriverWait(driver, TIMEOUT).until(ExpectedConditions.invisibilityOfElementLocated(className("loading-view")));
         driver.findElement(cssSelector("button[ng-click=\"showAddPlaylist()\"]")).click();
     }
 
@@ -42,7 +47,8 @@ public class PlaylistsSteps extends SpringBootTest {
 
     @Then("^the playlist \"([^\"]*)\" is added$")
     public void thePlaylistIsAdded(String name) throws Throwable {
-        List<WebElement> playlists = driver.findElement(className("playlists")).findElement(tagName("tbody")).findElements(tagName("tr"));
+        new WebDriverWait(driver, TIMEOUT).until((ExpectedCondition) input -> driver.findElement(className("playlists")).findElement(tagName("tbody")).findElements(tagName("tr")).size() > 0);
+        List<WebElement> playlists = driver.findElements(cssSelector(".playlists tbody tr"));
         assertTrue(playlists.stream().anyMatch(p -> p.findElement(cssSelector("td:first-child")).getText().equals(name)));
     }
 

@@ -27,7 +27,7 @@ public class BaseSteps extends SpringBootTest {
     @Before
     public void set_up() {
         driver = chromeDriver();
-        driver.get("http://localhost:8080/login");
+        driver.get("http://localhost:8081/login");
     }
 
     @Given("^the user with username \"([^\"]*)\" and password \"([^\"]*)\" is logged in$")
