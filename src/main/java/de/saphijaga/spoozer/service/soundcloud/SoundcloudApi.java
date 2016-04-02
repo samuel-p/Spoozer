@@ -2,6 +2,7 @@ package de.saphijaga.spoozer.service.soundcloud;
 
 import de.saphijaga.spoozer.core.service.AccountAccessService;
 import de.saphijaga.spoozer.core.service.AccountService;
+import de.saphijaga.spoozer.persistence.domain.SoundcloudAccount;
 import de.saphijaga.spoozer.service.Api;
 import de.saphijaga.spoozer.service.StreamingService;
 import de.saphijaga.spoozer.service.soundcloud.request.GetSoundcloudAccessTokensRequest;
@@ -35,7 +36,7 @@ import static org.springframework.web.util.UriUtils.encode;
  * Created by samuel on 31.03.16.
  */
 @Component
-public class SoundcloudApi implements Api {
+public class SoundcloudApi implements Api<SoundcloudAccount, SoundcloudAccountDetails, SoundcloudAccessDetails> {
     @Autowired
     private ApiService service;
 
@@ -53,6 +54,38 @@ public class SoundcloudApi implements Api {
     @Override
     public StreamingService getService() {
         return StreamingService.SOUNDCLOUD;
+    }
+
+    @Override
+    public SoundcloudAccountDetails getAccountDetailsFromAccount(SoundcloudAccount account) {
+        SoundcloudAccountDetails details = new SoundcloudAccountDetails();
+        details.setId(account.getId());
+        details.setUsername(account.getUsername());
+        details.setUrl(account.getUrl());
+        details.setDisplayname(account.getDisplayname());
+        return details;
+    }
+
+    @Override
+    public SoundcloudAccessDetails getAccountAccessDetailsFromAccount(SoundcloudAccount account) {
+        SoundcloudAccessDetails accessDetails = new SoundcloudAccessDetails();
+        accessDetails.setAccessToken(account.getAccessToken());
+        accessDetails.setRefreshToken(account.getRefreshToken());
+        return accessDetails;
+    }
+
+    @Override
+    public void updateAccount(SoundcloudAccount account, SoundcloudAccountDetails details) {
+        account.setUsername(details.getUsername());
+        account.setUrl(details.getUrl());
+        account.setDisplayname(details.getDisplayname());
+
+    }
+
+    @Override
+    public void updateAccount(SoundcloudAccount account, SoundcloudAccessDetails accessDetails) {
+        account.setAccessToken(accessDetails.getAccessToken());
+        account.setRefreshToken(accessDetails.getRefreshToken());
     }
 
     public String getLoginURL(String serverUrl, String state) throws UnsupportedEncodingException {
@@ -92,7 +125,7 @@ public class SoundcloudApi implements Api {
     }
 
     @Override
-    public AccountDetails updateAccountDetails(UserDetails user) {
+    public SoundcloudAccountDetails updateAccountDetails(UserDetails user) {
         Optional<SoundcloudAccountDetails> accountDetails = accountService.getAccount(user, StreamingService.SOUNDCLOUD);
         Optional<SoundcloudAccessDetails> accessDetails = accessService.getAccessDetails(user, StreamingService.SOUNDCLOUD);
         if (accountDetails.isPresent() && accessDetails.isPresent()) {

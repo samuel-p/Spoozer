@@ -2,6 +2,7 @@ package de.saphijaga.spoozer.service.spotify;
 
 import de.saphijaga.spoozer.core.service.AccountAccessService;
 import de.saphijaga.spoozer.core.service.AccountService;
+import de.saphijaga.spoozer.persistence.domain.SpotifyAccount;
 import de.saphijaga.spoozer.service.Api;
 import de.saphijaga.spoozer.service.StreamingService;
 import de.saphijaga.spoozer.service.spotify.request.GetSpotifyAccessTokensRequest;
@@ -10,7 +11,6 @@ import de.saphijaga.spoozer.service.spotify.response.*;
 import de.saphijaga.spoozer.service.utils.ApiService;
 import de.saphijaga.spoozer.service.utils.Get;
 import de.saphijaga.spoozer.service.utils.Post;
-import de.saphijaga.spoozer.web.details.AccountDetails;
 import de.saphijaga.spoozer.web.details.SpotifyAccountDetails;
 import de.saphijaga.spoozer.web.details.TrackDetails;
 import de.saphijaga.spoozer.web.details.UserDetails;
@@ -30,7 +30,7 @@ import static org.springframework.web.util.UriUtils.encode;
  * Created by samuel on 14.11.15.
  */
 @Component
-public class SpotifyApi implements Api {
+public class SpotifyApi implements Api<SpotifyAccount, SpotifyAccountDetails, SpotifyAccessDetails> {
     @Autowired
     private ApiService service;
 
@@ -43,6 +43,44 @@ public class SpotifyApi implements Api {
     @PostConstruct
     public void init() {
         service.registerApi(this);
+    }
+
+    @Override
+    public StreamingService getService() {
+        return StreamingService.SPOTIFY;
+    }
+
+    @Override
+    public SpotifyAccountDetails getAccountDetailsFromAccount(SpotifyAccount account) {
+        SpotifyAccountDetails details = new SpotifyAccountDetails();
+        details.setId(account.getId());
+        details.setUsername(account.getUsername());
+        details.setUrl(account.getUrl());
+        details.setDisplayname(account.getDisplayname());
+        return details;
+    }
+
+    @Override
+    public SpotifyAccessDetails getAccountAccessDetailsFromAccount(SpotifyAccount account) {
+        SpotifyAccessDetails accessDetails = new SpotifyAccessDetails();
+        accessDetails.setAccessToken(account.getAccessToken());
+        accessDetails.setRefreshToken(account.getRefreshToken());
+        accessDetails.setTokenType(account.getTokenType());
+        return accessDetails;
+    }
+
+    @Override
+    public void updateAccount(SpotifyAccount account, SpotifyAccountDetails details) {
+        account.setUsername(details.getUsername());
+        account.setUrl(details.getUrl());
+        account.setDisplayname(details.getDisplayname());
+    }
+
+    @Override
+    public void updateAccount(SpotifyAccount account, SpotifyAccessDetails accessDetails) {
+        account.setAccessToken(accessDetails.getAccessToken());
+        account.setRefreshToken(accessDetails.getRefreshToken());
+        account.setTokenType(accessDetails.getTokenType());
     }
 
     public String getLoginURL(String serverUrl, String state) throws UnsupportedEncodingException {
@@ -74,7 +112,7 @@ public class SpotifyApi implements Api {
     }
 
     @Override
-    public AccountDetails updateAccountDetails(UserDetails user) {
+    public SpotifyAccountDetails updateAccountDetails(UserDetails user) {
         Optional<SpotifyAccountDetails> accountDetails = accountService.getAccount(user, StreamingService.SPOTIFY);
         Optional<SpotifyAccessDetails> accessDetails = accessService.getAccessDetails(user, StreamingService.SPOTIFY);
         if (accountDetails.isPresent() && accessDetails.isPresent()) {
@@ -106,11 +144,6 @@ public class SpotifyApi implements Api {
 
     private String getApiUrl(String action) {
         return Spotify.API_URL + action;
-    }
-
-    @Override
-    public StreamingService getService() {
-        return StreamingService.SPOTIFY;
     }
 
     @Override
