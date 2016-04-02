@@ -2,6 +2,7 @@ package de.saphijaga.spoozer.test.cucumber;
 
 import de.saphijaga.spoozer.test.application.SpoozerTestApplication;
 import org.junit.runner.RunWith;
+import org.openqa.selenium.WebDriver;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationContextLoader;
 import org.springframework.test.context.ContextConfiguration;
@@ -16,4 +17,5 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @WebAppConfiguration
 @IntegrationTest
 public abstract class SpringBootTest {
+    protected static WebDriver driver;
 }

@@ -1,4 +1,4 @@
-app.controller('PlaylistCtrl', function ($ws, $scope, $rootScope, $player, $routeParams, $location, $route) {
+app.controller('PlaylistCtrl', function ($ws, $scope, $rootScope, $player, $routeParams, $location) {
     var playAfterSet = false;
     $scope.showLoadingView();
     $ws.subscribe("/setPlaylists", function (payload, headers, res) {

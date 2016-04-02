@@ -1,10 +1,8 @@
 package de.saphijaga.spoozer.test.application.config;
 
-import de.saphijaga.spoozer.core.handler.AccountAccessHandler;
-import de.saphijaga.spoozer.core.handler.AccountHandler;
-import de.saphijaga.spoozer.core.handler.SecurityUserDetailsHandler;
-import de.saphijaga.spoozer.core.handler.UserHandler;
+import de.saphijaga.spoozer.core.handler.*;
 import de.saphijaga.spoozer.persistence.handler.AccountPersistenceHandler;
+import de.saphijaga.spoozer.persistence.handler.PlaylistPersistenceHandler;
 import de.saphijaga.spoozer.persistence.handler.UserPersistenceHandler;
 import de.saphijaga.spoozer.service.spotify.SpotifyApi;
 import de.saphijaga.spoozer.service.utils.ApiService;
@@ -25,6 +23,11 @@ public class TestSpoozerConfig {
     }
 
     @Bean
+    public PlaylistPersistenceHandler playlistPersistenceHandler() {
+        return new PlaylistPersistenceHandler();
+    }
+
+    @Bean
     public UserPersistenceHandler userPersistenceHandler() {
         return new UserPersistenceHandler();
     }
@@ -39,6 +42,11 @@ public class TestSpoozerConfig {
     @Bean
     public AccountHandler accountHandler() {
         return new AccountHandler();
+    }
+
+    @Bean
+    public PlaylistHandler playlistHandler() {
+        return new PlaylistHandler();
     }
 
     @Bean
@@ -78,6 +86,11 @@ public class TestSpoozerConfig {
     @Bean
     public CsrfController csrfController() {
         return new CsrfController();
+    }
+
+    @Bean
+    public PlaylistController playlistController() {
+        return new PlaylistController();
     }
 
     @Bean

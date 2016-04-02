@@ -1,4 +1,4 @@
-app.controller('ProfileCtrl', function ($ws, $scope, $modal, $window, $rootScope) {
+app.controller('ProfileCtrl', function ($ws, $scope, $modal, $window, $rootScope, $routeParams, $location) {
     $scope.tabs = {
         overview: {
             active: true
@@ -16,7 +16,11 @@ app.controller('ProfileCtrl', function ($ws, $scope, $modal, $window, $rootScope
             active: false
         }
     };
+    if ($routeParams.tab) {
+        $scope.tabs[$routeParams.tab].active = true;
+    }
     $scope.editProfile = angular.copy($rootScope.userDetails);
+    $scope.editPassword = {};
 
     $scope.spotifyLogout = function () {
         $ws.send('/spotify/logout');
@@ -66,6 +70,19 @@ app.controller('ProfileCtrl', function ($ws, $scope, $modal, $window, $rootScope
     $ws.subscribe("/savedPassword", function (payload, headers, res) {
         $scope.$applyAsync(function () {
             $scope.tabs.overview.active = true;
+        });
+    });
+
+    $scope.selectTab = function(tab) {
+        if (tab == 'overview') {
+            $location.path('/profile', false);
+        } else {
+            $location.path('/profile/' + tab, false);
+        }
+    };
+    $ws.subscribe("/setUserDetails", function (payload, headers, res) {
+        $scope.$applyAsync(function () {
+            $scope.editProfile = payload.userDetails;
         });
     });
 });

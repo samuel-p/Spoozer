@@ -24,7 +24,7 @@ public class TestSslConfig {
     @Bean
     public TomcatEmbeddedServletContainerFactory servletContainer() {
         TomcatEmbeddedServletContainerFactory factory = new TomcatEmbeddedServletContainerFactory();
-        factory.setPort(8080);
+        factory.setPort(8081);
         factory.setSessionTimeout(10, TimeUnit.MINUTES);
         factory.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/notfound.html"));
         return factory;

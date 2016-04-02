@@ -1,6 +1,7 @@
 package de.saphijaga.spoozer.persistence.domain;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ public class Playlist {
     @Id
     private String id;
     private String name;
+    @DBRef
     private List<Track> tracks;
 
     public Playlist(){

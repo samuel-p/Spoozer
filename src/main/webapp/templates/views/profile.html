@@ -1,5 +1,5 @@
 <tabset>
-    <tab heading="Übersicht" active="tabs.overview.active">
+    <tab heading="Übersicht" active="tabs.overview.active" select="selectTab('overview')">
         <div class="row fill" data-equalizer="profile-overview">
             <div class="medium-6 columns">
                 <div class="panel" data-equalizer-watch="profile-overview">
@@ -40,7 +40,7 @@
             </div>
         </div>
     </tab>
-    <tab heading="Profil Bearbeiten" active="tabs.profile.active">
+    <tab heading="Profil Bearbeiten" active="tabs.profile.active" select="selectTab('profile')">
         <form ng-submit="saveUserDetails()">
             <fieldset>
                 <table>
@@ -61,7 +61,7 @@
             </fieldset>
         </form>
     </tab>
-    <tab heading="Passwort ändern" active="tabs.password.active">
+    <tab heading="Passwort ändern" active="tabs.password.active" select="selectTab('password')">
         <form ng-submit="changePassword()">
             <fieldset>
                 <h3>Passwort ändern</h3>
@@ -75,7 +75,7 @@
             </fieldset>
         </form>
     </tab>
-    <tab heading="Accounts" active="tabs.accounts.active">
+    <tab heading="Accounts" active="tabs.accounts.active" select="selectTab('accounts')">
         <accordion close-others="true">
             <accordion-group>
                 <accordion-heading>
@@ -120,7 +120,7 @@
             </accordion-group>
         </accordion>
     </tab>
-    <tab heading="Einstellungen" active="tabs.settings.active">
+    <tab heading="Einstellungen" active="tabs.settings.active" select="selectTab('settings')">
         Settings comming soon...
     </tab>
 </tabset>
