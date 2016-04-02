@@ -1,12 +1,12 @@
 package de.saphijaga.spoozer.service.spotify;
 
 import de.saphijaga.spoozer.core.service.AccountAccessService;
-import de.saphijaga.spoozer.service.spotify.response.*;
 import de.saphijaga.spoozer.core.service.AccountService;
 import de.saphijaga.spoozer.service.Api;
-import de.saphijaga.spoozer.service.ApiActions;
 import de.saphijaga.spoozer.service.StreamingService;
+import de.saphijaga.spoozer.service.spotify.request.GetSpotifyAccessTokensRequest;
 import de.saphijaga.spoozer.service.spotify.request.RefreshSpotifyAccessTokensRequest;
+import de.saphijaga.spoozer.service.spotify.response.*;
 import de.saphijaga.spoozer.service.utils.ApiService;
 import de.saphijaga.spoozer.service.utils.Get;
 import de.saphijaga.spoozer.service.utils.Post;
@@ -14,7 +14,6 @@ import de.saphijaga.spoozer.web.details.AccountDetails;
 import de.saphijaga.spoozer.web.details.SpotifyAccountDetails;
 import de.saphijaga.spoozer.web.details.TrackDetails;
 import de.saphijaga.spoozer.web.details.UserDetails;
-import de.saphijaga.spoozer.service.spotify.request.GetSpotifyAccessTokensRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +22,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 
-import static java.lang.String.join;
 import static java.util.Collections.emptyList;
 import static org.springframework.util.Base64Utils.encodeToString;
 import static org.springframework.web.util.UriUtils.encode;
@@ -90,7 +88,7 @@ public class SpotifyApi implements Api {
     }
 
     private void requestAccountDetails(SpotifyAccessDetails accessDetails, SpotifyAccountDetails accountDetails) throws IOException {
-        GetSpotifyProfileResponse profileResponse = Get.forObject(getApiUrl(ApiActions.PROFILE), getHeader(accessDetails), GetSpotifyProfileResponse.class);
+        GetSpotifyProfileResponse profileResponse = Get.forObject(getApiUrl("/me"), getHeader(accessDetails), GetSpotifyProfileResponse.class);
         accountDetails.setUsername(profileResponse.getId());
         accountDetails.setDisplayname(profileResponse.getDisplayname());
         accountDetails.setUrl(profileResponse.getExternalUrls().get("spotify"));
@@ -106,8 +104,8 @@ public class SpotifyApi implements Api {
         return "Basic " + encodeToString((Spotify.CLIENT_ID + ":" + Spotify.CLIENT_SECRET).getBytes());
     }
 
-    private String getApiUrl(ApiActions api) {
-        return Spotify.API_URL + api.getSpotify();
+    private String getApiUrl(String action) {
+        return Spotify.API_URL + action;
     }
 
     @Override
@@ -125,7 +123,7 @@ public class SpotifyApi implements Api {
         if (!accessDetails.isPresent()) {
             return emptyList();
         }
-        String url = getApiUrl(ApiActions.SEARCH_TRACKS) + search.trim().replace(" ", "%20OR%20");
+        String url = getApiUrl("/search?type=track&market=from_token&q=") + search.trim().replace(" ", "%20OR%20");
         try {
             GetSpotifyTrackSearchResponse searchResponse = Get.forObject(url, getHeader(accessDetails.get()), GetSpotifyTrackSearchResponse.class);
             List<TrackDetails> tracks = new ArrayList<>();
@@ -184,7 +182,7 @@ public class SpotifyApi implements Api {
         if (!accessDetails.isPresent()) {
             return null;
         }
-        String url = getApiUrl(ApiActions.GET_TRACK) + id;
+        String url = getApiUrl("/tracks/") + id;
         try {
             SpotifyTrackResponse trackResponse = Get.forObject(url, getHeader(accessDetails.get()), SpotifyTrackResponse.class);
             return trackToDetails(trackResponse);

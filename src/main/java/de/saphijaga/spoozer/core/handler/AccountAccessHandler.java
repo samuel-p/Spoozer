@@ -1,6 +1,7 @@
 package de.saphijaga.spoozer.core.handler;
 
 import de.saphijaga.spoozer.core.service.AccountAccessService;
+import de.saphijaga.spoozer.persistence.domain.SoundcloudAccount;
 import de.saphijaga.spoozer.persistence.domain.SpotifyAccount;
 import de.saphijaga.spoozer.persistence.domain.User;
 import de.saphijaga.spoozer.persistence.service.AccountPersistenceService;
@@ -8,8 +9,11 @@ import de.saphijaga.spoozer.persistence.domain.Account;
 import de.saphijaga.spoozer.persistence.service.UserPersistenceService;
 import de.saphijaga.spoozer.service.AccountAccessDetails;
 import de.saphijaga.spoozer.service.StreamingService;
+import de.saphijaga.spoozer.service.soundcloud.Soundcloud;
+import de.saphijaga.spoozer.service.soundcloud.SoundcloudAccessDetails;
 import de.saphijaga.spoozer.service.spotify.SpotifyAccessDetails;
 import de.saphijaga.spoozer.web.details.AccountDetails;
+import de.saphijaga.spoozer.web.details.SoundcloudAccountDetails;
 import de.saphijaga.spoozer.web.details.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -51,6 +55,12 @@ public class AccountAccessHandler implements AccountAccessService {
             accessDetails.setTokenType(((SpotifyAccount) account.get()).getTokenType());
             return of((T) accessDetails);
         }
+        if (account.get() instanceof SoundcloudAccount) {
+            SoundcloudAccessDetails accessDetails = new SoundcloudAccessDetails();
+            accessDetails.setAccessToken(((SoundcloudAccount) account.get()).getAccessToken());
+            accessDetails.setRefreshToken(((SoundcloudAccount) account.get()).getRefreshToken());
+            return of((T) accessDetails);
+        }
         return empty();
     }
 
@@ -72,6 +82,12 @@ public class AccountAccessHandler implements AccountAccessService {
             a.setTokenType(((SpotifyAccessDetails) accessDetails).getTokenType());
             return a;
         }
-        return account;
+        if (account instanceof SoundcloudAccount && accessDetails instanceof SoundcloudAccessDetails) {
+            SoundcloudAccount a = ((SoundcloudAccount) account);
+            a.setAccessToken(accessDetails.getAccessToken());
+            a.setRefreshToken(((SoundcloudAccessDetails) accessDetails).getRefreshToken());
+            return a;
+        }
+        throw new IllegalArgumentException("StreamingAccount not supported yet!");
     }
 }

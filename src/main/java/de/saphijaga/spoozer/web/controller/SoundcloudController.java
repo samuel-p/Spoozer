@@ -1,11 +1,11 @@
 package de.saphijaga.spoozer.web.controller;
 
-import de.saphijaga.spoozer.service.spotify.Spotify;
 import de.saphijaga.spoozer.core.service.AccountService;
 import de.saphijaga.spoozer.service.StreamingService;
-import de.saphijaga.spoozer.service.spotify.SpotifyApi;
-import de.saphijaga.spoozer.web.details.AccountDetails;
+import de.saphijaga.spoozer.service.soundcloud.Soundcloud;
+import de.saphijaga.spoozer.service.soundcloud.SoundcloudApi;
 import de.saphijaga.spoozer.web.authentication.Session;
+import de.saphijaga.spoozer.web.details.AccountDetails;
 import de.saphijaga.spoozer.web.details.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -19,10 +19,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Created by samuel on 12.11.15.
+ * Created by samuel on 31.03.16.
  */
 @Controller
-public class SpotifyController {
+public class SoundcloudController {
     @Autowired
     private AccountService accountService;
 
@@ -30,33 +30,33 @@ public class SpotifyController {
     private AccountController accountController;
 
     @Autowired
-    private SpotifyApi api;
+    private SoundcloudApi api;
 
-    @RequestMapping("/spotify/login")
+    @RequestMapping("/soundcloud/login")
     public String login(HttpSession session) throws IOException {
         String state = UUID.randomUUID().toString();
-        session.setAttribute(Spotify.STATE, state);
+        session.setAttribute(Soundcloud.STATE, state);
         String redirectUrl = (String) session.getAttribute("serverurl");
-        return "redirect:" + api.getLoginURL(redirectUrl, state);
+        return  "redirect:" + api.getLoginURL(redirectUrl, state);
     }
 
-    @RequestMapping("/spotify/callback")
+    @RequestMapping("/soundcloud/callback")
     public String callback(@RequestParam(required = false) String code, @RequestParam String state, HttpSession session, UserDetails user) throws Exception {
-        String sessionState = (String) session.getAttribute(Spotify.STATE);
+        String sessionState = (String) session.getAttribute(Soundcloud.STATE);
         if (state.equals(sessionState)) {
-            session.removeAttribute(Spotify.STATE);
+            session.removeAttribute(Soundcloud.STATE);
             api.login(user, code, (String) session.getAttribute(Session.SERVER_URL));
             // TODO ErrorHandling
             accountController.sendGetUserAccountsResponse(user);
-            return "scripts/spotify_callback";
+            return "scripts/soundcloud_callback";
         }
         throw new IllegalArgumentException("state is wrong");
     }
 
 
-    @MessageMapping("/spotify/logout")
+    @MessageMapping("/soundcloud/logout")
     public void logout(UserDetails user) throws IOException {
-        Optional<AccountDetails> account = accountService.getAccount(user, StreamingService.SPOTIFY);
+        Optional<AccountDetails> account = accountService.getAccount(user, StreamingService.SOUNDCLOUD);
         if (account.isPresent()) {
             accountService.deleteAccount(user, account.get());
             accountController.sendGetUserAccountsResponse(user);

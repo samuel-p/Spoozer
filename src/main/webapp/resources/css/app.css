@@ -356,6 +356,17 @@ ul.icon-bar li.spoozer * {
     background-color: #1ed760;
 }
 
+.soundcloud {
+    color: #fff;
+    background-color: #fc8212;
+    margin: 0;
+}
+
+.soundcloud:hover, .soundcloud:active, .soundcloud:focus {
+    color: #fff;
+    background-color: #fd600a;
+}
+
 .result-service {
     color: #fff;
 }

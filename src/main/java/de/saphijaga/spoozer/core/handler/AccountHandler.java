@@ -1,5 +1,6 @@
 package de.saphijaga.spoozer.core.handler;
 
+import de.saphijaga.spoozer.persistence.domain.SoundcloudAccount;
 import de.saphijaga.spoozer.persistence.domain.SpotifyAccount;
 import de.saphijaga.spoozer.persistence.domain.User;
 import de.saphijaga.spoozer.persistence.service.AccountPersistenceService;
@@ -7,7 +8,9 @@ import de.saphijaga.spoozer.core.service.AccountService;
 import de.saphijaga.spoozer.persistence.domain.Account;
 import de.saphijaga.spoozer.persistence.service.UserPersistenceService;
 import de.saphijaga.spoozer.service.StreamingService;
+import de.saphijaga.spoozer.service.soundcloud.Soundcloud;
 import de.saphijaga.spoozer.web.details.AccountDetails;
+import de.saphijaga.spoozer.web.details.SoundcloudAccountDetails;
 import de.saphijaga.spoozer.web.details.SpotifyAccountDetails;
 import de.saphijaga.spoozer.web.details.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +28,7 @@ import static java.util.Optional.ofNullable;
  */
 @Component
 public class AccountHandler implements AccountService {
-
+    // TODO outsource api parsing to api implementations
     @Autowired
     private UserPersistenceService userService;
 
@@ -57,7 +60,15 @@ public class AccountHandler implements AccountService {
             details.setDisplayname(((SpotifyAccount) account).getDisplayname());
             return (T) details;
         }
-        return null;
+        if (account instanceof SoundcloudAccount) {
+            SoundcloudAccountDetails details = new SoundcloudAccountDetails();
+            details.setId(account.getId());
+            details.setUsername(account.getUsername());
+            details.setUrl(account.getUrl());
+            details.setDisplayname(((SoundcloudAccount) account).getDisplayname());
+            return (T) details;
+        }
+        throw new IllegalArgumentException("StreamingAccount not supported yed");
     }
 
     private Account detailsToAccount(AccountDetails details) {
@@ -69,7 +80,15 @@ public class AccountHandler implements AccountService {
             account.setDisplayname(((SpotifyAccountDetails) details).getDisplayname());
             return account;
         }
-        return null;
+        if (details instanceof SoundcloudAccountDetails) {
+            SoundcloudAccount account = new SoundcloudAccount();
+            account.setId(details.getId());
+            account.setUsername(details.getUsername());
+            account.setUrl(details.getUrl());
+            account.setDisplayname(((SoundcloudAccountDetails) details).getDisplayname());
+            return account;
+        }
+        throw new IllegalArgumentException("StreamingAccount not supported yed");
     }
 
     @Override

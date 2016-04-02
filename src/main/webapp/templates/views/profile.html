@@ -105,17 +105,24 @@
                 <accordion-heading>
                     <img class="accordion-header" ng-class="{grayscale: !userAccounts.soundcloud}" src="img/soundcloud.png"/>
                 </accordion-heading>
-                <p style="color: #000;">Soundcloud is comming soon...</p>
                 <a class="button round soundcloud" target="_blank" href="/soundcloud/login" ng-hide="userAccounts.soundcloud">Anmelden</a>
                 <div ng-show="userAccounts.soundcloud">
                     <table>
+                        <tr ng-show="userAccounts.soundcloud.displayname">
+                            <th>Name:</th>
+                            <td>{{userAccounts.soundcloud.displayname}}</td>
+                        </tr>
+                        <tr ng-show="userAccounts.soundcloud.username">
+                            <th>Benutzername:</th>
+                            <td>{{userAccounts.soundcloud.username}}</td>
+                        </tr>
                         <tr ng-show="userAccounts.soundcloud.url">
                             <th>Url:</th>
                             <td><a ng-href="{{userAccounts.soundcloud.url}}"
                                    target="_blank">{{userAccounts.soundcloud.url}}</a></td>
                         </tr>
                     </table>
-                    <button class="round spotify">Abmelden</button>
+                    <button class="round soundcloud" ng-click="soundcloudLogout()">Abmelden</button>
                 </div>
             </accordion-group>
         </accordion>

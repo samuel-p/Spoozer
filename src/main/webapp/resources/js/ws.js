@@ -10,6 +10,7 @@ angular.module('ngWs', ['ngStomp']).service('$ws', ['$stomp', '$http', function 
 
     this.setOnDisconnected = function(callback) {
         $stomp.setDisconnected(callback);
+
     };
 
     this.init = function(csrf) {
