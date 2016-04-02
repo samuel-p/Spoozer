@@ -9,7 +9,6 @@ import java.util.Optional;
  * Created by samuel on 27.10.15.
  */
 public interface PlaylistPersistenceService {
-
     Optional<Playlist> savePlaylist(Playlist playlist);
 
     void deletePlaylist(Playlist playlist);

@@ -11,6 +11,7 @@ public class Get {
     public static <T> T forObject(String url, Class<T> responseObjectClass) throws IOException {
         return forObject(url, new HashMap<>(), responseObjectClass);
     }
+
     public static <T> T forObject(String url, Map<String, String> header, Class<T> responseObjectClass) throws IOException {
         return HttpUtils.streamToObject(forStream(url, header), responseObjectClass);
     }

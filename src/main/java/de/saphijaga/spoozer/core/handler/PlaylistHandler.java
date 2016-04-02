@@ -5,6 +5,7 @@ import de.saphijaga.spoozer.persistence.domain.Playlist;
 import de.saphijaga.spoozer.persistence.domain.Track;
 import de.saphijaga.spoozer.persistence.domain.User;
 import de.saphijaga.spoozer.persistence.service.PlaylistPersistenceService;
+import de.saphijaga.spoozer.persistence.service.TrackPersistenceService;
 import de.saphijaga.spoozer.persistence.service.UserPersistenceService;
 import de.saphijaga.spoozer.web.details.PlaylistDetails;
 import de.saphijaga.spoozer.web.details.TrackDetails;
@@ -31,6 +32,8 @@ public class PlaylistHandler implements PlaylistService {
 
     @Autowired
     private PlaylistPersistenceService playlistService;
+    @Autowired
+    private TrackPersistenceService trackService;
 
     @Override
     public void addPlaylist(UserDetails userDetails, AddPlaylistRequest request) {
@@ -55,14 +58,15 @@ public class PlaylistHandler implements PlaylistService {
         Optional<Playlist> playlist = playlistService.getPlaylist(id);
         if (user.isPresent() && playlist.isPresent()) {
             List<Track> tracks = playlist.map(Playlist::getTracks).orElse(emptyList());
-            tracks.add(toTrack(trackDetails));
+            Track track = trackService.getTrack(trackDetails.getService(), trackDetails.getId()).orElse(toTrack(trackDetails));
+            trackService.saveTrack(track);
+            tracks.add(track);
             playlistService.savePlaylist(playlist.get());
         }
     }
 
     private Track toTrack(TrackDetails trackDetails) {
         Track track = new Track();
-        track.setId(UUID.randomUUID().toString());
         track.setServiceId(trackDetails.getId());
         track.setService(trackDetails.getService());
         track.setTitle(trackDetails.getTitle());
@@ -94,13 +98,13 @@ public class PlaylistHandler implements PlaylistService {
         if (user.isPresent()) {
             Optional<Playlist> playlist = playlistService.getPlaylist(id);
             if (playlist.isPresent()) {
-                return of(toTracklistDetals(playlist.get()));
+                return of(toTracklistDetails(playlist.get()));
             }
         }
         return empty();
     }
 
-    private TracklistDetails toTracklistDetals(Playlist playlist) {
+    private TracklistDetails toTracklistDetails(Playlist playlist) {
         TracklistDetails tracklist = new TracklistDetails();
         tracklist.setId(playlist.getId());
         tracklist.setName(playlist.getName());
@@ -111,6 +115,9 @@ public class PlaylistHandler implements PlaylistService {
     }
 
     private TrackDetails toTrackDetails(Track track) {
+        if (track == null) {
+            return null;
+        }
         TrackDetails trackDetails = new TrackDetails();
         trackDetails.setId(track.getServiceId());
         trackDetails.setService(track.getService());
@@ -148,6 +155,5 @@ public class PlaylistHandler implements PlaylistService {
             playlist.map(Playlist::getTracks).orElse(emptyList()).removeIf(track -> track.getServiceId().equals(request.getTrackId()) && track.getService().equals(request.getService()));
             playlistService.savePlaylist(playlist.get());
         }
-        //TODO delete empty playlist
     }
 }
