@@ -1,20 +1,18 @@
 package de.saphijaga.spoozer.service.spotify.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
 /**
- * Created by samuel on 15.11.15.
+ * Created by samuel on 03.04.16.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SpotifyAlbumResponse {
+public class SpotifyPlaylistResponse {
     private String id;
     private String name;
-    @JsonProperty("album_type")
-    private String albumType;
     private List<SpotifyImageResponse> images;
+    private SpotifyPlaylistTracksResponse tracks;
 
     public String getId() {
         return id;
@@ -40,11 +38,11 @@ public class SpotifyAlbumResponse {
         this.images = images;
     }
 
-    public String getAlbumType() {
-        return albumType;
+    public SpotifyPlaylistTracksResponse getTracks() {
+        return tracks;
     }
 
-    public void setAlbumType(String albumType) {
-        this.albumType = albumType;
+    public void setTracks(SpotifyPlaylistTracksResponse tracks) {
+        this.tracks = tracks;
     }
 }

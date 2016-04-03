@@ -14,6 +14,7 @@ import de.saphijaga.spoozer.service.utils.Post;
 import de.saphijaga.spoozer.web.details.SpotifyAccountDetails;
 import de.saphijaga.spoozer.web.details.TrackDetails;
 import de.saphijaga.spoozer.web.details.UserDetails;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,8 +22,11 @@ import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.util.Collections.emptyList;
+import static java.util.stream.Collectors.toList;
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 import static org.springframework.util.Base64Utils.encodeToString;
 import static org.springframework.web.util.UriUtils.encode;
 
@@ -227,5 +231,57 @@ public class SpotifyApi implements Api<SpotifyAccount, SpotifyAccountDetails, Sp
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public List<TrackDetails> getNewReleasedTracks(UserDetails user) {
+        return getNewReleasedTracks(user, true);
+    }
+
+    private List<TrackDetails> getNewReleasedTracks(UserDetails user, boolean retry) {
+        Optional<SpotifyAccessDetails> accessDetails = accessService.getAccessDetails(user, StreamingService.SPOTIFY);
+        if (!accessDetails.isPresent()) {
+            return emptyList();
+        }
+        try {
+            GetSpotifyNewReleasesResponse response = Get.forObject(getApiUrl("/browse/new-releases"), getHeader(accessDetails.get()), GetSpotifyNewReleasesResponse.class);
+            List<SpotifyAlbumResponse> newReleases = response.getAlbums().getItems().stream().filter(album -> "album".equals(album.getAlbumType())).collect(toList());
+            SpotifyAlbumResponse randomAlbum = newReleases.get(new Random().nextInt(newReleases.size()));
+            GetSpotifyTrackResponse trackResponse = Get.forObject(getApiUrl("/albums/" + randomAlbum.getId() + "/tracks"), getHeader(accessDetails.get()), GetSpotifyTrackResponse.class);
+            trackResponse.getItems().forEach(track -> track.setAlbum(randomAlbum));
+            return trackResponse.getItems().stream().map(this::trackToDetails).collect(toList());
+        } catch (IOException e) {
+            if (e.getMessage().contains("401") && retry) {
+                refreshAccessDetails(user, accessDetails.get());
+                return getNewReleasedTracks(user, false);
+            }
+            e.printStackTrace();
+        }
+        return emptyList();
+    }
+
+    @Override
+    public List<TrackDetails> getFeaturedTracks(UserDetails user) {
+        return getFeaturedTracks(user, true);
+    }
+
+    private List<TrackDetails> getFeaturedTracks(UserDetails user, boolean retry) {
+        Optional<SpotifyAccessDetails> accessDetails = accessService.getAccessDetails(user, StreamingService.SPOTIFY);
+        if (!accessDetails.isPresent()) {
+            return emptyList();
+        }
+        try {
+            GetSpotifyFeaturedPlaylistsResponse response = Get.forObject(getApiUrl("/browse/featured-playlists"), getHeader(accessDetails.get()), GetSpotifyFeaturedPlaylistsResponse.class);
+            SpotifyPlaylistResponse randomPlaylist = response.getPlaylists().getItems().get(new Random().nextInt(response.getPlaylists().getItems().size()));
+            GetSpotifyPlaylistTracksResponse trackResponse = Get.forObject(randomPlaylist.getTracks().getHref(), getHeader(accessDetails.get()), GetSpotifyPlaylistTracksResponse.class);
+            return trackResponse.getItems().stream().map(track -> trackToDetails(track.getTrack())).collect(toList());
+        } catch (IOException e) {
+            if (e.getMessage().contains("401") && retry) {
+                refreshAccessDetails(user, accessDetails.get());
+                return getNewReleasedTracks(user, false);
+            }
+            e.printStackTrace();
+        }
+        return emptyList();
     }
 }
