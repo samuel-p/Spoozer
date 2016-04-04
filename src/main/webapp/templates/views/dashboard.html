@@ -1,14 +1,191 @@
-<ul class="large-block-grid-4 medium-block-grid-2 small-block-grid-1" data-equalizer="panels">
+<ul id="dashboard-list" class="large-block-grid-4 medium-block-grid-2 small-block-grid-1" data-equalizer="panels">
     <li>
         <div class="panel" data-equalizer-watch="panels">
-            <h4>Angesagt:</h4>
-            <p><strong>TODO</strong> Globale Suche nach den beliebtesten Liedern</p>
+            <h2>Willkommen zurück!</h2>
+            <p>TODO</p>
+        </div>
+    </li>
+    <li ng-if="!properties.spotify">
+        <div class="panel" data-equalizer-watch="panels">
+            <p><img src="img/spotify.png"></p>
+            <p>Verbinde jetzt deinen Spotify-Account mit Spoozer!<br><br></p>
+            <p class="text-center"><a class="button round spotify" href="#/profile/accounts">Zu den Einstellungen <span
+                    class="fa fa-arrow-right"></span></a><br><br><br></p>
+        </div>
+    </li>
+    <li ng-if="!properties.soundcloud">
+        <div class="panel" data-equalizer-watch="panels">
+            <p><img src="img/soundcloud.png"></p>
+            <p>Verbinde jetzt deinen Soundcloud-Account mit Spoozer!<br><br></p>
+            <p class="text-center"><a class="button round soundcloud" href="#/profile/accounts">Zu den Einstellungen
+                <span class="fa fa-arrow-right"></span></a><br><br><br></p>
+        </div>
+    </li>
+    <li ng-if="properties.playlists == 0">
+        <div class="panel" data-equalizer-watch="panels">
+            <h2>Erstelle jetzt deine erste Playlist!</h2>
+            <p>Du hast bis jetzt noch keine Playlist hinzugefügt. Erstelle deine erste Playlist um die erste Party
+                steigen zu lassen!<br><br></p>
+            <p class="text-center"><a class="button round alert" href="#/playlists">Los geht's <span
+                    class="fa fa-arrow-right"></span></a><br><br></p>
         </div>
     </li>
     <li>
         <div class="panel" data-equalizer-watch="panels">
-            <h4>Neues:</h4>
-            <p><strong>TODO</strong> Globale Suche nach den neusten Liedern</p>
+            <h2>Übersicht:</h2>
+            <table>
+                <tr>
+                    <th class="text-left">Verbundene Services:</th>
+                    <td>{{properties.services}}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Playlists:</th>
+                    <td>{{properties.playlists}}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Songs:</th>
+                    <td>{{properties.tracks}}</td>
+                </tr>
+            </table>
+        </div>
+    </li>
+    <li ng-if="properties.spotify">
+        <div class="panel" data-equalizer-watch="panels">
+            <h3>Neues von Spotify:</h3>
+            <!--<h4 ng-show="newReleasedTracks.spotify[0].interpret">Neues von {{newReleasedTracks.spotify[0].interpret}} auf Spotify:</h4>-->
+            <div class="dashboard-tracks">
+                <table class="table fill">
+                    <tr ng-repeat="track in newReleasedTracks.spotify" class="dashboard-track">
+                        <td>
+                            <div class="dashboard-track-image left">
+                                <img ng-src="{{track.coverUrl}}"/>
+                            </div>
+                        </td>
+                        <td>{{track.title}}</td>
+                        <td>
+                            <div class="dashboard-track-buttons right">
+                                <ul class="button-group radius">
+                                    <li>
+                                        <button class="button spotify tiny" ng-click="playTrack(track)"><span
+                                                class="fa fa-play"></span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="button spotify tiny" ng-click="addToPlaylist(track)"><span
+                                                class="fa fa-plus"></span>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </li>
+    <li ng-if="properties.spotify">
+        <div class="panel" data-equalizer-watch="panels">
+            <h3>Vorschläge von Spotify:</h3>
+            <div class="dashboard-tracks">
+                <table class="table fill">
+                    <tr ng-repeat="track in featuredTracks.spotify" class="dashboard-track">
+                        <td>
+                            <div class="dashboard-track-image left">
+                                <img ng-src="{{track.coverUrl}}"/>
+                            </div>
+                        </td>
+                        <td>{{track.title}}</td>
+                        <td>
+                            <div class="dashboard-track-buttons right">
+                                <ul class="button-group radius">
+                                    <li>
+                                        <button class="button spotify tiny" ng-click="playTrack(track)"><span
+                                                class="fa fa-play"></span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="button spotify tiny" ng-click="addToPlaylist(track)"><span
+                                                class="fa fa-plus"></span>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </li>
+    <li ng-if="properties.soundcloud">
+        <div class="panel" data-equalizer-watch="panels">
+            <h3>Charts auf Soundcloud:</h3>
+            <div class="dashboard-tracks">
+                <table class="table fill">
+                    <tr ng-repeat="track in chartTracks.soundcloud" class="dashboard-track">
+                        <td>
+                            <div class="dashboard-track-image left">
+                                <img ng-src="{{track.coverUrl}}"/>
+                            </div>
+                        </td>
+                        <td>{{track.title}}</td>
+                        <td>
+                            <div class="dashboard-track-buttons right">
+                                <ul class="button-group radius">
+                                    <li>
+                                        <button class="button soundcloud tiny" ng-click="playTrack(track)"><span
+                                                class="fa fa-play"></span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="button soundcloud tiny" ng-click="addToPlaylist(track)"><span
+                                                class="fa fa-plus"></span>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </li>
+    <li ng-if="properties.soundcloud">
+        <div class="panel" data-equalizer-watch="panels">
+            <h3>Neues von Soundcloud:</h3>
+            <div class="dashboard-tracks">
+                <table class="table fill">
+                    <tr ng-repeat="track in newReleasedTracks.soundcloud" class="dashboard-track">
+                        <td>
+                            <div class="dashboard-track-image left">
+                                <img ng-src="{{track.coverUrl}}"/>
+                            </div>
+                        </td>
+                        <td>{{track.title}}</td>
+                        <td>
+                            <div class="dashboard-track-buttons right">
+                                <ul class="button-group radius">
+                                    <li>
+                                        <button class="button soundcloud tiny" ng-click="playTrack(track)"><span
+                                                class="fa fa-play"></span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="button soundcloud tiny" ng-click="addToPlaylist(track)"><span
+                                                class="fa fa-plus"></span>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="panel" data-equalizer-watch="panels">
+            <h3>Zuletzt angehört:</h3>
+            <p><strong>TODO</strong> show songs from history</p>
         </div>
     </li>
     <li>
@@ -24,28 +201,12 @@
             <h4>This is a regular panel.</h4>
             <p>It has an easy to override visual style, and is appropriately subdued.</p>
             <p>It has an easy to override visual style, and is appropriately subdued.</p>
-        </div>
-    </li>
-    <li>
-        <div class="panel" data-equalizer-watch="panels">
-            <h4>This is a regular panel.</h4>
-            <p>It has an easy to override visual style, and is appropriately subdued.</p>
-            <p>It has an easy to override visual style, and is appropriately subdued.</p>
-            <p>It has an easy to override visual style, and is appropriately subdued.</p>
-            <p>It has an easy to override visual style, and is appropriately subdued.</p>
             <p>It has an easy to override visual style, and is appropriately subdued.</p>
         </div>
     </li>
     <li>
         <div class="panel" data-equalizer-watch="panels">
             <h4>This is a regular panel.</h4>
-            <p>It has an easy to override visual style, and is appropriately subdued.</p>
-        </div>
-    </li>
-    <li>
-        <div class="panel" data-equalizer-watch="panels">
-            <h4>This is a regular panel.</h4>
-            <p>It has an easy to override visual style, and is appropriately subdued.</p>
             <p>It has an easy to override visual style, and is appropriately subdued.</p>
             <p>It has an easy to override visual style, and is appropriately subdued.</p>
             <p>It has an easy to override visual style, and is appropriately subdued.</p>

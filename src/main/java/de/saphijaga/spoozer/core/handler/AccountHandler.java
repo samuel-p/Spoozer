@@ -89,8 +89,6 @@ public class AccountHandler implements AccountService {
         return (Optional<T>) accountDetails.stream().filter(account -> account.getClass().equals(streamingService.getAccountDetailsClass())).findAny();
     }
 
-
-
     @Override
     public List<AccountDetails> getAccountList(UserDetails userDetails) {
         List<Account> accounts = userService.getUser(userDetails.getId()).map(User::getAccounts).orElse(asList());

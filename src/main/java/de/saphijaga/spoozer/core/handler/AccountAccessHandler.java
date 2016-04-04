@@ -26,6 +26,7 @@ import static de.saphijaga.spoozer.service.StreamingService.valueOfAccountClass;
 import static java.util.Collections.emptyList;
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
+import static java.util.Optional.ofNullable;
 
 /**
  * Created by samuel on 14.11.15.
@@ -46,7 +47,7 @@ public class AccountAccessHandler implements AccountAccessService {
         Optional<User> user = userService.getUser(userDetails.getId());
         List<Account> accounts = user.map(User::getAccounts).orElse(emptyList());
         Optional<Account> account = accounts.stream().filter(a -> a.getClass().equals(service.getAccountClass())).findAny();
-        return of(accountToAccessDetails(account.get()));
+        return ofNullable(accountToAccessDetails(account.orElse(null)));
     }
 
     private <T extends AccountAccessDetails> T accountToAccessDetails(Account account) {
@@ -63,7 +64,7 @@ public class AccountAccessHandler implements AccountAccessService {
             Account a = updateAccountWithAccessDetails(account.get(), accessDetails);
             account = accountService.saveAccount(a);
         }
-        return of(accountToAccessDetails(account.get()));
+        return ofNullable(accountToAccessDetails(account.orElse(null)));
     }
 
     private Account updateAccountWithAccessDetails(Account account, AccountAccessDetails accessDetails) {
