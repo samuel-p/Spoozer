@@ -23,9 +23,11 @@
     </li>
     <li class="divider"></li>
     <li class="has-dropdown" ng-controller="UserAccountCtrl">
-        <a href="#/">Accounts</a>
-        <ul class="dropdown" ng-repeat="(service, account) in userAccounts">
-            <li><a ng-href="{{account.url}}" target="_blank">{{account.serviceName}}</a></li>
+        <a href="#/profile/accounts">Accounts</a>
+        <ul class="dropdown">
+            <li ng-repeat="(service, account) in userAccounts">
+                <a ng-href="{{account.url}}" target="_blank">{{account.serviceName}}</a>
+            </li>
         </ul>
         <ul class="dropdown" ng-show="areUserAccountsEmpty()">
             <li><a>Keine vorhanden!</a></li>

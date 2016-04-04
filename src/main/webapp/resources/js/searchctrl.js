@@ -6,7 +6,7 @@ app.controller('SearchResultCtrl', function ($ws, $scope, $rootScope, $routePara
     $ws.subscribe("/setSearchResult", function (payload, headers, res) {
         $scope.$applyAsync(function () {
             $scope.hideLoadingView();
-            $scope.searchResult = payload.searchResult;
+            $scope.searchResult = payload.tracks;
         });
     });
     $ws.send('/getSearchResult', {

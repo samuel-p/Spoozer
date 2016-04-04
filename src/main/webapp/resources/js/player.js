@@ -3,7 +3,8 @@ angular.module('ngPlayer', []).service('$player', [function () {
         'change': [],
         'update': [],
         'start': [],
-        'stop': []
+        'stop': [],
+        'changeTrack': []
     };
     this.queue = [];
     this.index = 0;
@@ -13,26 +14,25 @@ angular.module('ngPlayer', []).service('$player', [function () {
     this.volume = 1;
 
     this.play = function (playlist) {
-        this.stop();
         this.queue = playlist.tracks;
         this.index = 0;
         this.playCurrent();
     };
 
     this.pause = function () {
-        if (this.playing != null) {
+        if (this.playing) {
             this.playing.pause();
         }
     };
 
     this.resume = function () {
-        if (this.playing != null) {
-            this.playing.play();
+        if (this.playing) {
+            this.playing.resume();
         }
     };
 
     this.stop = function () {
-        if (this.playing != null) {
+        if (this.playing) {
             this.playing.stop();
         }
     };
@@ -52,36 +52,41 @@ angular.module('ngPlayer', []).service('$player', [function () {
     };
 
     this.playCurrent = function () {
-        if (this.playing != null) {
+        if (this.playing) {
             this.playing.stop();
         }
+        console.log(this.index);
         var track = this.queue[this.index];
+        if (track.service == 'SOUNDCLOUD') {
+            this.playing = new SoundcloudPlayer(track, this.volume);
+        } else {
+            this.playing = new HowlPlayer(track, this.volume);
+        }
         var self = this;
-        this.playing = new Howl({
-            urls: [track.url],
-            buffer: true,
-            volume: this.volume,
-            format: 'mp3',
-            onplay: function () {
-                if (this.running == null) {
-                    self.firePlayerEvent('start');
-                }
-                self.setRunning(true);
-                self.firePlayerEvent('change');
-            },
-            onpause: function () {
-                self.setRunning(false);
-            },
-            onend: function () {
-                self.setRunning(false);
-                if (self.index == self.queue.length - 1 && !self.loop) {
-                    self.firePlayerEvent('stop');
-                } else {
-                    self.next();
-                }
+        this.playing.setOnStart(function () {
+            if (this.running == null) {
+                self.firePlayerEvent('start');
+            }
+            self.firePlayerEvent('changeTrack');
+            self.setRunning(true);
+            self.firePlayerEvent('change');
+        });
+        this.playing.setOnPause(function () {
+            self.setRunning(false);
+        });
+        this.playing.setOnResume(function () {
+            self.setRunning(true);
+            self.firePlayerEvent('change');
+        });
+        this.playing.setOnStop(function () {
+            self.setRunning(false);
+            if (self.index == self.queue.length - 1 && !self.loop) {
+                self.firePlayerEvent('stop');
+            } else {
+                self.next();
             }
         });
-        this.playing.play();
+        this.playing.start();
     };
 
     this.bind = function (event, listener) {
@@ -121,25 +126,20 @@ angular.module('ngPlayer', []).service('$player', [function () {
     };
 
     this.setPosition = function (value) {
-        this.playing.pos(value);
+        this.playing.setPosition(value);
     };
 
     this.setVolume = function (value) {
         this.volume = value;
-        this.playing.volume(value);
+        if (this.playing)
+            this.playing.setVolume(value);
         this.firePlayerEvent('change');
     };
 
     this.get = function () {
-        if (this.queue.length == 0) {
-            return null;
+        if (this.playing) {
+            return this.playing.get();
         }
-        var track = this.queue[this.index];
-        return {
-            track: track,
-            trackPosition: this.playing.pos(),
-            trackLength: this.playing._duration,
-            volume: this.playing.volume()
-        };
+        return null;
     };
 }]);
