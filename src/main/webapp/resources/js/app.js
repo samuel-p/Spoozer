@@ -1,30 +1,42 @@
 var app = angular.module('spoozerApp', ['ngRoute', 'ngWs', 'mm.foundation', 'ngAnimate', 'ngTouch', 'ngPlayer']);
 app.config(function ($routeProvider) {
-    $routeProvider.when('/dashboard', {
+    $routeProvider.
+    when('/dashboard', {
         templateUrl: 'views/dashboard.html',
         controller: 'DashboardCtrl',
         caseInsensitiveMatch: true
-    }).when('/search/:text', {
+    }).
+    when('/search/:text', {
         templateUrl: 'views/search.html',
         controller: 'SearchResultCtrl',
         caseInsensitiveMatch: true
-    }).when('/profile', {
+    }).
+    when('/profile', {
         templateUrl: 'views/profile.html',
         controller: 'ProfileCtrl',
         caseInsensitiveMatch: true
-    }).when('/profile/:tab', {
+    }).
+    when('/profile/:tab', {
         templateUrl: 'views/profile.html',
         controller: 'ProfileCtrl',
         caseInsensitiveMatch: true
-    }).when('/playlists', {
+    }).
+    when('/playlists', {
         templateUrl: 'views/playlists.html',
         controller: 'PlaylistCtrl',
         caseInsensitiveMatch: true
-    }).when('/playlists/:playlist', {
+    }).
+    when('/playlists/:playlist', {
         templateUrl: 'views/playlists.html',
         controller: 'PlaylistCtrl',
         caseInsensitiveMatch: true
-    }).otherwise({
+    }).
+    when('/history', {
+        templateUrl: 'views/history.html',
+        controller: 'HistoryCtrl',
+        caseInsensitiveMatch: true
+    }).
+    otherwise({
         redirectTo: '/dashboard'
     });
 });

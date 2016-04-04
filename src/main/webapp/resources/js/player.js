@@ -4,7 +4,7 @@ angular.module('ngPlayer', []).service('$player', [function () {
         'update': [],
         'start': [],
         'stop': [],
-        'changeTrack': []
+        'changeTrack':[]
     };
     this.queue = [];
     this.index = 0;
