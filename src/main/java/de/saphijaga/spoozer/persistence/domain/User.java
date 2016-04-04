@@ -25,9 +25,12 @@ public class User {
     @DBRef
     private List<Account> accounts;
 
+    private History history;
+
     public User() {
         playlists = new ArrayList<>();
         accounts = new ArrayList<>();
+        history = new History();
     }
 
     public String getId() {
@@ -84,5 +87,13 @@ public class User {
 
     public void setAccounts(List<Account> accounts) {
         this.accounts = accounts;
+    }
+
+    public History getHistory() {
+        return history;
+    }
+
+    public void setHistory(History history) {
+        this.history = history;
     }
 }

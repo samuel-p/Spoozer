@@ -24,6 +24,10 @@ public class UserPersistenceHandler implements UserPersistenceService {
         if (user.getId() == null) {
             user.setId(UUID.randomUUID().toString());
         }
+        if (user.getHistory().getId() == null) {
+            user.getHistory().setId(UUID.randomUUID().toString());
+        }
+
         User savedUser = userRepository.save(user);
         return ofNullable(savedUser);
     }

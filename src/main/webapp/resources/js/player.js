@@ -3,7 +3,8 @@ angular.module('ngPlayer', []).service('$player', [function () {
         'change': [],
         'update': [],
         'start': [],
-        'stop': []
+        'stop': [],
+        'changeTrack':[]
     };
     this.queue = [];
     this.index = 0;
@@ -66,6 +67,7 @@ angular.module('ngPlayer', []).service('$player', [function () {
                 if (this.running == null) {
                     self.firePlayerEvent('start');
                 }
+                self.firePlayerEvent('changeTrack');
                 self.setRunning(true);
                 self.firePlayerEvent('change');
             },

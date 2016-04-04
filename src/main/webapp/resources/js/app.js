@@ -31,6 +31,11 @@ app.config(function ($routeProvider) {
         controller: 'PlaylistCtrl',
         caseInsensitiveMatch: true
     }).
+    when('/history', {
+        templateUrl: 'views/history.html',
+        controller: 'HistoryCtrl',
+        caseInsensitiveMatch: true
+    }).
     otherwise({
         redirectTo: '/dashboard'
     });
