@@ -1,4 +1,4 @@
-app.controller('PlayerCtrl', function ($player, $scope, $modal, $window) {
+app.controller('PlayerCtrl', function ($player, $scope, $modal, $window, $ws) {
     var volumeSlider = new PlayerSlider($('#player-volume-slider'));
     volumeSlider.change(function () {
         $player.setVolume(volumeSlider.get() / 100);
@@ -64,6 +64,7 @@ app.controller('PlayerCtrl', function ($player, $scope, $modal, $window) {
     };
     $player.bind('start', function () {
         $scope.show();
+
     });
     $player.bind('stop', function () {
         $scope.hide();
@@ -73,8 +74,14 @@ app.controller('PlayerCtrl', function ($player, $scope, $modal, $window) {
             $scope.player = player;
             volumeSlider.set(player.volume * 100);
             new AutoScrollView($('#player-track-info'), player.track.title);
+
         });
     });
+
+    $player.bind('changeTrack', function (player) {
+        $ws.send("/addHTrack", {id: player.track.id, service: player.track.service});
+    });
+
     $player.bind('update', function (player) {
         $scope.$applyAsync(function () {
             player.trackPositionInPercentage = player.trackPosition / player.trackLength * 100;
@@ -87,7 +94,7 @@ app.controller('PlayerModalCtrl', function ($scope, $window, $player, $modalInst
     var volumeSlider = null;
     $scope.$applyAsync(function () {
         $(document).foundation('reflow');
-        setTimeout(function() {
+        setTimeout(function () {
             volumeSlider = new PlayerSlider($('#player-modal-volume-slider'));
             volumeSlider.change(function () {
                 console.log(volumeSlider.get());

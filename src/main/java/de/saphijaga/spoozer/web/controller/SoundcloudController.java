@@ -7,8 +7,10 @@ import de.saphijaga.spoozer.service.soundcloud.SoundcloudApi;
 import de.saphijaga.spoozer.web.authentication.Session;
 import de.saphijaga.spoozer.web.details.AccountDetails;
 import de.saphijaga.spoozer.web.details.UserDetails;
+import de.saphijaga.spoozer.web.domain.response.GetSoundcloudClientIdResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -61,5 +63,11 @@ public class SoundcloudController {
             accountService.deleteAccount(user, account.get());
             accountController.sendGetUserAccountsResponse(user);
         }
+    }
+
+    @MessageMapping("/getSoundcloudClientId")
+    @SendToUser("/setSoundcloudClientId")
+    public GetSoundcloudClientIdResponse getSoundcloudClientId() {
+        return new GetSoundcloudClientIdResponse(Soundcloud.CLIENT_ID);
     }
 }

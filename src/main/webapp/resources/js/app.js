@@ -31,6 +31,11 @@ app.config(function ($routeProvider) {
         controller: 'PlaylistCtrl',
         caseInsensitiveMatch: true
     }).
+    when('/history', {
+        templateUrl: 'views/history.html',
+        controller: 'HistoryCtrl',
+        caseInsensitiveMatch: true
+    }).
     otherwise({
         redirectTo: '/dashboard'
     });
@@ -132,6 +137,12 @@ app.run(function ($rootScope, $window, $location, $ws, $route) {
         }
         return originalPath.apply($location, [path]);
     };
+    $ws.subscribe('/setSoundcloudClientId', function (clientId) {
+        SC.initialize({
+            client_id: clientId.data
+        });
+    });
+    $ws.send('/getSoundcloudClientId');
 });
 app.filter('timeFromMillisFilter', function () {
     return function (value) {

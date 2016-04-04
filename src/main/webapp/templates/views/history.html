@@ -1,0 +1,26 @@
+<div>
+    <h3 style="color: white">Verlauf</h3>
+    <table class="search-result table fill">
+        <thead>
+        <tr>
+            <th></th>
+            <th>Titel</th>
+            <th>Interpret</th>
+            <th>Länge</th>
+            <th>Datum</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="entry in history | orderBy:'date':true" class="search-result-track">
+            <td>
+                <img ng-src="{{entry.track.coverUrl}}"/>
+            </td>
+            <td>{{entry.track.title}}</td>
+            <td>{{entry.track.interpret}}</td>
+            <td>{{entry.track.durationInMillis | timeFromMillisFilter}}</td>
+            <td>{{entry.date | date:'d. MMMM yyyy h:mm:ss'}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <p class="light-text" ng-show="isHistoryEmpty()">Keinen Verlauf gefunden!</p>
+</div>
