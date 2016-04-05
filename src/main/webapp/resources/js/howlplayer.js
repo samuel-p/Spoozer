@@ -1,4 +1,4 @@
-function HowlPlayer(track, volume) {
+function HowlPlayer(track, volume, loadOnly) {
     this.player = null;
     this.onStart = function () {
     };
@@ -31,7 +31,13 @@ function HowlPlayer(track, volume) {
                 self.onStop.call(this);
             }
         });
-        this.player.play();
+        if (loadOnly) {
+            this.onStart.call(this);
+            this.started = true;
+            this.onPause.call(this);
+        } else {
+            this.player.play();
+        }
     };
 
     this.stop = function () {
@@ -53,7 +59,7 @@ function HowlPlayer(track, volume) {
     };
 
     this.setPosition = function (value) {
-        this.playing.pos(value);
+        this.player.pos(value);
     };
 
     this.setVolume = function (volume) {

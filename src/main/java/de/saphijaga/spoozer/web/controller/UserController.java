@@ -10,10 +10,10 @@ import de.saphijaga.spoozer.web.domain.request.ChangePasswordRequest;
 import de.saphijaga.spoozer.web.domain.request.SaveUserRequest;
 import de.saphijaga.spoozer.web.domain.response.GetUserDetailsResponse;
 import de.saphijaga.spoozer.web.domain.response.HistoryResponse;
+import de.saphijaga.spoozer.web.domain.response.PropertiesResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.web.bind.annotation.RestController;
@@ -82,5 +82,17 @@ public class UserController {
         HistoryDetails historyDetails = new HistoryDetails();
         historyDetails.setHistory(history);
         return new HistoryResponse(historyDetails);
+    }
+
+    @MessageMapping("/saveProperties")
+    public void saveProperties(UserDetails user, @Payload Map<String, Object> properties) {
+        userService.saveProperties(user, properties);
+    }
+
+    @MessageMapping("/getProperties")
+    @SendToUser("/setProperties")
+    public PropertiesResponse getProperties(UserDetails user) {
+        Map<String, Object> properties = userService.getProperties(user);
+        return new PropertiesResponse(properties);
     }
 }

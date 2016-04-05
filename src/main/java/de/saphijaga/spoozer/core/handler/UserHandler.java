@@ -1,13 +1,12 @@
 package de.saphijaga.spoozer.core.handler;
 
+import de.saphijaga.spoozer.core.service.TrackService;
+import de.saphijaga.spoozer.core.service.UserService;
 import de.saphijaga.spoozer.persistence.domain.HTrack;
 import de.saphijaga.spoozer.persistence.domain.History;
-import de.saphijaga.spoozer.persistence.domain.Track;
+import de.saphijaga.spoozer.persistence.domain.Properties;
 import de.saphijaga.spoozer.persistence.domain.User;
-import de.saphijaga.spoozer.core.service.UserService;
-import de.saphijaga.spoozer.persistence.service.TrackPersistenceService;
 import de.saphijaga.spoozer.persistence.service.UserPersistenceService;
-import de.saphijaga.spoozer.service.utils.ApiService;
 import de.saphijaga.spoozer.web.details.TrackDetails;
 import de.saphijaga.spoozer.web.details.UserDetails;
 import de.saphijaga.spoozer.web.domain.request.AddHTrackRequest;
@@ -31,18 +30,12 @@ import static java.util.Optional.of;
  */
 @Component
 public class UserHandler implements UserService {
-
     @Autowired
     private UserPersistenceService userService;
-
-    @Autowired
-    private TrackPersistenceService trackService;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
-
     @Autowired
-    private ApiService api;
+    private TrackService trackService;
 
     @Override
     public Optional<UserDetails> registerUser(RegisterUserRequest request) {
@@ -82,7 +75,6 @@ public class UserHandler implements UserService {
         return of(details);
     }
 
-
     @Override
     public Optional<UserDetails> saveUserDetails(UserDetails userDetails, SaveUserRequest request) {
         Optional<User> user = userService.getUser(userDetails.getId());
@@ -108,45 +100,20 @@ public class UserHandler implements UserService {
     }
 
     @Override
-    public Optional<UserDetails> addSongToHistory(UserDetails userDetails, AddHTrackRequest request) {
-        Optional<User> user = userService.getUser(userDetails.getId());
-        Optional<Track> song = trackService.getTrack(request.getService(), request.getId());
-        if(!song.isPresent()){
-            song = Optional.of(toTrack(api.getApi(request.getService()).getTrack(userDetails, request.getId())));
-            trackService.saveTrack(song.get());
-        }
-        user.get().getHistory().addSong(song.get());
-        System.out.println("Song added");
-        user = userService.saveUser(user.get());
-        return toUserDetails(user);
-    }
-
-    private Track toTrack(TrackDetails trackDetails) {
-        Track track = new Track();
-        track.setServiceId(trackDetails.getId());
-        track.setService(trackDetails.getService());
-        track.setTitle(trackDetails.getTitle());
-        track.setDurationInMillis(trackDetails.getDurationInMillis());
-        track.setInterpret(trackDetails.getInterpret());
-        track.setAlbum(trackDetails.getAlbum());
-        track.setCoverUrl(trackDetails.getCoverUrl());
-        track.setUrl(trackDetails.getUrl());
-        track.setExternalUrl(trackDetails.getUrl());
-        return track;
+    public void addSongToHistory(UserDetails userDetails, AddHTrackRequest request) {
+        trackService.addTrackToHistory(userDetails, request);
     }
 
     @Override
-    public Optional<UserDetails> cutUserHistory(UserDetails userDetails, int limit) {
+    public void cutUserHistory(UserDetails userDetails, int limit) {
         Optional<User> user = userService.getUser(userDetails.getId());
         user.get().getHistory().cutListtoLimit(limit);
-        return toUserDetails(user);
     }
 
     @Override
-    public Optional<UserDetails> clearUserHistory(UserDetails userDetails) {
+    public void clearUserHistory(UserDetails userDetails) {
         Optional<User> user = userService.getUser(userDetails.getId());
         user.get().getHistory().clearHistory();
-        return toUserDetails(user);
     }
 
     @Override
@@ -155,7 +122,7 @@ public class UserHandler implements UserService {
         User user = userService.getUser(userDetails.getId()).get();
         History history = user.getHistory();
         for (HTrack track : history.getSongs()){
-            historyMap.put(track.getDate(), toTrackDetails(track.getTrack()));
+            trackService.getTrack(track.getTrack().getId()).ifPresent(t -> historyMap.put(track.getDate(), t));
         }
         return historyMap;
     }
@@ -166,21 +133,17 @@ public class UserHandler implements UserService {
         user.setUsername(request.getUsername());
     }
 
-    private TrackDetails toTrackDetails(Track track) {
-        if (track == null) {
-            return null;
+    @Override
+    public void saveProperties(UserDetails userDetails, Map<String, Object> properties) {
+        Optional<User> user = userService.getUser(userDetails.getId());
+        if (user.isPresent()) {
+            user.get().getProperties().addProperties(properties);
+            userService.saveUser(user.get());
         }
-        TrackDetails trackDetails = new TrackDetails();
-        trackDetails.setId(track.getServiceId());
-        trackDetails.setService(track.getService());
-        trackDetails.setTitle(track.getTitle());
-        trackDetails.setDurationInMillis(track.getDurationInMillis());
-        trackDetails.setInterpret(track.getInterpret());
-        trackDetails.setAlbum(track.getAlbum());
-        trackDetails.setCoverUrl(track.getCoverUrl());
-        trackDetails.setUrl(track.getUrl());
-        trackDetails.setExternalUrl(track.getUrl());
-        return trackDetails;
     }
 
+    @Override
+    public Map<String, Object> getProperties(UserDetails user) {
+        return userService.getUser(user.getId()).map(User::getProperties).map(Properties::getProperties).orElse(new HashMap<>());
+    }
 }

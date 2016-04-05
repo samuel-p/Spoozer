@@ -1,4 +1,4 @@
-function SoundcloudPlayer(track, volume) {
+function SoundcloudPlayer(track, volume, loadOnly) {
     this.player = null;
     this.onStart = function () {
     };
@@ -13,7 +13,6 @@ function SoundcloudPlayer(track, volume) {
     this.start = function () {
         var self = this;
         SC.stream('/tracks/' + track.id).then(function (player) {
-            console.log(player);
             self.player = player;
             player.on('play', function () {
                 if (self.started)
@@ -29,12 +28,19 @@ function SoundcloudPlayer(track, volume) {
                 self.onStop.call(this);
             });
             player.setVolume(volume);
-            player.play();
+            if (loadOnly) {
+                self.onStart.call(this);
+                self.started = true;
+                self.onPause.call(this);
+            } else {
+                player.play();
+            }
         });
     };
 
     this.stop = function () {
         if (this.player) {
+            this.player.pause();
             this.player.dispose();
         }
     };
@@ -62,18 +68,11 @@ function SoundcloudPlayer(track, volume) {
     };
 
     this.get = function () {
-        if (this.player && this.player.isPlaying())
-            return {
-                track: track,
-                trackPosition: this.player.currentTime() / 1000,
-                trackLength: track.durationInMillis / 1000,
-                volume: this.player.getVolume()
-            };
         return {
             track: track,
-            trackPosition: 0,
+            trackPosition: (this.player) ? (this.player.currentTime() / 1000) : 0,
             trackLength: track.durationInMillis / 1000,
-            volume: 1
+            volume: this.player ? this.player.getVolume() : volume
         };
     };
 
