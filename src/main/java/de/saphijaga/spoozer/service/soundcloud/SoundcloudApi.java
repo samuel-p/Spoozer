@@ -2,17 +2,18 @@ package de.saphijaga.spoozer.service.soundcloud;
 
 import de.saphijaga.spoozer.core.service.AccountAccessService;
 import de.saphijaga.spoozer.core.service.AccountService;
+import de.saphijaga.spoozer.persistence.domain.SoundcloudAccount;
 import de.saphijaga.spoozer.service.Api;
 import de.saphijaga.spoozer.service.StreamingService;
 import de.saphijaga.spoozer.service.soundcloud.request.GetSoundcloudAccessTokensRequest;
 import de.saphijaga.spoozer.service.soundcloud.request.RefreshSoundcloudAccessTokensRequest;
 import de.saphijaga.spoozer.service.soundcloud.response.GetSoundcloudAccessTokensResponse;
+import de.saphijaga.spoozer.service.soundcloud.response.GetSoundcloudChartTracksResponse;
 import de.saphijaga.spoozer.service.soundcloud.response.GetSoundcloudProfileResponse;
 import de.saphijaga.spoozer.service.soundcloud.response.GetSoundcloudTrackResponse;
 import de.saphijaga.spoozer.service.utils.ApiService;
 import de.saphijaga.spoozer.service.utils.Get;
 import de.saphijaga.spoozer.service.utils.Post;
-import de.saphijaga.spoozer.web.details.AccountDetails;
 import de.saphijaga.spoozer.web.details.SoundcloudAccountDetails;
 import de.saphijaga.spoozer.web.details.TrackDetails;
 import de.saphijaga.spoozer.web.details.UserDetails;
@@ -35,7 +36,7 @@ import static org.springframework.web.util.UriUtils.encode;
  * Created by samuel on 31.03.16.
  */
 @Component
-public class SoundcloudApi implements Api {
+public class SoundcloudApi implements Api<SoundcloudAccount, SoundcloudAccountDetails, SoundcloudAccessDetails> {
     @Autowired
     private ApiService service;
 
@@ -55,6 +56,38 @@ public class SoundcloudApi implements Api {
         return StreamingService.SOUNDCLOUD;
     }
 
+    @Override
+    public SoundcloudAccountDetails getAccountDetailsFromAccount(SoundcloudAccount account) {
+        SoundcloudAccountDetails details = new SoundcloudAccountDetails();
+        details.setId(account.getId());
+        details.setUsername(account.getUsername());
+        details.setUrl(account.getUrl());
+        details.setDisplayname(account.getDisplayname());
+        return details;
+    }
+
+    @Override
+    public SoundcloudAccessDetails getAccountAccessDetailsFromAccount(SoundcloudAccount account) {
+        SoundcloudAccessDetails accessDetails = new SoundcloudAccessDetails();
+        accessDetails.setAccessToken(account.getAccessToken());
+        accessDetails.setRefreshToken(account.getRefreshToken());
+        return accessDetails;
+    }
+
+    @Override
+    public void updateAccount(SoundcloudAccount account, SoundcloudAccountDetails details) {
+        account.setUsername(details.getUsername());
+        account.setUrl(details.getUrl());
+        account.setDisplayname(details.getDisplayname());
+
+    }
+
+    @Override
+    public void updateAccount(SoundcloudAccount account, SoundcloudAccessDetails accessDetails) {
+        account.setAccessToken(accessDetails.getAccessToken());
+        account.setRefreshToken(accessDetails.getRefreshToken());
+    }
+
     public String getLoginURL(String serverUrl, String state) throws UnsupportedEncodingException {
         return Soundcloud.LOGIN_URL + "?client_id=" + Soundcloud.CLIENT_ID + "&redirect_uri=" + encode(getRedirectUrl(serverUrl), "utf8")
                 + "&scope=" + encode(Soundcloud.SCOPE, "utf8") + "&state=" + state + "&response_type=code";
@@ -66,6 +99,10 @@ public class SoundcloudApi implements Api {
 
     private String getApiUrl(String action) {
         return Soundcloud.API_URL + action;
+    }
+
+    private String getApiUrl2(String action) {
+        return Soundcloud.API_URL_2 + action;
     }
 
     public SoundcloudAccountDetails login(UserDetails user, String code, String serverUrl) throws IOException {
@@ -92,7 +129,7 @@ public class SoundcloudApi implements Api {
     }
 
     @Override
-    public AccountDetails updateAccountDetails(UserDetails user) {
+    public SoundcloudAccountDetails updateAccountDetails(UserDetails user) {
         Optional<SoundcloudAccountDetails> accountDetails = accountService.getAccount(user, StreamingService.SOUNDCLOUD);
         Optional<SoundcloudAccessDetails> accessDetails = accessService.getAccessDetails(user, StreamingService.SOUNDCLOUD);
         if (accountDetails.isPresent() && accessDetails.isPresent()) {
@@ -131,8 +168,7 @@ public class SoundcloudApi implements Api {
             return emptyList();
         }
         try {
-            System.out.println(encode(search.trim(), "utf8"));
-            String url = getApiUrl("/tracks") + "?oauth_token=" + accessDetails.get().getAccessToken() + "&q=" + encode(search.trim(), "utf8") + "&limit=20";
+            String url = getApiUrl("/tracks") + "?oauth_token=" + accessDetails.get().getAccessToken() + "&q=" + encode(search.trim(), "utf8") + "&filter=streamable&limit=20";
             GetSoundcloudTrackResponse[] searchResponse = Get.forObject(url, GetSoundcloudTrackResponse[].class);
             List<TrackDetails> tracks = new ArrayList<>();
             stream(searchResponse).forEach(track -> tracks.add(trackToDetails(track)));
@@ -183,5 +219,57 @@ public class SoundcloudApi implements Api {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public List<TrackDetails> getChartTracks(UserDetails user) {
+        return getChartTracks(user, true);
+    }
+
+    private List<TrackDetails> getChartTracks(UserDetails user, boolean retry) {
+        Optional<SoundcloudAccessDetails> accessDetails = accessService.getAccessDetails(user, StreamingService.SOUNDCLOUD);
+        if (!accessDetails.isPresent()) {
+            return emptyList();
+        }
+        try {
+            String url = getApiUrl2("/charts") + "?oauth_token=" + accessDetails.get().getAccessToken() + "&kind=top&limit=10";
+            GetSoundcloudChartTracksResponse response = Get.forObject(url, GetSoundcloudChartTracksResponse.class);
+            List<TrackDetails> tracks = new ArrayList<>();
+            response.getCollection().forEach(chart -> tracks.add(trackToDetails(chart.getTrack())));
+            return tracks;
+        } catch (IOException e) {
+            if (e.getMessage().contains("401") && retry) {
+                refreshAccessDetails(user, accessDetails.get());
+                return getChartTracks(user, false);
+            }
+            e.printStackTrace();
+        }
+        return emptyList();
+    }
+
+    @Override
+    public List<TrackDetails> getNewReleasedTracks(UserDetails user) {
+        return getNewReleasedTracks(user, true);
+    }
+
+    private List<TrackDetails> getNewReleasedTracks(UserDetails user, boolean retry) {
+        Optional<SoundcloudAccessDetails> accessDetails = accessService.getAccessDetails(user, StreamingService.SOUNDCLOUD);
+        if (!accessDetails.isPresent()) {
+            return emptyList();
+        }
+        try {
+            String url = getApiUrl("/tracks") + "?oauth_token=" + accessDetails.get().getAccessToken() + "&filter=streamable&limit=10&order=created_at";
+            GetSoundcloudTrackResponse[] searchResponse = Get.forObject(url, GetSoundcloudTrackResponse[].class);
+            List<TrackDetails> tracks = new ArrayList<>();
+            stream(searchResponse).forEach(track -> tracks.add(trackToDetails(track)));
+            return tracks;
+        } catch (IOException e) {
+            if (e.getMessage().contains("401") && retry) {
+                refreshAccessDetails(user, accessDetails.get());
+                return getNewReleasedTracks(user, false);
+            }
+            e.printStackTrace();
+        }
+        return emptyList();
     }
 }

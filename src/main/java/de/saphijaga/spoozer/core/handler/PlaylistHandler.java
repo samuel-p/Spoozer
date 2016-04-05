@@ -17,10 +17,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.util.Collections.emptyList;
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
+import static java.util.stream.Collectors.toList;
 
 /**
  * Created by xce35l5 on 04.12.2015.
@@ -134,9 +136,7 @@ public class PlaylistHandler implements PlaylistService {
     @Override
     public List<PlaylistDetails> getPlaylists(UserDetails userDetails) {
         Optional<User> user = userService.getUser(userDetails.getId());
-        List<PlaylistDetails> detailsList = new ArrayList<>();
-        user.map(User::getPlaylists).orElse(emptyList()).forEach(playlist -> detailsList.add(toPlaylistDetails(playlist)));
-        return detailsList;
+        return user.map(User::getPlaylists).orElse(emptyList()).stream().map(this::toPlaylistDetails).collect(toList());
     }
 
     private PlaylistDetails toPlaylistDetails(Playlist playlist) {

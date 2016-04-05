@@ -10,6 +10,10 @@ import de.saphijaga.spoozer.web.details.AccountDetails;
 import de.saphijaga.spoozer.web.details.SoundcloudAccountDetails;
 import de.saphijaga.spoozer.web.details.SpotifyAccountDetails;
 
+import java.util.Arrays;
+
+import static java.util.Arrays.stream;
+
 /**
  * Created by samuel on 13.11.15.
  */
@@ -43,5 +47,13 @@ public enum StreamingService {
 
     public Class<? extends Api> getApiClass() {
         return apiClass;
+    }
+
+    public static StreamingService valueOfAccountClass(Class<? extends Account> accountClass) {
+        return stream(values()).filter(value -> value.getAccountClass().equals(accountClass)).findAny().orElse(null);
+    }
+
+    public static StreamingService valueOfAccountDetailsClass(Class<? extends AccountDetails> accountDetailsClass) {
+        return stream(values()).filter(value -> value.getAccountDetailsClass().equals(accountDetailsClass)).findAny().orElse(null);
     }
 }

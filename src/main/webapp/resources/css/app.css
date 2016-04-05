@@ -532,3 +532,36 @@ img.grayscale {
 .tracklist img {
     height: 60px;
 }
+
+#dashboard-list .panel {
+    margin: 0;
+}
+
+.dashboard-tracks {
+    max-height: 350px;
+    height: 350px;
+    overflow: auto;
+    margin: 0;
+    padding: 0;
+}
+
+.dashboard-tracks table {
+    margin: 0;
+    padding: 0;
+}
+
+.dashboard-tracks td {
+    padding: 2px;
+}
+
+.dashboard-tracks td .dashboard-track-buttons {
+    min-width: 95px;
+}
+
+.dashboard-tracks td .dashboard-track-image {
+    min-width: 40px;
+}
+
+.dashboard-tracks td .dashboard-track-image img {
+    height: 40px;
+}
