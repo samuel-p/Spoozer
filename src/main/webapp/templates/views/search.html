@@ -38,14 +38,4 @@
         </table>
     </div>
     <p class="light-text" ng-show="isSearchResultEmpty()">Keine Ergebnisse gefunden!</p>
-    <script type="text/ng-template" id="AddTrackToPlaylistContent.html">
-        <h3>Playlist auswählen</h3>
-        <ul class="list" style="max-height: 250px; overflow: auto;">
-            <li ng-repeat="playlist in playlists | orderBy:'name'" ng-class="{selected: (selected.playlist == playlist)}">
-                <a ng-click="selected.playlist = playlist">{{playlist.name}}</a>
-            </li>
-        </ul>
-        <button class="button spoozer" ng-click="ok()" ng-disabled="!selected.playlist">OK</button>
-        <a class="close-reveal-modal" ng-click="cancel()">&#215;</a>
-    </script>
 </div>

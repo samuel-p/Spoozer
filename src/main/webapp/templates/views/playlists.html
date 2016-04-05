@@ -57,7 +57,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="track in playlist.tracks" ng-click="showPlaylist(list)">
+            <tr ng-repeat="track in playlist.tracks track by $index" ng-click="showPlaylist(list)">
                 <td>
                     <img ng-src="{{track.coverUrl}}"/>
                 </td>
@@ -66,18 +66,16 @@
                 <td>{{track.durationInMillis | timeFromMillisFilter}}</td>
                 <td>
                     <ul class="button-group radius right">
-                        <!--
                         <li>
-                            <button class="button spoozer small" ng-click="playPlaylist(playlist, track)"><span
+                            <button class="button spoozer small" ng-click="playList(playlist, $index)"><span
                                     class="fa fa-play"></span>
                             </button>
                         </li>
                         <li>
-                            <button class="button spoozer small"><span
+                            <button class="button spoozer small" ng-click="addToPlaylist(track)"><span
                                     class="fa fa-plus"></span>
                             </button>
                         </li>
-                        -->
                         <li>
                             <button class="button spoozer small" ng-click="deleteTrackFromPlaylist($event, track)"><span
                                     class="fa fa-trash"></span>

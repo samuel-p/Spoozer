@@ -13,9 +13,9 @@ angular.module('ngPlayer', []).service('$player', [function () {
     this.loop = false;
     this.volume = 1;
 
-    this.play = function (playlist) {
+    this.play = function (playlist, index) {
         this.queue = playlist.tracks;
-        this.index = 0;
+        this.index = index | 0;
         this.playCurrent();
     };
 
@@ -55,7 +55,6 @@ angular.module('ngPlayer', []).service('$player', [function () {
         if (this.playing) {
             this.playing.stop();
         }
-        console.log(this.index);
         var track = this.queue[this.index];
         if (track.service == 'SOUNDCLOUD') {
             this.playing = new SoundcloudPlayer(track, this.volume);
