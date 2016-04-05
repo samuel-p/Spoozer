@@ -3,7 +3,7 @@ package de.saphijaga.spoozer.web.controller;
 import de.saphijaga.spoozer.service.utils.ApiService;
 import de.saphijaga.spoozer.web.details.TrackDetails;
 import de.saphijaga.spoozer.web.domain.request.GetSearchResultRequest;
-import de.saphijaga.spoozer.web.domain.response.GetSearchResultResponse;
+import de.saphijaga.spoozer.web.domain.response.GetServiceTrackResultResponse;
 import de.saphijaga.spoozer.web.details.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -23,7 +23,7 @@ public class TrackController {
 
     @MessageMapping("/getSearchResult")
     @SendToUser("/setSearchResult")
-    public GetSearchResultResponse getSearchResult(UserDetails user, @Payload GetSearchResultRequest request) {
+    public GetServiceTrackResultResponse getSearchResult(UserDetails user, @Payload GetSearchResultRequest request) {
         Map<String, List<TrackDetails>> searchResult = new HashMap<>();
         apiService.getApis().forEach(api -> {
             List<TrackDetails> apiResult = api.getSearchResult(user, request.getSearch());
@@ -31,6 +31,6 @@ public class TrackController {
                 searchResult.put(api.getService().name().toLowerCase(), apiResult);
             }
         });
-        return new GetSearchResultResponse(searchResult);
+        return new GetServiceTrackResultResponse(searchResult);
     }
 }

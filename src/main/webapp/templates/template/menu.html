@@ -26,7 +26,7 @@
         <a href="#/profile/accounts">Accounts</a>
         <ul class="dropdown">
             <li ng-repeat="(service, account) in userAccounts">
-                <a ng-href="{{account.url}}" target="_blank">{{account.serviceName}}</a>
+                <a ng-href="{{account.url}}" target="_blank"><span class="fa fa-{{account.serviceName | lowercase}} fa-fw"></span> {{account.serviceName}}</a>
             </li>
         </ul>
         <ul class="dropdown" ng-show="areUserAccountsEmpty()">
