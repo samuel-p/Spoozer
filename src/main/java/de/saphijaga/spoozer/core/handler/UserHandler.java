@@ -1,9 +1,16 @@
 package de.saphijaga.spoozer.core.handler;
 
+import de.saphijaga.spoozer.persistence.domain.HTrack;
+import de.saphijaga.spoozer.persistence.domain.History;
+import de.saphijaga.spoozer.persistence.domain.Track;
 import de.saphijaga.spoozer.persistence.domain.User;
 import de.saphijaga.spoozer.core.service.UserService;
+import de.saphijaga.spoozer.persistence.service.TrackPersistenceService;
 import de.saphijaga.spoozer.persistence.service.UserPersistenceService;
+import de.saphijaga.spoozer.service.utils.ApiService;
+import de.saphijaga.spoozer.web.details.TrackDetails;
 import de.saphijaga.spoozer.web.details.UserDetails;
+import de.saphijaga.spoozer.web.domain.request.AddHTrackRequest;
 import de.saphijaga.spoozer.web.domain.request.ChangePasswordRequest;
 import de.saphijaga.spoozer.web.domain.request.RegisterUserRequest;
 import de.saphijaga.spoozer.web.domain.request.SaveUserRequest;
@@ -11,6 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import static java.util.Optional.empty;
@@ -26,7 +36,13 @@ public class UserHandler implements UserService {
     private UserPersistenceService userService;
 
     @Autowired
+    private TrackPersistenceService trackService;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private ApiService api;
 
     @Override
     public Optional<UserDetails> registerUser(RegisterUserRequest request) {
@@ -91,10 +107,80 @@ public class UserHandler implements UserService {
         return toUserDetails(userUpdate);
     }
 
+    @Override
+    public Optional<UserDetails> addSongToHistory(UserDetails userDetails, AddHTrackRequest request) {
+        Optional<User> user = userService.getUser(userDetails.getId());
+        Optional<Track> song = trackService.getTrack(request.getService(), request.getId());
+        if(!song.isPresent()){
+            song = Optional.of(toTrack(api.getApi(request.getService()).getTrack(userDetails, request.getId())));
+            trackService.saveTrack(song.get());
+        }
+        user.get().getHistory().addSong(song.get());
+        System.out.println("Song added");
+        user = userService.saveUser(user.get());
+        return toUserDetails(user);
+    }
+
+    private Track toTrack(TrackDetails trackDetails) {
+        Track track = new Track();
+        track.setServiceId(trackDetails.getId());
+        track.setService(trackDetails.getService());
+        track.setTitle(trackDetails.getTitle());
+        track.setDurationInMillis(trackDetails.getDurationInMillis());
+        track.setInterpret(trackDetails.getInterpret());
+        track.setAlbum(trackDetails.getAlbum());
+        track.setCoverUrl(trackDetails.getCoverUrl());
+        track.setUrl(trackDetails.getUrl());
+        track.setExternalUrl(trackDetails.getUrl());
+        return track;
+    }
+
+    @Override
+    public Optional<UserDetails> cutUserHistory(UserDetails userDetails, int limit) {
+        Optional<User> user = userService.getUser(userDetails.getId());
+        user.get().getHistory().cutListtoLimit(limit);
+        return toUserDetails(user);
+    }
+
+    @Override
+    public Optional<UserDetails> clearUserHistory(UserDetails userDetails) {
+        Optional<User> user = userService.getUser(userDetails.getId());
+        user.get().getHistory().clearHistory();
+        return toUserDetails(user);
+    }
+
+    @Override
+    public Map<Date, TrackDetails> getHistoryMap(UserDetails userDetails) {
+        Map<Date, TrackDetails> historyMap = new HashMap<>();
+        User user = userService.getUser(userDetails.getId()).get();
+        History history = user.getHistory();
+        for (HTrack track : history.getSongs()){
+            historyMap.put(track.getDate(), toTrackDetails(track.getTrack()));
+        }
+        return historyMap;
+    }
+
     private void updateUser(User user, SaveUserRequest request) {
         user.setName(request.getName());
         user.setEmail(request.getEmail());
         user.setUsername(request.getUsername());
+    }
+
+    private TrackDetails toTrackDetails(Track track) {
+        if (track == null) {
+            return null;
+        }
+        TrackDetails trackDetails = new TrackDetails();
+        trackDetails.setId(track.getServiceId());
+        trackDetails.setService(track.getService());
+        trackDetails.setTitle(track.getTitle());
+        trackDetails.setDurationInMillis(track.getDurationInMillis());
+        trackDetails.setInterpret(track.getInterpret());
+        trackDetails.setAlbum(track.getAlbum());
+        trackDetails.setCoverUrl(track.getCoverUrl());
+        trackDetails.setUrl(track.getUrl());
+        trackDetails.setExternalUrl(track.getUrl());
+        return trackDetails;
     }
 
 }

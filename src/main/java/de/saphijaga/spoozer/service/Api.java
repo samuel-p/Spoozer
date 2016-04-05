@@ -1,20 +1,49 @@
 package de.saphijaga.spoozer.service;
 
+import de.saphijaga.spoozer.persistence.domain.Account;
+import de.saphijaga.spoozer.persistence.domain.Track;
 import de.saphijaga.spoozer.web.details.AccountDetails;
 import de.saphijaga.spoozer.web.details.TrackDetails;
 import de.saphijaga.spoozer.web.details.UserDetails;
 
+import java.util.Collections;
 import java.util.List;
+
+import static java.util.Collections.emptyList;
 
 /**
  * Created by samuel on 14.11.15.
  */
-public interface Api {
+public interface Api<ApiAccount extends Account, ApiAccountDetails extends AccountDetails, ApiAccountAccessDetails extends AccountAccessDetails> {
     StreamingService getService();
 
-    AccountDetails updateAccountDetails(UserDetails userDetails);
+    ApiAccountDetails getAccountDetailsFromAccount(ApiAccount account);
+
+    ApiAccountAccessDetails getAccountAccessDetailsFromAccount(ApiAccount account);
+
+    void updateAccount(ApiAccount account, ApiAccountDetails details);
+
+    void updateAccount(ApiAccount account, ApiAccountAccessDetails accessDetails);
+
+    ApiAccountDetails updateAccountDetails(UserDetails userDetails);
 
     List<TrackDetails> getSearchResult(UserDetails user, String search);
 
     TrackDetails getTrack(UserDetails user, String id);
+
+    default List<TrackDetails> getChartTracks(UserDetails user) {
+        return emptyList();
+    }
+
+    default List<TrackDetails> getNewReleasedTracks(UserDetails user) {
+        return emptyList();
+    }
+
+    default List<TrackDetails> getTrendingTracks(UserDetails user) {
+        return emptyList();
+    }
+
+    default List<TrackDetails> getFeaturedTracks(UserDetails user) {
+        return emptyList();
+    }
 }

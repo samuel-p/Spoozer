@@ -1,6 +1,7 @@
 package de.saphijaga.spoozer.service.spotify.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
@@ -11,6 +12,8 @@ import java.util.List;
 public class SpotifyAlbumResponse {
     private String id;
     private String name;
+    @JsonProperty("album_type")
+    private String albumType;
     private List<SpotifyImageResponse> images;
 
     public String getId() {
@@ -35,5 +38,13 @@ public class SpotifyAlbumResponse {
 
     public void setImages(List<SpotifyImageResponse> images) {
         this.images = images;
+    }
+
+    public String getAlbumType() {
+        return albumType;
+    }
+
+    public void setAlbumType(String albumType) {
+        this.albumType = albumType;
     }
 }

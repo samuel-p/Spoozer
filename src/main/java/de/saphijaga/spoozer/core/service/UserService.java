@@ -1,10 +1,15 @@
 package de.saphijaga.spoozer.core.service;
 
+import de.saphijaga.spoozer.persistence.domain.Track;
+import de.saphijaga.spoozer.web.details.TrackDetails;
 import de.saphijaga.spoozer.web.details.UserDetails;
+import de.saphijaga.spoozer.web.domain.request.AddHTrackRequest;
 import de.saphijaga.spoozer.web.domain.request.ChangePasswordRequest;
 import de.saphijaga.spoozer.web.domain.request.RegisterUserRequest;
 import de.saphijaga.spoozer.web.domain.request.SaveUserRequest;
 
+import java.util.Date;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -20,4 +25,12 @@ public interface UserService {
     Optional<UserDetails> saveUserDetails(UserDetails user, SaveUserRequest request);
 
     Optional<UserDetails> changeUserPassword(UserDetails user, ChangePasswordRequest changePasswordRequest);
+
+    Optional<UserDetails> addSongToHistory(UserDetails user,AddHTrackRequest request);
+
+    Optional<UserDetails> cutUserHistory(UserDetails user,int limit);
+
+    Optional<UserDetails> clearUserHistory(UserDetails user);
+
+    Map<Date, TrackDetails> getHistoryMap(UserDetails user);
 }
