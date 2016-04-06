@@ -71,12 +71,21 @@ public class UserController {
     public void AddHistoryTrack(UserDetails user, @Payload AddHTrackRequest addHTrackRequest) {
         if (userService.getUserDetails(user.getId()).isPresent())
             userService.addSongToHistory(user, addHTrackRequest);
-        System.out.println("Adding title to History! " + addHTrackRequest.getId());
     }
 
     @MessageMapping("/getHistory")
     @SendToUser("/setHistory")
     public HistoryResponse getHistory(UserDetails user){
+        Map<Date, TrackDetails> history = userService.getHistoryMap(user);
+        HistoryDetails historyDetails = new HistoryDetails();
+        historyDetails.setHistory(history);
+        return new HistoryResponse(historyDetails);
+    }
+
+    @MessageMapping("/clearHistory")
+    @SendToUser("/setHistory")
+    public HistoryResponse clearHistory(UserDetails user){
+        userService.clearUserHistory(user);
         Map<Date, TrackDetails> history = userService.getHistoryMap(user);
         HistoryDetails historyDetails = new HistoryDetails();
         historyDetails.setHistory(history);

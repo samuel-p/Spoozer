@@ -116,7 +116,6 @@ public class UserHandler implements UserService {
             trackService.saveTrack(song.get());
         }
         user.get().getHistory().addSong(song.get());
-        System.out.println("Song added");
         user = userService.saveUser(user.get());
         return toUserDetails(user);
     }
@@ -146,6 +145,7 @@ public class UserHandler implements UserService {
     public Optional<UserDetails> clearUserHistory(UserDetails userDetails) {
         Optional<User> user = userService.getUser(userDetails.getId());
         user.get().getHistory().clearHistory();
+        user = userService.saveUser(user.get());
         return toUserDetails(user);
     }
 
