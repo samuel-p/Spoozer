@@ -4,7 +4,7 @@ angular.module('ngPlayer', []).service('$player', [function () {
         'update': [],
         'start': [],
         'stop': [],
-        'changeTrack':[]
+        'changeTrack': []
     };
     this.queue = [];
     this.index = 0;
@@ -13,10 +13,10 @@ angular.module('ngPlayer', []).service('$player', [function () {
     this.loop = false;
     this.volume = 1;
 
-    this.play = function (playlist) {
+    this.play = function (playlist, index, loadOnly) {
         this.queue = playlist.tracks;
-        this.index = 0;
-        this.playCurrent();
+        this.index = index | 0;
+        this.playCurrent(loadOnly);
     };
 
     this.pause = function () {
@@ -51,16 +51,15 @@ angular.module('ngPlayer', []).service('$player', [function () {
         return this.running != null;
     };
 
-    this.playCurrent = function () {
+    this.playCurrent = function (loadOnly) {
         if (this.playing) {
             this.playing.stop();
         }
-        console.log(this.index);
         var track = this.queue[this.index];
         if (track.service == 'SOUNDCLOUD') {
-            this.playing = new SoundcloudPlayer(track, this.volume);
+            this.playing = new SoundcloudPlayer(track, this.volume, loadOnly);
         } else {
-            this.playing = new HowlPlayer(track, this.volume);
+            this.playing = new HowlPlayer(track, this.volume, loadOnly);
         }
         var self = this;
         this.playing.setOnStart(function () {
@@ -126,7 +125,8 @@ angular.module('ngPlayer', []).service('$player', [function () {
     };
 
     this.setPosition = function (value) {
-        this.playing.setPosition(value);
+        if (this.playing)
+            this.playing.setPosition(value);
     };
 
     this.setVolume = function (value) {
@@ -140,6 +140,8 @@ angular.module('ngPlayer', []).service('$player', [function () {
         if (this.playing) {
             return this.playing.get();
         }
-        return null;
+        return {
+            volume: this.volume
+        };
     };
 }]);

@@ -3,23 +3,18 @@ package de.saphijaga.spoozer.web.domain.response;
 import de.saphijaga.spoozer.web.details.TrackDetails;
 
 import java.util.List;
-import java.util.Map;
 
 /**
- * Created by samuel on 08.11.15.
+ * Created by samuel on 04.04.16.
  */
 public class GetTrackResultResponse {
-    private Map<String, List<TrackDetails>> tracks;
+    private List<TrackDetails> tracks;
 
-    public GetTrackResultResponse(Map<String, List<TrackDetails>> tracks) {
+    public GetTrackResultResponse(List<TrackDetails> tracks) {
         this.tracks = tracks;
     }
 
-    public Map<String, List<TrackDetails>> getTracks() {
+    public List<TrackDetails> getTracks() {
         return tracks;
-    }
-
-    public void setTracks(Map<String, List<TrackDetails>> tracks) {
-        this.tracks = tracks;
     }
 }

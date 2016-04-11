@@ -10,8 +10,8 @@ app.controller('DashboardCtrl', function ($scope, $ws) {
                 while (divs.length > 8) {
                     divs.splice(divs.length - 1, 1)[0].remove();
                 }
-                while (divs.length) {
-                    parent.append(divs.splice(Math.floor(Math.random() * divs.length), 1)[0]);
+                while (divs.length - 1) {
+                    parent.append(divs.splice(Math.floor(Math.random() * (divs.length - 1) + 1), 1)[0]);
                 }
                 $(document).foundation('reflow');
                 $scope.hideLoadingView();
@@ -19,6 +19,12 @@ app.controller('DashboardCtrl', function ($scope, $ws) {
         });
     });
     $ws.send('/getDashboardProperties');
+    $ws.subscribe("/setHistoryTracks", function (payload, headers, res) {
+        $scope.$applyAsync(function () {
+            $scope.historyTracks = payload.tracks;
+        });
+    });
+    $ws.send('/getHistoryTracks');
     $ws.subscribe("/setChartTracks", function (payload, headers, res) {
         $scope.$applyAsync(function () {
             $scope.chartTracks = payload.tracks;

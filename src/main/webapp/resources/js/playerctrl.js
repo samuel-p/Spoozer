@@ -1,7 +1,26 @@
 app.controller('PlayerCtrl', function ($player, $scope, $modal, $window, $ws) {
+    $ws.subscribe('/setProperties', function (data) {
+        $scope.properties = data.properties;
+        if (data.properties.playerVolume)
+            $player.setVolume(data.properties.playerVolume);
+        if (data.properties.playerTrackService && data.properties.playerTrackId) {
+            $ws.send('/getServiceTrackDetails', {
+                service: data.properties.playerTrackService,
+                id: data.properties.playerTrackId
+            });
+        }
+    });
+    $ws.send('/getProperties');
+    $ws.subscribe('/setServiceTrackDetails', function (data) {
+        $player.play({
+            name: 'Letzter abgespielter Song',
+            tracks: [data.track]
+        }, 0, true);
+    });
     var volumeSlider = new PlayerSlider($('#player-volume-slider'));
     volumeSlider.change(function () {
-        $player.setVolume(volumeSlider.get() / 100);
+        var volume = volumeSlider.get() / 100;
+        $player.setVolume(volume);
     });
     $scope.pauseTrack = function () {
         $player.pause();
@@ -64,17 +83,30 @@ app.controller('PlayerCtrl', function ($player, $scope, $modal, $window, $ws) {
     };
     $player.bind('start', function () {
         $scope.show();
-
     });
     $player.bind('stop', function () {
         $scope.hide();
+        $ws.send('/saveProperties', {
+            playerTrackId: '[empty]',
+            playerTrackService: '[empty]'
+        });
     });
     $player.bind('change', function (player) {
         $scope.$applyAsync(function () {
             $scope.player = player;
             volumeSlider.set(player.volume * 100);
-            new AutoScrollView($('#player-track-info'), player.track.title);
-
+            if (player.track)
+                new AutoScrollView($('#player-track-info'), player.track.title);
+            var properties = {
+                playerVolume: player.volume,
+                playerTrackId: '[empty]',
+                playerTrackService: '[empty]'
+            };
+            if (player.track) {
+                properties.playerTrackId = player.track.id;
+                properties.playerTrackService = player.track.service;
+            }
+            $ws.send('/saveProperties', properties);
         });
     });
 

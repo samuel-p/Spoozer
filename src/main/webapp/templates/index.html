@@ -27,6 +27,16 @@
                         <div class="large-11 medium-10 small-12 columns dynamic-content">
                             <div class="view" ng-view=""></div>
                             <div class="loading-view"><img src="img/load.gif"/></div>
+                            <script type="text/ng-template" id="AddTrackToPlaylistContent.html">
+                                <h3>Playlist auswählen</h3>
+                                <ul class="list" style="max-height: 250px; overflow: auto;">
+                                    <li ng-repeat="playlist in playlists | orderBy:'name'" ng-class="{selected: (selected.playlist == playlist)}">
+                                        <a ng-click="selected.playlist = playlist">{{playlist.name}}</a>
+                                    </li>
+                                </ul>
+                                <button class="button spoozer" ng-click="ok()" ng-disabled="!selected.playlist">OK</button>
+                                <a class="close-reveal-modal" ng-click="cancel()">&#215;</a>
+                            </script>
                         </div>
                     </div>
                     <div class="row player spoozer-background" ng-controller="PlayerCtrl">

@@ -23,4 +23,9 @@ app.controller('HistoryCtrl', function ($ws, $scope, $rootScope, $routeParams, $
         return Object.keys($scope.history).length == 0;
     };
 
+    $scope.clearHistory = function () {
+        $ws.send('/clearHistory');
+    };
+
+
 });

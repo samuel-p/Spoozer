@@ -2,7 +2,10 @@
     <li>
         <div class="panel" data-equalizer-watch="panels">
             <h2>Willkommen zurück!</h2>
-            <p>TODO</p>
+            <h4 ng-show="userDetails.name">Hallo {{userDetails.name}},</h4>
+            <h4 ng-hide="userDetails.name">Hallo {{userDetails.username}},</h4>
+            <p>Herzlich willkommen zurück auf <i>Spoozer</i>. Viel Spaß beim Musik hören!</p>
+            <h4>Dein <i>Spoozer</i>-Team</h4>
         </div>
     </li>
     <li ng-if="!properties.spotify">
@@ -18,6 +21,14 @@
             <p><img src="img/soundcloud.png"></p>
             <p>Verbinde jetzt deinen Soundcloud-Account mit Spoozer!<br><br></p>
             <p class="text-center"><a class="button round soundcloud" href="#/profile/accounts">Zu den Einstellungen
+                <span class="fa fa-arrow-right"></span></a><br><br><br></p>
+        </div>
+    </li>
+    <li ng-if="!properties.youtube">
+        <div class="panel" data-equalizer-watch="panels">
+            <p><img src="img/youtube.png"></p>
+            <p>Verbinde jetzt deinen YouTube-Account mit Spoozer!<br><br></p>
+            <p class="text-center"><a class="button round youtube" href="#/profile/accounts">Zu den Einstellungen
                 <span class="fa fa-arrow-right"></span></a><br><br><br></p>
         </div>
     </li>
@@ -52,10 +63,9 @@
     <li ng-if="properties.spotify">
         <div class="panel" data-equalizer-watch="panels">
             <h3>Neues von Spotify:</h3>
-            <!--<h4 ng-show="newReleasedTracks.spotify[0].interpret">Neues von {{newReleasedTracks.spotify[0].interpret}} auf Spotify:</h4>-->
             <div class="dashboard-tracks">
                 <table class="table fill">
-                    <tr ng-repeat="track in newReleasedTracks.spotify" class="dashboard-track">
+                    <tr ng-repeat="track in newReleasedTracks.spotify track by $index" class="dashboard-track">
                         <td>
                             <div class="dashboard-track-image left">
                                 <img ng-src="{{track.coverUrl}}"/>
@@ -66,7 +76,7 @@
                             <div class="dashboard-track-buttons right">
                                 <ul class="button-group radius">
                                     <li>
-                                        <button class="button spotify tiny" ng-click="playTrack(track)"><span
+                                        <button class="button spotify tiny" ng-click="playTracks('Neues von Spotify', newReleasedTracks.spotify, $index)"><span
                                                 class="fa fa-play"></span>
                                         </button>
                                     </li>
@@ -88,7 +98,7 @@
             <h3>Vorschläge von Spotify:</h3>
             <div class="dashboard-tracks">
                 <table class="table fill">
-                    <tr ng-repeat="track in featuredTracks.spotify" class="dashboard-track">
+                    <tr ng-repeat="track in featuredTracks.spotify track by $index" class="dashboard-track">
                         <td>
                             <div class="dashboard-track-image left">
                                 <img ng-src="{{track.coverUrl}}"/>
@@ -99,7 +109,7 @@
                             <div class="dashboard-track-buttons right">
                                 <ul class="button-group radius">
                                     <li>
-                                        <button class="button spotify tiny" ng-click="playTrack(track)"><span
+                                        <button class="button spotify tiny" ng-click="playTracks('Vorschläge von Spotify', featuredTracks.spotify, $index)"><span
                                                 class="fa fa-play"></span>
                                         </button>
                                     </li>
@@ -121,7 +131,7 @@
             <h3>Charts auf Soundcloud:</h3>
             <div class="dashboard-tracks">
                 <table class="table fill">
-                    <tr ng-repeat="track in chartTracks.soundcloud" class="dashboard-track">
+                    <tr ng-repeat="track in chartTracks.soundcloud track by $index" class="dashboard-track">
                         <td>
                             <div class="dashboard-track-image left">
                                 <img ng-src="{{track.coverUrl}}"/>
@@ -132,7 +142,7 @@
                             <div class="dashboard-track-buttons right">
                                 <ul class="button-group radius">
                                     <li>
-                                        <button class="button soundcloud tiny" ng-click="playTrack(track)"><span
+                                        <button class="button soundcloud tiny" ng-click="playTracks('Charts auf Soundcloud', chartTracks.soundcloud, $index)"><span
                                                 class="fa fa-play"></span>
                                         </button>
                                     </li>
@@ -154,7 +164,7 @@
             <h3>Neues von Soundcloud:</h3>
             <div class="dashboard-tracks">
                 <table class="table fill">
-                    <tr ng-repeat="track in newReleasedTracks.soundcloud" class="dashboard-track">
+                    <tr ng-repeat="track in newReleasedTracks.soundcloud track by $index" class="dashboard-track">
                         <td>
                             <div class="dashboard-track-image left">
                                 <img ng-src="{{track.coverUrl}}"/>
@@ -165,7 +175,7 @@
                             <div class="dashboard-track-buttons right">
                                 <ul class="button-group radius">
                                     <li>
-                                        <button class="button soundcloud tiny" ng-click="playTrack(track)"><span
+                                        <button class="button soundcloud tiny" ng-click="playTracks('Neues von Soundcloud', newReleasedTracks.soundcloud, $index)"><span
                                                 class="fa fa-play"></span>
                                         </button>
                                     </li>
@@ -185,15 +195,34 @@
     <li>
         <div class="panel" data-equalizer-watch="panels">
             <h3>Zuletzt angehört:</h3>
-            <p><strong>TODO</strong> show songs from history</p>
-        </div>
-    </li>
-    <li>
-        <div class="panel" data-equalizer-watch="panels">
-            <h4>This is a regular panel.</h4>
-            <p>It has an easy to override visual style, and is appropriately subdued.</p>
-            <p>It has an easy to override visual style, and is appropriately subdued.</p>
-            <p>It has an easy to override visual style, and is appropriately subdued.</p>
+            <div class="dashboard-tracks">
+                <table class="table fill">
+                    <tr ng-repeat="track in historyTracks track by $index" class="dashboard-track">
+                        <td>
+                            <div class="dashboard-track-image left">
+                                <img ng-src="{{track.coverUrl}}"/>
+                            </div>
+                        </td>
+                        <td>{{track.title}}</td>
+                        <td>
+                            <div class="dashboard-track-buttons right">
+                                <ul class="button-group radius">
+                                    <li>
+                                        <button class="button spoozer tiny" ng-click="playTracks('Zuletzt angehört', historyTracks, $index)"><span
+                                                class="fa fa-play"></span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="button spoozer tiny" ng-click="addToPlaylist(track)"><span
+                                                class="fa fa-plus"></span>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </li>
     <li>
