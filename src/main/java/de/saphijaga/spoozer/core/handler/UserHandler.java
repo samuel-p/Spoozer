@@ -114,6 +114,7 @@ public class UserHandler implements UserService {
     public void clearUserHistory(UserDetails userDetails) {
         Optional<User> user = userService.getUser(userDetails.getId());
         user.get().getHistory().clearHistory();
+        user = userService.saveUser(user.get());
     }
 
     @Override

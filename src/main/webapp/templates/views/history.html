@@ -1,6 +1,7 @@
 <div>
     <h3 style="color: white">Verlauf</h3>
-    <table class="search-result table fill">
+
+    <table class="search-result table fill" ng-hide="isHistoryEmpty()">
         <thead>
         <tr>
             <th></th>
@@ -23,4 +24,5 @@
         </tbody>
     </table>
     <p class="light-text" ng-show="isHistoryEmpty()">Keinen Verlauf gefunden!</p>
+    <a ng-hide="isHistoryEmpty()" ng-click="clearHistory()" class="small" style="color:white">Verlauf löschen</a>
 </div>
