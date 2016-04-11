@@ -51,7 +51,7 @@ public class TrackHandler implements TrackService {
         if (playlist.isPresent()) {
             List<Track> tracks = playlist.map(Playlist::getTracks).orElse(emptyList());
             Track track = trackService.getTrack(trackDetails.getService(), trackDetails.getId()).orElse(toTrack(trackDetails));
-
+            trackService.saveTrack(track);
             tracks.add(track);
             playlistService.savePlaylist(playlist.get());
         }
