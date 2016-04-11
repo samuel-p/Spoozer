@@ -1,46 +1,38 @@
 var app = angular.module('spoozerApp', ['ngRoute', 'ngWs', 'mm.foundation', 'ngAnimate', 'ngTouch', 'ngPlayer']);
 app.config(function ($routeProvider) {
-    $routeProvider.
-    when('/dashboard', {
+    $routeProvider.when('/dashboard', {
         templateUrl: 'views/dashboard.html',
         controller: 'DashboardCtrl',
         caseInsensitiveMatch: true
-    }).
-    when('/search/:text', {
+    }).when('/search/:text', {
         templateUrl: 'views/search.html',
         controller: 'SearchResultCtrl',
         caseInsensitiveMatch: true
-    }).
-    when('/profile', {
+    }).when('/profile', {
         templateUrl: 'views/profile.html',
         controller: 'ProfileCtrl',
         caseInsensitiveMatch: true
-    }).
-    when('/profile/:tab', {
+    }).when('/profile/:tab', {
         templateUrl: 'views/profile.html',
         controller: 'ProfileCtrl',
         caseInsensitiveMatch: true
-    }).
-    when('/playlists', {
+    }).when('/playlists', {
         templateUrl: 'views/playlists.html',
         controller: 'PlaylistCtrl',
         caseInsensitiveMatch: true
-    }).
-    when('/playlists/:playlist', {
+    }).when('/playlists/:playlist', {
         templateUrl: 'views/playlists.html',
         controller: 'PlaylistCtrl',
         caseInsensitiveMatch: true
-    }).
-    when('/history', {
+    }).when('/history', {
         templateUrl: 'views/history.html',
         controller: 'HistoryCtrl',
         caseInsensitiveMatch: true
-    }).
-    otherwise({
+    }).otherwise({
         redirectTo: '/dashboard'
     });
 });
-app.run(function ($rootScope, $window, $location, $ws, $route) {
+app.run(function ($rootScope, $window, $location, $ws, $route, $modal, $player) {
     $rootScope.$on('$routeChangeSuccess', function (next, current) {
         $rootScope.hideLoadingView();
         $rootScope.$applyAsync(function () {
@@ -57,6 +49,7 @@ app.run(function ($rootScope, $window, $location, $ws, $route) {
 
     $ws.subscribe('/setUserDetails', function (payload, headers, res) {
         $rootScope.$applyAsync(function () {
+            console.log(payload.userDetails);
             $rootScope.userDetails = payload.userDetails;
         });
     });
@@ -136,6 +129,66 @@ app.run(function ($rootScope, $window, $location, $ws, $route) {
             });
         }
         return originalPath.apply($location, [path]);
+    };
+    $ws.subscribe('/setSoundcloudClientId', function (clientId) {
+        SC.initialize({
+            client_id: clientId.data
+        });
+    });
+    $ws.send('/getSoundcloudClientId');
+    $rootScope.playTrack = function (track) {
+        $player.play({
+            name: track.title,
+            tracks: [track]
+        });
+    };
+    $rootScope.playTracks = function (title, tracks, index) {
+        $player.play({
+            name: title,
+            tracks: tracks
+        }, index);
+    };
+    $rootScope.playList = function (playlist, index) {
+        $player.play(playlist, index);
+    };
+    $rootScope.addToPlaylist = function (track) {
+        var modalInstance = $modal.open({
+            templateUrl: 'AddTrackToPlaylistContent.html',
+            controller: 'AddTrackToPlaylistCtrl',
+        });
+
+        modalInstance.result.then(function (playlist) {
+            if (angular.isDefined(playlist)) {
+                $ws.send('/addSongToPlaylist', {
+                    playlistId: playlist.id,
+                    trackId: track.id,
+                    service: track.service
+                });
+            }
+        });
+    };
+});
+app.controller('AddTrackToPlaylistCtrl', function ($scope, $modalInstance, $ws) {
+    $scope.selected = {
+        playlist: null
+    };
+    var updatePlaylists = function (payload, headers, res) {
+        $scope.$applyAsync(function () {
+            $scope.playlists = payload.playlists;
+            $modalInstance.reposition();
+        });
+    };
+    $ws.subscribe('/setPlaylists', updatePlaylists);
+    $ws.send('/getPlaylists');
+
+    $scope.ok = function () {
+        $modalInstance.close($scope.selected.playlist);
+        $ws.unsubscribe('/setPlaylists', updatePlaylists);
+    };
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+        $ws.unsubscribe('/setPlaylists', updatePlaylists);
     };
 });
 app.filter('timeFromMillisFilter', function () {

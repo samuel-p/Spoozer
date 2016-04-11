@@ -41,7 +41,7 @@ public class SpotifyController {
     }
 
     @RequestMapping("/spotify/callback")
-    public String spotifyCallback(@RequestParam(required = false) String code, @RequestParam String state, HttpSession session, UserDetails user) throws Exception {
+    public String callback(@RequestParam(required = false) String code, @RequestParam String state, HttpSession session, UserDetails user) throws Exception {
         String sessionState = (String) session.getAttribute(Spotify.STATE);
         if (state.equals(sessionState)) {
             session.removeAttribute(Spotify.STATE);

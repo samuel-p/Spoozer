@@ -25,6 +25,9 @@ app.controller('ProfileCtrl', function ($ws, $scope, $modal, $window, $rootScope
     $scope.spotifyLogout = function () {
         $ws.send('/spotify/logout');
     };
+    $scope.soundcloudLogout = function () {
+        $ws.send('/soundcloud/logout');
+    };
 
     $scope.areUserAccountsEmpty = function () {
         return !angular.isDefined($rootScope.userAccounts) || Object.keys($rootScope.userAccounts).length == 0;

@@ -1,6 +1,5 @@
 package de.saphijaga.spoozer.core.service;
 
-import de.saphijaga.spoozer.persistence.domain.Track;
 import de.saphijaga.spoozer.web.details.TrackDetails;
 import de.saphijaga.spoozer.web.details.UserDetails;
 import de.saphijaga.spoozer.web.domain.request.AddHTrackRequest;
@@ -26,11 +25,15 @@ public interface UserService {
 
     Optional<UserDetails> changeUserPassword(UserDetails user, ChangePasswordRequest changePasswordRequest);
 
-    Optional<UserDetails> addSongToHistory(UserDetails user,AddHTrackRequest request);
+    void addSongToHistory(UserDetails user, AddHTrackRequest request);
 
-    Optional<UserDetails> cutUserHistory(UserDetails user,int limit);
+    void cutUserHistory(UserDetails user, int limit);
 
-    Optional<UserDetails> clearUserHistory(UserDetails user);
+    void clearUserHistory(UserDetails user);
 
     Map<Date, TrackDetails> getHistoryMap(UserDetails user);
+
+    void saveProperties(UserDetails userDetails, Map<String, Object> properties);
+
+    Map<String, Object> getProperties(UserDetails user);
 }

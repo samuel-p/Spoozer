@@ -20,17 +20,18 @@ public class User {
     private String password;
     private String name;
     private String email;
+    private Properties properties;
+    private History history;
     @DBRef
     private List<Playlist> playlists;
     @DBRef
     private List<Account> accounts;
 
-    private History history;
-
     public User() {
         playlists = new ArrayList<>();
         accounts = new ArrayList<>();
         history = new History();
+        properties = new Properties();
     }
 
     public String getId() {
@@ -95,5 +96,13 @@ public class User {
 
     public void setHistory(History history) {
         this.history = history;
+    }
+
+    public Properties getProperties() {
+        return properties;
+    }
+
+    public void setProperties(Properties properties) {
+        this.properties = properties;
     }
 }

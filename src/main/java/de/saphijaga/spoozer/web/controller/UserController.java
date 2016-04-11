@@ -1,6 +1,7 @@
 package de.saphijaga.spoozer.web.controller;
 
 import de.saphijaga.spoozer.core.service.UserService;
+import de.saphijaga.spoozer.web.authentication.Session;
 import de.saphijaga.spoozer.web.details.HistoryDetails;
 import de.saphijaga.spoozer.web.details.TrackDetails;
 import de.saphijaga.spoozer.web.details.UserDetails;
@@ -9,19 +10,17 @@ import de.saphijaga.spoozer.web.domain.request.ChangePasswordRequest;
 import de.saphijaga.spoozer.web.domain.request.SaveUserRequest;
 import de.saphijaga.spoozer.web.domain.response.GetUserDetailsResponse;
 import de.saphijaga.spoozer.web.domain.response.HistoryResponse;
+import de.saphijaga.spoozer.web.domain.response.PropertiesResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by samuel on 16.10.15.
@@ -42,7 +41,7 @@ public class UserController {
 
     @MessageMapping("/saveUserDetails")
     @SendToUser("/savedUserDetails")
-    public GetUserDetailsResponse saveUserDetails(UserDetails user, @Valid @Payload SaveUserRequest saveUserRequest) {
+    public GetUserDetailsResponse saveUserDetails(HttpSession session, UserDetails user, @Valid @Payload SaveUserRequest saveUserRequest) {
         //        if (result.hasErrors()) {
         //            System.out.println("errors found");
                     /*Optional<ObjectError> error = result.getAllErrors().stream().filter(e -> e.getCode().equals(UpdateNameNotInUse.class.getSimpleName())).findAny();
@@ -52,10 +51,12 @@ public class UserController {
                     messagingTemplate.convertAndSendToUser(user.getUsername(), "/errorSaveUserDetails", result.getFieldErrors());*/
         //        } else {
         if (user.getId().equals(saveUserRequest.getId())) {
-            userService.saveUserDetails(user, saveUserRequest);
+            Optional<UserDetails> userDetails = userService.saveUserDetails(user, saveUserRequest);
+            session.setAttribute(Session.USER, userDetails.orElse(user));
+            return new GetUserDetailsResponse(userDetails.orElse(user));
         }
         //        }
-        return new GetUserDetailsResponse(userService.getUserDetails(user.getId()).orElse(user));
+        return new GetUserDetailsResponse(user);
     }
 
     @MessageMapping("/savePassword")
@@ -75,11 +76,23 @@ public class UserController {
 
     @MessageMapping("/getHistory")
     @SendToUser("/setHistory")
-    public HistoryResponse getHistory(UserDetails user){
+    public HistoryResponse getHistory(UserDetails user) {
         Map<Date, TrackDetails> history = userService.getHistoryMap(user);
         HistoryDetails historyDetails = new HistoryDetails();
         historyDetails.setHistory(history);
         return new HistoryResponse(historyDetails);
+    }
+
+    @MessageMapping("/saveProperties")
+    public void saveProperties(UserDetails user, @Payload Map<String, Object> properties) {
+        userService.saveProperties(user, properties);
+    }
+
+    @MessageMapping("/getProperties")
+    @SendToUser("/setProperties")
+    public PropertiesResponse getProperties(UserDetails user) {
+        Map<String, Object> properties = userService.getProperties(user);
+        return new PropertiesResponse(properties);
     }
 
     @MessageMapping("/clearHistory")
