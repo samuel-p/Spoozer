@@ -10,10 +10,10 @@ import de.saphijaga.spoozer.web.domain.request.ChangePasswordRequest;
 import de.saphijaga.spoozer.web.domain.request.SaveUserRequest;
 import de.saphijaga.spoozer.web.domain.response.GetUserDetailsResponse;
 import de.saphijaga.spoozer.web.domain.response.HistoryResponse;
+import de.saphijaga.spoozer.web.domain.response.PropertiesResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.web.bind.annotation.RestController;
@@ -72,12 +72,33 @@ public class UserController {
     public void AddHistoryTrack(UserDetails user, @Payload AddHTrackRequest addHTrackRequest) {
         if (userService.getUserDetails(user.getId()).isPresent())
             userService.addSongToHistory(user, addHTrackRequest);
-        System.out.println("Adding title to History! " + addHTrackRequest.getId());
     }
 
     @MessageMapping("/getHistory")
     @SendToUser("/setHistory")
     public HistoryResponse getHistory(UserDetails user) {
+        Map<Date, TrackDetails> history = userService.getHistoryMap(user);
+        HistoryDetails historyDetails = new HistoryDetails();
+        historyDetails.setHistory(history);
+        return new HistoryResponse(historyDetails);
+    }
+
+    @MessageMapping("/saveProperties")
+    public void saveProperties(UserDetails user, @Payload Map<String, Object> properties) {
+        userService.saveProperties(user, properties);
+    }
+
+    @MessageMapping("/getProperties")
+    @SendToUser("/setProperties")
+    public PropertiesResponse getProperties(UserDetails user) {
+        Map<String, Object> properties = userService.getProperties(user);
+        return new PropertiesResponse(properties);
+    }
+
+    @MessageMapping("/clearHistory")
+    @SendToUser("/setHistory")
+    public HistoryResponse clearHistory(UserDetails user){
+        userService.clearUserHistory(user);
         Map<Date, TrackDetails> history = userService.getHistoryMap(user);
         HistoryDetails historyDetails = new HistoryDetails();
         historyDetails.setHistory(history);
