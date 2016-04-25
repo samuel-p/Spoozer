@@ -23,12 +23,17 @@ branches:
 # container-based build:
 sudo: false
 
+#
+notifications:
+  email:
+    - test@spoozer.de
+
 #before_install:
 
 #before_script:
 
 # Run Integration tests
-script: "./gradlew testUnit"
+script: "./gradlew unitTest"
 
 #after_success:
 

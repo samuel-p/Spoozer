@@ -93,8 +93,6 @@ task buildAll(type: Jar) {
     with jar
 }
 
-test {
-    java {
-        srcDir "src/test/java"
-    }
+task unitTest( type: Test ) {
+    exclude '**/cucumber/**'
 }
