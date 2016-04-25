@@ -77,7 +77,7 @@ dependencies {
 
 jar {
     baseName = project.name
-    version =  project.version
+    version = project.version
     manifest {
         attributes "Main-Class": "de.saphijaga.spoozer.SpoozerApplication"
     }
@@ -85,10 +85,16 @@ jar {
 
 task buildAll(type: Jar) {
     baseName = project.name + "-all"
-    version =  project.version
+    version = project.version
     manifest {
         attributes "Main-Class": "de.saphijaga.spoozer.SpoozerApplication"
     }
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
+}
+
+test {
+    java {
+        srcDir "src/test/java"
+    }
 }
