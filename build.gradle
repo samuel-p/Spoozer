@@ -3,6 +3,7 @@ version "0.1-SNAPSHOT"
 
 apply plugin: "java"
 apply plugin: "spring-boot"
+apply plugin: 'sonar-runner'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -93,6 +94,17 @@ task buildAll(type: Jar) {
     with jar
 }
 
-task unitTest( type: Test ) {
+test {
     exclude '**/cucumber/**'
+}
+
+
+sonarRunner {
+    sonarProperties {
+        property "sonar.host.url", "http://193.196.7.25/"
+        property "sonar.projectName", "Spoozer"
+        property "sonar.projectVersions", "1.0.0"
+        property "sonar.sources", "src/main/java"
+        property "sourceEncoding", "UTF-8"
+    }
 }
