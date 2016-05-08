@@ -33,7 +33,7 @@ notifications:
 #before_script:
 
 # Run Integration tests
-script: "./gradlew unitTest"
+script: "./gradlew test"
 
 #after_success:
 
