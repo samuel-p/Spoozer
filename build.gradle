@@ -108,7 +108,6 @@ test {
     }
 }
 
-
 sonarRunner {
     sonarProperties {
         property "sonar.host.url", "http://193.196.7.25/"
@@ -121,13 +120,25 @@ sonarRunner {
 
 }
 
-
 jacocoTestReport {
     group = "Reporting"
     description = "Generate Jacoco coverage reports after running tests."
     additionalSourceDirs = files(sourceSets.main.allJava.srcDirs)
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(
+                    dir: it,
+                    exclude: [
+                            '**/cucumber/**',
+                            '**/resources/**',
+                            '**/static/**',
+                            '**/templates/**',
+                            '**/de/saphijaga/spoozer/service/**'
+                    ]
+            )
+        })
+    }
 }
-
 
 jacoco {
     toolVersion = "0.7.6.201602180812"
