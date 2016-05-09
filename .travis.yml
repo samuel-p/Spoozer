@@ -33,7 +33,9 @@ notifications:
 #before_script:
 
 # Run Integration tests
-script: "./gradlew test jacocoTestReport ./gradlew sonarRunner"
+script:
+  - ./gradlew test jacocoTestReport
+  - ./gradlew sonarRunner
 
 #after_success:
 
