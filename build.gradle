@@ -4,6 +4,7 @@ version "0.1-SNAPSHOT"
 apply plugin: "java"
 apply plugin: "spring-boot"
 apply plugin: 'sonar-runner'
+apply plugin: "jacoco"
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -96,6 +97,9 @@ task buildAll(type: Jar) {
 
 test {
     exclude '**/cucumber/**'
+        jacoco{
+            excludes = ['**/cucumber/**']
+        }
 }
 
 
@@ -104,7 +108,22 @@ sonarRunner {
         property "sonar.host.url", "http://193.196.7.25/"
         property "sonar.projectName", "Spoozer"
         property "sonar.projectVersions", "1.0.0"
-        property "sonar.sources", "src/main/java"
+        property "sonar.sources", "src/main/"
+        property "sonar.tests", "src/test"
         property "sourceEncoding", "UTF-8"
     }
+
+}
+
+
+jacocoTestReport {
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports after running tests."
+    additionalSourceDirs = files(sourceSets.main.allJava.srcDirs)
+}
+
+
+jacoco {
+    toolVersion = "0.7.6.201602180812"
+    reportsDir = file("$buildDir/reports")
 }
