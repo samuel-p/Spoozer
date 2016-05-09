@@ -4,6 +4,7 @@ import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import de.saphijaga.spoozer.persistence.repository.AccountRepository;
 import de.saphijaga.spoozer.persistence.repository.PlaylistRepository;
+import de.saphijaga.spoozer.persistence.repository.TrackRepository;
 import de.saphijaga.spoozer.persistence.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -22,6 +23,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
                 value = {
                         UserRepository.class,
                         PlaylistRepository.class,
+                        TrackRepository.class,
                         AccountRepository.class
                 },
                 type = FilterType.ASSIGNABLE_TYPE
