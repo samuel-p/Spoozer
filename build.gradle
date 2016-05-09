@@ -122,7 +122,21 @@ sonarRunner {
 jacocoTestReport {
     group = "Reporting"
     description = "Generate Jacoco coverage reports after running tests."
-    additionalSourceDirs = files(sourceSets.main.allJava.srcDirs)
+//    additionalSourceDirs = files(sourceSets.main.allJava.srcDirs)
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(
+                    dir: it,
+                    excludes: [
+                            '**/cucumber/**',
+                            '**/resources/**',
+                            '**/static/**',
+                            '**/templates/**',
+                            '**/de/saphijaga/spoozer/service/**'
+                    ]
+            )
+        })
+    }
 }
 
 jacoco {
