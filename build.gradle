@@ -97,15 +97,6 @@ task buildAll(type: Jar) {
 
 test {
     exclude '**/cucumber/**'
-    jacoco {
-        excludes = [
-                '**/cucumber/**',
-                '**/resources/**',
-                '**/static/**',
-                '**/templates/**',
-                '**/de/saphijaga/spoozer/service/**'
-        ]
-    }
 }
 
 sonarRunner {
@@ -115,6 +106,7 @@ sonarRunner {
         property "sonar.projectVersions", "1.0.0"
         property "sonar.sources", "src/main/"
         property "sonar.tests", "src/test"
+        property "sonar.coverage.exclusions", "**/de/saphijaga/spoozer/service/**"
         property "sourceEncoding", "UTF-8"
     }
 }
@@ -122,7 +114,6 @@ sonarRunner {
 jacocoTestReport {
     group = "Reporting"
     description = "Generate Jacoco coverage reports after running tests."
-//    additionalSourceDirs = files(sourceSets.main.allJava.srcDirs)
     afterEvaluate {
         classDirectories = files(classDirectories.files.collect {
             fileTree(
@@ -132,7 +123,12 @@ jacocoTestReport {
                             '**/resources/**',
                             '**/static/**',
                             '**/templates/**',
-                            '**/de/saphijaga/spoozer/service/**'
+                            '**/de/saphijaga/spoozer/config/**',
+                            '**/de/saphijaga/spoozer/persistence/domain**',
+                            '**/de/saphijaga/spoozer/service/**',
+                            '**/de/saphijaga/spoozer/web/authentication/**',
+                            '**/de/saphijaga/spoozer/web/details/**',
+                            '**/de/saphijaga/spoozer/web/domain/**',
                     ]
             )
         })
