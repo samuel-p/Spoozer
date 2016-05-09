@@ -1,32 +1,24 @@
 package de.saphijaga.spoozer.service.spotify;
 
-import de.saphijaga.spoozer.core.service.AccountAccessService;
-import de.saphijaga.spoozer.core.service.AccountService;
 import de.saphijaga.spoozer.persistence.domain.SpotifyAccount;
-import de.saphijaga.spoozer.service.Api;
+import de.saphijaga.spoozer.service.ApiImpl;
 import de.saphijaga.spoozer.service.StreamingService;
 import de.saphijaga.spoozer.service.spotify.request.GetSpotifyAccessTokensRequest;
 import de.saphijaga.spoozer.service.spotify.request.RefreshSpotifyAccessTokensRequest;
 import de.saphijaga.spoozer.service.spotify.response.*;
-import de.saphijaga.spoozer.service.utils.ApiService;
 import de.saphijaga.spoozer.service.utils.Get;
 import de.saphijaga.spoozer.service.utils.Post;
 import de.saphijaga.spoozer.web.details.SpotifyAccountDetails;
 import de.saphijaga.spoozer.web.details.TrackDetails;
 import de.saphijaga.spoozer.web.details.UserDetails;
-import org.apache.commons.lang3.RandomStringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
-import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 import static org.springframework.util.Base64Utils.encodeToString;
 import static org.springframework.web.util.UriUtils.encode;
 
@@ -34,21 +26,7 @@ import static org.springframework.web.util.UriUtils.encode;
  * Created by samuel on 14.11.15.
  */
 @Component
-public class SpotifyApi implements Api<SpotifyAccount, SpotifyAccountDetails, SpotifyAccessDetails> {
-    @Autowired
-    private ApiService service;
-
-    @Autowired
-    private AccountService accountService;
-
-    @Autowired
-    private AccountAccessService accessService;
-
-    @PostConstruct
-    public void init() {
-        service.registerApi(this);
-    }
-
+public class SpotifyApi extends ApiImpl<SpotifyAccount, SpotifyAccountDetails, SpotifyAccessDetails> {
     @Override
     public StreamingService getService() {
         return StreamingService.SPOTIFY;

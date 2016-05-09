@@ -1,9 +1,7 @@
 package de.saphijaga.spoozer.service.soundcloud;
 
-import de.saphijaga.spoozer.core.service.AccountAccessService;
-import de.saphijaga.spoozer.core.service.AccountService;
 import de.saphijaga.spoozer.persistence.domain.SoundcloudAccount;
-import de.saphijaga.spoozer.service.Api;
+import de.saphijaga.spoozer.service.ApiImpl;
 import de.saphijaga.spoozer.service.StreamingService;
 import de.saphijaga.spoozer.service.soundcloud.request.GetSoundcloudAccessTokensRequest;
 import de.saphijaga.spoozer.service.soundcloud.request.RefreshSoundcloudAccessTokensRequest;
@@ -11,17 +9,14 @@ import de.saphijaga.spoozer.service.soundcloud.response.GetSoundcloudAccessToken
 import de.saphijaga.spoozer.service.soundcloud.response.GetSoundcloudChartTracksResponse;
 import de.saphijaga.spoozer.service.soundcloud.response.GetSoundcloudProfileResponse;
 import de.saphijaga.spoozer.service.soundcloud.response.GetSoundcloudTrackResponse;
-import de.saphijaga.spoozer.service.utils.ApiService;
 import de.saphijaga.spoozer.service.utils.Get;
 import de.saphijaga.spoozer.service.utils.Post;
 import de.saphijaga.spoozer.web.details.SoundcloudAccountDetails;
 import de.saphijaga.spoozer.web.details.TrackDetails;
 import de.saphijaga.spoozer.web.details.UserDetails;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -36,21 +31,7 @@ import static org.springframework.web.util.UriUtils.encode;
  * Created by samuel on 31.03.16.
  */
 @Component
-public class SoundcloudApi implements Api<SoundcloudAccount, SoundcloudAccountDetails, SoundcloudAccessDetails> {
-    @Autowired
-    private ApiService service;
-
-    @Autowired
-    private AccountService accountService;
-
-    @Autowired
-    private AccountAccessService accessService;
-
-    @PostConstruct
-    public void init() {
-        service.registerApi(this);
-    }
-
+public class SoundcloudApi extends ApiImpl<SoundcloudAccount, SoundcloudAccountDetails, SoundcloudAccessDetails> {
     @Override
     public StreamingService getService() {
         return StreamingService.SOUNDCLOUD;
