@@ -98,7 +98,7 @@ task buildAll(type: Jar) {
 test {
     exclude '**/cucumber/**'
     jacoco {
-        exclude = [
+        excludes = [
                 '**/cucumber/**',
                 '**/resources/**',
                 '**/static/**',
@@ -117,27 +117,12 @@ sonarRunner {
         property "sonar.tests", "src/test"
         property "sourceEncoding", "UTF-8"
     }
-
 }
 
 jacocoTestReport {
     group = "Reporting"
     description = "Generate Jacoco coverage reports after running tests."
     additionalSourceDirs = files(sourceSets.main.allJava.srcDirs)
-    afterEvaluate {
-        classDirectories = files(classDirectories.files.collect {
-            fileTree(
-                    dir: it,
-                    exclude: [
-                            '**/cucumber/**',
-                            '**/resources/**',
-                            '**/static/**',
-                            '**/templates/**',
-                            '**/de/saphijaga/spoozer/service/**'
-                    ]
-            )
-        })
-    }
 }
 
 jacoco {
