@@ -12,4 +12,7 @@ public class Spotify {
     public static final String REDIRECT_URL_PATH = "/spotify/callback";
     public static final String[] SCOPES = {"user-read-private", "playlist-read-private", "playlist-modify-private"};
     public static final String STATE = "spotify-state";
+
+    private Spotify() {
+    }
 }

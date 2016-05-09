@@ -12,7 +12,8 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan("de.saphijaga.spoozer")
 public class SpoozerApplication {
     public static void main(String[] args) {
-        final ConfigurableApplicationContext context = SpringApplication.run(SpoozerApplication.class, args);
-        Runtime.getRuntime().addShutdownHook(new Thread(context::close));
+        try (ConfigurableApplicationContext context = SpringApplication.run(SpoozerApplication.class, args)) {
+            context.registerShutdownHook();
+        }
     }
 }
