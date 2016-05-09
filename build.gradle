@@ -98,7 +98,7 @@ task buildAll(type: Jar) {
 test {
     exclude '**/cucumber/**'
     jacoco {
-        excludes = [
+        exclude = [
                 '**/cucumber/**',
                 '**/resources/**',
                 '**/static/**',
