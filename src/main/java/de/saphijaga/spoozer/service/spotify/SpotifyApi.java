@@ -73,7 +73,7 @@ public class SpotifyApi extends BaseApi<SpotifyAccount, SpotifyAccountDetails, S
 
     public String getLoginURL(String serverUrl, String state) throws UnsupportedEncodingException {
         return Spotify.LOGIN_URL + "?client_id=" + Spotify.CLIENT_ID + "&redirect_uri=" + encode(getRedirectUrl(serverUrl), "utf8")
-                + "&scope=" + encode(join(" ", Spotify.SCOPES), "utf8") + "&state=" + state + "&response_type=code";
+                + "&scope=" + encode(join(" ", Spotify.getSCOPES()), "utf8") + "&state=" + state + "&response_type=code";
     }
 
     private String getRedirectUrl(String serverUrl) {
