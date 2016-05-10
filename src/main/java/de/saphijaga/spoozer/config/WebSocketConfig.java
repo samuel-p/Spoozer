@@ -19,12 +19,6 @@ import java.util.List;
 @EnableWebSocketMessageBroker
 public class WebSocketConfig extends AbstractSessionWebSocketMessageBrokerConfigurer<ExpiringSession> {
     @Override
-    public void configureMessageBroker(MessageBrokerRegistry config) {
-//        config.enableSimpleBroker("/user");
-//        config.setApplicationDestinationPrefixes("/app");
-    }
-
-    @Override
     public void configureStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/connect").addInterceptors(new HttpSessionHandshakeInterceptor()).withSockJS();
     }
@@ -34,6 +28,4 @@ public class WebSocketConfig extends AbstractSessionWebSocketMessageBrokerConfig
         argumentResolvers.add(new UserDetailsArgumentResolver());
         argumentResolvers.add(new HttpSessionArgumentResolver());
     }
-
-
 }

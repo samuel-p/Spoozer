@@ -87,6 +87,7 @@ public class HttpUtils {
                     params.put(key, value.toString());
                 }
             } catch (IllegalAccessException e) {
+                logger.info("field not accessable", e);
             }
         });
         return paramsToString(params);

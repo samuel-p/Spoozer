@@ -26,6 +26,8 @@ public class HttpSessionHandshakeInterceptor implements HandshakeInterceptor {
         return true;
     }
 
+    @Override
     public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Exception ex) {
+        // not used
     }
 }
