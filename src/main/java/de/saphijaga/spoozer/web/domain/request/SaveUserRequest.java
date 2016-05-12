@@ -1,7 +1,6 @@
 package de.saphijaga.spoozer.web.domain.request;
 
 import de.saphijaga.spoozer.web.authentication.UpdateNameNotInUse;
-import de.saphijaga.spoozer.web.authentication.UsernameNotInUse;
 import de.saphijaga.spoozer.web.authentication.ValidEmail;
 import org.hibernate.validator.constraints.NotEmpty;
 

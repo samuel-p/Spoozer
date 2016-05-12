@@ -1,6 +1,7 @@
 package de.saphijaga.spoozer.service.utils;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 

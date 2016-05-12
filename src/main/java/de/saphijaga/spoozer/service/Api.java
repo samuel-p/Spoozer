@@ -1,12 +1,10 @@
 package de.saphijaga.spoozer.service;
 
 import de.saphijaga.spoozer.persistence.domain.Account;
-import de.saphijaga.spoozer.persistence.domain.Track;
 import de.saphijaga.spoozer.web.details.AccountDetails;
 import de.saphijaga.spoozer.web.details.TrackDetails;
 import de.saphijaga.spoozer.web.details.UserDetails;
 
-import java.util.Collections;
 import java.util.List;
 
 import static java.util.Collections.emptyList;

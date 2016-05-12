@@ -1,11 +1,10 @@
 package de.saphijaga.spoozer.config;
 
-import de.saphijaga.spoozer.config.resolver.UserDetailsArgumentResolver;
 import de.saphijaga.spoozer.config.resolver.HttpSessionArgumentResolver;
+import de.saphijaga.spoozer.config.resolver.UserDetailsArgumentResolver;
 import de.saphijaga.spoozer.config.session.HttpSessionHandshakeInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.handler.invocation.HandlerMethodArgumentResolver;
-import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.session.ExpiringSession;
 import org.springframework.session.web.socket.config.annotation.AbstractSessionWebSocketMessageBrokerConfigurer;

@@ -1,7 +1,5 @@
 package de.saphijaga.spoozer.web.details;
 
-import de.saphijaga.spoozer.persistence.domain.HTrack;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;

@@ -7,7 +7,10 @@ import de.saphijaga.spoozer.service.StreamingService;
 import de.saphijaga.spoozer.web.details.AccountDetails;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by samuel on 14.11.15.

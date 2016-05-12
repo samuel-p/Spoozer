@@ -1,6 +1,5 @@
 package de.saphijaga.spoozer.persistence.repository;
 
-import de.saphijaga.spoozer.persistence.domain.Playlist;
 import de.saphijaga.spoozer.persistence.domain.Track;
 import de.saphijaga.spoozer.service.StreamingService;
 import org.springframework.data.repository.CrudRepository;

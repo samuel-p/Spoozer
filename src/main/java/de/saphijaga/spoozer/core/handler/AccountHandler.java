@@ -1,7 +1,6 @@
 package de.saphijaga.spoozer.core.handler;
 
 import de.saphijaga.spoozer.core.service.AccountService;
-import de.saphijaga.spoozer.core.utils.AccountFactory;
 import de.saphijaga.spoozer.persistence.domain.Account;
 import de.saphijaga.spoozer.persistence.domain.User;
 import de.saphijaga.spoozer.persistence.service.AccountPersistenceService;

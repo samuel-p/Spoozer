@@ -1,20 +1,14 @@
 package de.saphijaga.spoozer.core.handler;
 
 import de.saphijaga.spoozer.core.service.AccountAccessService;
-import de.saphijaga.spoozer.persistence.domain.SoundcloudAccount;
-import de.saphijaga.spoozer.persistence.domain.SpotifyAccount;
+import de.saphijaga.spoozer.persistence.domain.Account;
 import de.saphijaga.spoozer.persistence.domain.User;
 import de.saphijaga.spoozer.persistence.service.AccountPersistenceService;
-import de.saphijaga.spoozer.persistence.domain.Account;
 import de.saphijaga.spoozer.persistence.service.UserPersistenceService;
 import de.saphijaga.spoozer.service.AccountAccessDetails;
 import de.saphijaga.spoozer.service.StreamingService;
-import de.saphijaga.spoozer.service.soundcloud.Soundcloud;
-import de.saphijaga.spoozer.service.soundcloud.SoundcloudAccessDetails;
-import de.saphijaga.spoozer.service.spotify.SpotifyAccessDetails;
 import de.saphijaga.spoozer.service.utils.ApiService;
 import de.saphijaga.spoozer.web.details.AccountDetails;
-import de.saphijaga.spoozer.web.details.SoundcloudAccountDetails;
 import de.saphijaga.spoozer.web.details.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,8 +18,6 @@ import java.util.Optional;
 
 import static de.saphijaga.spoozer.service.StreamingService.valueOfAccountClass;
 import static java.util.Collections.emptyList;
-import static java.util.Optional.empty;
-import static java.util.Optional.of;
 import static java.util.Optional.ofNullable;
 
 /**

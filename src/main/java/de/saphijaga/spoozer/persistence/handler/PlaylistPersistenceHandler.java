@@ -1,14 +1,11 @@
 package de.saphijaga.spoozer.persistence.handler;
 
 import de.saphijaga.spoozer.persistence.domain.Playlist;
-import de.saphijaga.spoozer.persistence.domain.User;
 import de.saphijaga.spoozer.persistence.repository.PlaylistRepository;
-import de.saphijaga.spoozer.persistence.repository.UserRepository;
 import de.saphijaga.spoozer.persistence.service.PlaylistPersistenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 

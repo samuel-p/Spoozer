@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.*;
+import java.util.Date;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * Created by samuel on 16.10.15.
