@@ -38,9 +38,7 @@ public class DashboardController {
     @SendToUser("/setDashboardProperties")
     public GetDashboardPropertiesResponse getDashboardProperties(UserDetails user) {
         Map<String, Object> properties = new HashMap<>();
-        stream(StreamingService.values()).forEach(service ->  {
-            properties.put(service.getName().toLowerCase(), propertiesService.hasAccount(user, service));
-        });
+        stream(StreamingService.values()).forEach(service -> properties.put(service.getName().toLowerCase(), propertiesService.hasAccount(user, service)));
         properties.put("services", propertiesService.getServicesCount(user));
         properties.put("playlists", propertiesService.getPlaylistCount(user));
         properties.put("tracks", propertiesService.getTrackCount(user));
@@ -78,6 +76,7 @@ public class DashboardController {
         return getTrackResult(api -> api.getFeaturedTracks(user));
     }
 
+    @FunctionalInterface
     private interface ApiTrackResult {
         List<TrackDetails> getTrackResult(Api api);
     }

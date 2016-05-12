@@ -19,4 +19,7 @@ public class AccountFactory {
                 throw new IllegalArgumentException("No Account available for given StreamingService!");
         }
     }
+
+    private AccountFactory() {
+    }
 }

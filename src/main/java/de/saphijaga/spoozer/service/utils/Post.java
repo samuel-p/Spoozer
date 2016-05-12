@@ -86,4 +86,7 @@ public class Post {
         outputStream.close();
         return connection.getInputStream();
     }
+
+    private Post() {
+    }
 }

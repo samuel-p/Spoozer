@@ -42,20 +42,11 @@ public class UserController {
     @MessageMapping("/saveUserDetails")
     @SendToUser("/savedUserDetails")
     public GetUserDetailsResponse saveUserDetails(HttpSession session, UserDetails user, @Valid @Payload SaveUserRequest saveUserRequest) {
-        //        if (result.hasErrors()) {
-        //            System.out.println("errors found");
-                    /*Optional<ObjectError> error = result.getAllErrors().stream().filter(e -> e.getCode().equals(UpdateNameNotInUse.class.getSimpleName())).findAny();
-                    if (error.isPresent()) {
-                        result.addError(new FieldError("user", "nameError", error.get().getDefaultMessage()));
-                    }
-                    messagingTemplate.convertAndSendToUser(user.getUsername(), "/errorSaveUserDetails", result.getFieldErrors());*/
-        //        } else {
         if (user.getId().equals(saveUserRequest.getId())) {
             Optional<UserDetails> userDetails = userService.saveUserDetails(user, saveUserRequest);
             session.setAttribute(Session.USER, userDetails.orElse(user));
             return new GetUserDetailsResponse(userDetails.orElse(user));
         }
-        //        }
         return new GetUserDetailsResponse(user);
     }
 
@@ -69,7 +60,7 @@ public class UserController {
     }
 
     @MessageMapping("/addHTrack")
-    public void AddHistoryTrack(UserDetails user, @Payload AddHTrackRequest addHTrackRequest) {
+    public void addHistoryTrack(UserDetails user, @Payload AddHTrackRequest addHTrackRequest) {
         if (userService.getUserDetails(user.getId()).isPresent())
             userService.addSongToHistory(user, addHTrackRequest);
     }

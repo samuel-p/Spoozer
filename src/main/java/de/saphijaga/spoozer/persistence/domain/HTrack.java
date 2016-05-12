@@ -11,7 +11,6 @@ import java.util.Date;
  */
 @Document
 public class HTrack {
-
     @Id
     private String id;
 
@@ -20,7 +19,9 @@ public class HTrack {
 
     private Date date;
 
-    public HTrack(){}
+    public HTrack(){
+        // used by Spring
+    }
 
     public HTrack(String id,Track track, Date date) {
         this.id = id;

@@ -15,6 +15,7 @@ public class UsernameNotInUseValidator implements ConstraintValidator<UsernameNo
 
     @Override
     public void initialize(UsernameNotInUse constraintAnnotation) {
+        // not used
     }
 
     @Override

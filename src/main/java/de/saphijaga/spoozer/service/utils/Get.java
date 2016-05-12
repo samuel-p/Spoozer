@@ -31,4 +31,7 @@ public class Get {
     public static InputStream forStream(String url, Map<String, String> header) throws IOException {
         return HttpUtils.buildConnection(url, "GET", header).getInputStream();
     }
+
+    private Get() {
+    }
 }

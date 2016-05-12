@@ -92,4 +92,7 @@ public class HttpUtils {
         });
         return paramsToString(params);
     }
+
+    private HttpUtils() {
+    }
 }

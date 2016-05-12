@@ -90,11 +90,9 @@ public class UserHandler implements UserService {
     public Optional<UserDetails> changeUserPassword(UserDetails userDetails, ChangePasswordRequest changePasswordRequest) {
         Optional<User> user = userService.getUser(userDetails.getId());
         Optional<User> userUpdate = userService.getUser(userDetails.getId());
-        if (user.isPresent()) {
-            if (passwordEncoder.matches(changePasswordRequest.getOldpassword(), user.get().getPassword())){
-                user.get().setPassword(passwordEncoder.encode(changePasswordRequest.getPassword()));
-                userUpdate = userService.saveUser(user.get());
-            }
+        if (user.isPresent() && passwordEncoder.matches(changePasswordRequest.getOldpassword(), user.get().getPassword())) {
+            user.get().setPassword(passwordEncoder.encode(changePasswordRequest.getPassword()));
+            userUpdate = userService.saveUser(user.get());
         }
         return toUserDetails(userUpdate);
     }
@@ -114,7 +112,7 @@ public class UserHandler implements UserService {
     public void clearUserHistory(UserDetails userDetails) {
         Optional<User> user = userService.getUser(userDetails.getId());
         user.get().getHistory().clearHistory();
-        user = userService.saveUser(user.get());
+        userService.saveUser(user.get());
     }
 
     @Override
@@ -122,7 +120,7 @@ public class UserHandler implements UserService {
         Map<Date, TrackDetails> historyMap = new HashMap<>();
         User user = userService.getUser(userDetails.getId()).get();
         History history = user.getHistory();
-        for (HTrack track : history.getSongs()){
+        for (HTrack track : history.getSongs()) {
             trackService.getTrack(track.getTrack().getId()).ifPresent(t -> historyMap.put(track.getDate(), t));
         }
         return historyMap;
@@ -138,13 +136,13 @@ public class UserHandler implements UserService {
     public void saveProperties(UserDetails userDetails, Map<String, Object> properties) {
         Optional<User> user = userService.getUser(userDetails.getId());
         if (user.isPresent()) {
-            user.get().getProperties().addProperties(properties);
+            user.get().getProperties().addList(properties);
             userService.saveUser(user.get());
         }
     }
 
     @Override
     public Map<String, Object> getProperties(UserDetails user) {
-        return userService.getUser(user.getId()).map(User::getProperties).map(Properties::getProperties).orElse(new HashMap<>());
+        return userService.getUser(user.getId()).map(User::getProperties).map(Properties::getList).orElse(new HashMap<>());
     }
 }

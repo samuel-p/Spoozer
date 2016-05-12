@@ -11,7 +11,9 @@ import javax.validation.ConstraintValidatorContext;
 public class PasswordChangeMatchesValidator implements ConstraintValidator<PasswordChangeMatches, Object> {
     @Override
     public void initialize(PasswordChangeMatches constraintAnnotation) {
+        // not used
     }
+
     @Override
     public boolean isValid(Object obj, ConstraintValidatorContext context){
         ChangePasswordRequest request = (ChangePasswordRequest) obj;

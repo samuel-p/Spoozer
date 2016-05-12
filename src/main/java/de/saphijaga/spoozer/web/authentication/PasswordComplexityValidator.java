@@ -9,6 +9,7 @@ import javax.validation.ConstraintValidatorContext;
 public class PasswordComplexityValidator implements ConstraintValidator<ComplexPassword, String> {
     @Override
     public void initialize(ComplexPassword constraintAnnotation) {
+        // not used
     }
 
     @Override

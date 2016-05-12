@@ -13,10 +13,10 @@ import java.util.Map;
 public class Properties {
     @Id
     private String id;
-    private Map<String, Object> properties;
+    private Map<String, Object> list;
 
     public Properties() {
-        this.properties = new HashMap<>();
+        this.list = new HashMap<>();
     }
 
     public String getId() {
@@ -27,16 +27,16 @@ public class Properties {
         this.id = id;
     }
 
-    public Map<String, Object> getProperties() {
-        return properties;
+    public Map<String, Object> getList() {
+        return list;
     }
 
-    public void addProperties(Map<String, Object> properties) {
+    public void addList(Map<String, Object> properties) {
         properties.forEach((key, value) -> {
             if (value instanceof String && "[empty]".equals(value))
-                this.properties.remove(key);
+                this.list.remove(key);
             else
-                this.properties.put(key, value);
+                this.list.put(key, value);
         });
     }
 }

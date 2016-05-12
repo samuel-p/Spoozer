@@ -207,7 +207,7 @@ public class SoundcloudApi extends BaseApi<SoundcloudAccount, SoundcloudAccountD
         trackDetails.setDurationInMillis(track.getDurationInMillis());
         trackDetails.setInterpret(track.getLabelName());
         trackDetails.setAlbum(track.getUser().getFullName());
-        trackDetails.setCoverUrl((StringUtils.isNotEmpty(track.getArtworkUrl())) ? track.getArtworkUrl() : track.getUser().getAvatarUrl());
+        trackDetails.setCoverUrl(StringUtils.isNotEmpty(track.getArtworkUrl()) ? track.getArtworkUrl() : track.getUser().getAvatarUrl());
         trackDetails.setUrl(track.getStreamUrl());
         trackDetails.setExternalUrl(track.getUri());
         return trackDetails;
