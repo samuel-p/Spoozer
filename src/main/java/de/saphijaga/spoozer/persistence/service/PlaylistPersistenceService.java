@@ -1,7 +1,6 @@
 package de.saphijaga.spoozer.persistence.service;
 
 import de.saphijaga.spoozer.persistence.domain.Playlist;
-import de.saphijaga.spoozer.persistence.domain.User;
 
 import java.util.Optional;
 

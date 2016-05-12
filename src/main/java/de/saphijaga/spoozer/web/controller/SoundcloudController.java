@@ -43,7 +43,7 @@ public class SoundcloudController {
     }
 
     @RequestMapping("/soundcloud/callback")
-    public String callback(@RequestParam(required = false) String code, @RequestParam String state, HttpSession session, UserDetails user) throws Exception {
+    public String callback(@RequestParam(required = false) String code, @RequestParam String state, HttpSession session, UserDetails user) throws IOException {
         String sessionState = (String) session.getAttribute(Soundcloud.STATE);
         if (state.equals(sessionState)) {
             session.removeAttribute(Soundcloud.STATE);

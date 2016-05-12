@@ -13,6 +13,8 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
+import java.net.UnknownHostException;
+
 @Configuration
 @EnableMongoRepositories(
         basePackages = "de.saphijaga.spoozer.persistence.repository",
@@ -33,7 +35,7 @@ public class MongoConfig {
     }
 
     @Bean
-    public Mongo mongo() throws Exception {
+    public Mongo mongo() throws UnknownHostException {
         return new MongoClient("localhost");
     }
 }

@@ -2,6 +2,9 @@ package de.saphijaga.spoozer.service.utils;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.saphijaga.spoozer.service.spotify.SpotifyApi;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.lang.reflect.Field;
@@ -19,6 +22,8 @@ import static org.springframework.web.util.UriUtils.encode;
  * Created by samuel on 13.11.15.
  */
 public class HttpUtils {
+    private static Logger logger = LoggerFactory.getLogger(SpotifyApi.class);
+
     public static <T> T streamToObject(InputStream inputStream, Class<T> streamObjectClass) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(inputStream, streamObjectClass);
@@ -53,6 +58,7 @@ public class HttpUtils {
             try {
                 param.append("&").append(encode(key, "utf8")).append("=").append(encode(value, "utf8"));
             } catch (UnsupportedEncodingException e) {
+                logger.info("Encoding failed", e);
             }
         });
         if (param.length() > 0) {
@@ -81,8 +87,12 @@ public class HttpUtils {
                     params.put(key, value.toString());
                 }
             } catch (IllegalAccessException e) {
+                logger.info("field not accessable", e);
             }
         });
         return paramsToString(params);
+    }
+
+    private HttpUtils() {
     }
 }

@@ -1,7 +1,6 @@
 package de.saphijaga.spoozer.service.spotify.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import de.saphijaga.spoozer.service.spotify.Spotify;
 
 import java.util.List;
 

@@ -18,6 +18,7 @@ public class UpdateNameNotInUseValidator implements ConstraintValidator<UpdateNa
 
     @Override
     public void initialize(UpdateNameNotInUse constraintAnnotation) {
+        // not used
     }
 
     @Override
@@ -26,6 +27,4 @@ public class UpdateNameNotInUseValidator implements ConstraintValidator<UpdateNa
         Optional<UserDetails> user = userService.getUserDetailsByUsername(saveUserRequest.getUsername());
         return user.isPresent() && user.get().getId().equals(saveUserRequest.getId());
     }
-
-
 }

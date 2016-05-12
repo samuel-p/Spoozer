@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static de.saphijaga.spoozer.core.utils.AccountFactory.create;
 import static de.saphijaga.spoozer.service.StreamingService.valueOfAccountClass;
-import static de.saphijaga.spoozer.service.StreamingService.valueOfAccountDetailsClass;
 import static java.util.Arrays.asList;
 import static java.util.Optional.ofNullable;
 
@@ -52,17 +52,9 @@ public class AccountHandler implements AccountService {
 
     private Account getOrCreateAccount(AccountDetails accountDetails) {
         if (accountDetails.getId() == null) {
-            return createAccount(accountDetails);
+            return create(accountDetails.getService());
         }
-        return accountService.getAccount(accountDetails.getId()).orElse(createAccount(accountDetails));
-    }
-
-    private Account createAccount(AccountDetails accountDetails) {
-        try {
-            return valueOfAccountDetailsClass(accountDetails.getClass()).getAccountClass().newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException("Could not create Account!", e);
-        }
+        return accountService.getAccount(accountDetails.getId()).orElse(create(accountDetails.getService()));
     }
 
     private <T extends AccountDetails> T accountToDetails(Account account) {

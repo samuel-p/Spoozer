@@ -1,6 +1,7 @@
 package de.saphijaga.spoozer.service.utils;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,5 +31,8 @@ public class Get {
 
     public static InputStream forStream(String url, Map<String, String> header) throws IOException {
         return HttpUtils.buildConnection(url, "GET", header).getInputStream();
+    }
+
+    private Get() {
     }
 }

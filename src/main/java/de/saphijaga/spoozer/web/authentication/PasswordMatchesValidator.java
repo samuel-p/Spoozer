@@ -7,8 +7,10 @@ import javax.validation.ConstraintValidatorContext;
 
 public class PasswordMatchesValidator implements ConstraintValidator<PasswordMatches, Object> {
     @Override
-    public void initialize(PasswordMatches constraintAnnotation) {       
+    public void initialize(PasswordMatches constraintAnnotation) {
+        // not used
     }
+
     @Override
     public boolean isValid(Object obj, ConstraintValidatorContext context){
         RegisterUserRequest user = (RegisterUserRequest) obj;

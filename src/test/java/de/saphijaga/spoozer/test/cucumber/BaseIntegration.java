@@ -33,6 +33,9 @@ public class BaseIntegration {
         if (SystemUtils.IS_OS_WINDOWS) {
             file = new File("src/test/resources/driver/windows/chromedriver.exe");
         }
+        if (SystemUtils.IS_OS_MAC) {
+            file = new File("src/test/resources/driver/mac/chromedriver");
+        }
         if (file == null) {
             throw new RuntimeException("ChromeDriver is not supported by your operating system");
         }

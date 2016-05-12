@@ -3,10 +3,8 @@ package de.saphijaga.spoozer.core.handler;
 import de.saphijaga.spoozer.core.service.PlaylistService;
 import de.saphijaga.spoozer.core.service.TrackService;
 import de.saphijaga.spoozer.persistence.domain.Playlist;
-import de.saphijaga.spoozer.persistence.domain.Track;
 import de.saphijaga.spoozer.persistence.domain.User;
 import de.saphijaga.spoozer.persistence.service.PlaylistPersistenceService;
-import de.saphijaga.spoozer.persistence.service.TrackPersistenceService;
 import de.saphijaga.spoozer.persistence.service.UserPersistenceService;
 import de.saphijaga.spoozer.web.details.PlaylistDetails;
 import de.saphijaga.spoozer.web.details.TrackDetails;
@@ -17,8 +15,8 @@ import de.saphijaga.spoozer.web.domain.request.TrackRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Optional;
 
 import static java.util.Collections.emptyList;
 import static java.util.Optional.empty;

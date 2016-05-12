@@ -1,11 +1,11 @@
 package de.saphijaga.spoozer.web.controller;
 
-import de.saphijaga.spoozer.service.spotify.Spotify;
 import de.saphijaga.spoozer.core.service.AccountService;
 import de.saphijaga.spoozer.service.StreamingService;
+import de.saphijaga.spoozer.service.spotify.Spotify;
 import de.saphijaga.spoozer.service.spotify.SpotifyApi;
-import de.saphijaga.spoozer.web.details.AccountDetails;
 import de.saphijaga.spoozer.web.authentication.Session;
+import de.saphijaga.spoozer.web.details.AccountDetails;
 import de.saphijaga.spoozer.web.details.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -41,7 +41,7 @@ public class SpotifyController {
     }
 
     @RequestMapping("/spotify/callback")
-    public String callback(@RequestParam(required = false) String code, @RequestParam String state, HttpSession session, UserDetails user) throws Exception {
+    public String callback(@RequestParam(required = false) String code, @RequestParam String state, HttpSession session, UserDetails user) throws IOException {
         String sessionState = (String) session.getAttribute(Spotify.STATE);
         if (state.equals(sessionState)) {
             session.removeAttribute(Spotify.STATE);

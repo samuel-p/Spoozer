@@ -2,6 +2,7 @@ package de.saphijaga.spoozer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
@@ -11,6 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan("de.saphijaga.spoozer")
 public class SpoozerApplication {
     public static void main(String[] args) {
-        SpringApplication.run(SpoozerApplication.class, args);
+        ConfigurableApplicationContext context = SpringApplication.run(SpoozerApplication.class, args);
+        context.registerShutdownHook();
     }
 }

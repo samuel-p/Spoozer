@@ -13,4 +13,7 @@ public class Soundcloud {
     public static final String REDIRECT_URL_PATH = "/soundcloud/callback";
     public static final String SCOPE = "non-expiring";
     public static final String STATE = "soundcloud-state";
+
+    private Soundcloud() {
+    }
 }

@@ -3,6 +3,8 @@ version "0.1-SNAPSHOT"
 
 apply plugin: "java"
 apply plugin: "spring-boot"
+apply plugin: 'sonar-runner'
+apply plugin: "jacoco"
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -77,7 +79,7 @@ dependencies {
 
 jar {
     baseName = project.name
-    version =  project.version
+    version = project.version
     manifest {
         attributes "Main-Class": "de.saphijaga.spoozer.SpoozerApplication"
     }
@@ -85,10 +87,59 @@ jar {
 
 task buildAll(type: Jar) {
     baseName = project.name + "-all"
-    version =  project.version
+    version = project.version
     manifest {
         attributes "Main-Class": "de.saphijaga.spoozer.SpoozerApplication"
     }
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
+}
+
+test {
+    exclude '**/cucumber/**'
+}
+
+sonarRunner {
+    sonarProperties {
+        property "sonar.host.url", "http://193.196.7.25/"
+        property "sonar.projectName", "Spoozer"
+        property "sonar.projectVersions", "1.0.0"
+        property "sonar.scm.provider", "git"
+        property "sonar.links.scm", "https://github.com/saphijaga/Spoozer"
+        property "sonar.links.homepage", "https://web.spoozer.de"
+        property "sonar.sources", "src/main/"
+        property "sonar.tests", "src/test"
+        property "sonar.exclusions", "**/resources/**,**/static/**,**/templates/**,**/SpoozerApplication.java,**/CucumberTest.java"
+        property "sonar.coverage.exclusions", "**/cucumber/**,**/de/saphijaga/spoozer/config/**,**/de/saphijaga/spoozer/persistence/domain**,**/de/saphijaga/spoozer/service/**,**/de/saphijaga/spoozer/web/authentication/**,**/de/saphijaga/spoozer/web/details/**,**/de/saphijaga/spoozer/web/domain/**"
+        property "sourceEncoding", "UTF-8"
+    }
+}
+
+jacocoTestReport {
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports after running tests."
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(
+                    dir: it,
+                    excludes: [
+                            '**/cucumber/**',
+                            '**/resources/**',
+                            '**/static/**',
+                            '**/templates/**',
+                            '**/de/saphijaga/spoozer/config/**',
+                            '**/de/saphijaga/spoozer/persistence/domain**',
+                            '**/de/saphijaga/spoozer/service/**',
+                            '**/de/saphijaga/spoozer/web/authentication/**',
+                            '**/de/saphijaga/spoozer/web/details/**',
+                            '**/de/saphijaga/spoozer/web/domain/**',
+                    ]
+            )
+        })
+    }
+}
+
+jacoco {
+    toolVersion = "0.7.6.201602180812"
+    reportsDir = file("$buildDir/reports")
 }

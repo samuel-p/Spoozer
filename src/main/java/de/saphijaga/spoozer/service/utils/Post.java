@@ -1,6 +1,8 @@
 package de.saphijaga.spoozer.service.utils;
 
-import java.io.*;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.util.HashMap;
 import java.util.Map;
@@ -85,5 +87,8 @@ public class Post {
         outputStream.flush();
         outputStream.close();
         return connection.getInputStream();
+    }
+
+    private Post() {
     }
 }

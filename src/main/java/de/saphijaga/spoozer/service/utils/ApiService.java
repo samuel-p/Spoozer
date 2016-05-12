@@ -8,18 +8,19 @@ import de.saphijaga.spoozer.web.details.AccountDetails;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by samuel on 14.11.15.
  */
 @Component
 public class ApiService {
-    private HashMap<StreamingService, Api<? extends Account, ? extends AccountDetails, ? extends AccountAccessDetails>> apis;
+    private Map<StreamingService, Api<? extends Account, ? extends AccountDetails, ? extends AccountAccessDetails>> apis;
 
     public ApiService() {
-        apis = new HashMap<>();
+        apis = new EnumMap<>(StreamingService.class);
     }
 
     public void registerApi(Api<? extends Account, ? extends AccountDetails, ? extends AccountAccessDetails> api) {
