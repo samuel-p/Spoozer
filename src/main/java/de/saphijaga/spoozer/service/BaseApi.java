@@ -21,6 +21,8 @@ import static java.util.Collections.emptyList;
  * Created by samuel on 09.05.16.
  */
 public abstract class BaseApi<ApiAccount extends Account, ApiAccountDetails extends AccountDetails, ApiAccountAccessDetails extends AccountAccessDetails> implements Api<ApiAccount, ApiAccountDetails, ApiAccountAccessDetails> {
+    private static final String ACCESS_DETAILS_EXPIRED = "AccessDetails expired";
+
     private static Logger logger = LoggerFactory.getLogger(BaseApi.class);
 
     @Autowired
@@ -52,7 +54,7 @@ public abstract class BaseApi<ApiAccount extends Account, ApiAccountDetails exte
         try {
             return getSearchResult(accessDetails.get(), search);
         } catch (AccessDetailsExpiredException e) {
-            logger.warn("AccessDetails expired", e);
+            logger.warn(ACCESS_DETAILS_EXPIRED, e);
             if (retry) {
                 refreshAccessDetails(user, accessDetails.get());
                 return getSearchResult(user, search, false);
@@ -76,7 +78,7 @@ public abstract class BaseApi<ApiAccount extends Account, ApiAccountDetails exte
         try {
             return getTrack(accessDetails.get(), id);
         } catch (AccessDetailsExpiredException e) {
-            logger.warn("AccessDetails expired", e);
+            logger.warn(ACCESS_DETAILS_EXPIRED, e);
             if (retry) {
                 refreshAccessDetails(user, accessDetails.get());
                 return getTrack(user, id, false);
@@ -100,7 +102,7 @@ public abstract class BaseApi<ApiAccount extends Account, ApiAccountDetails exte
         try {
             return getChartTracks(accessDetails.get());
         } catch (AccessDetailsExpiredException e) {
-            logger.warn("AccessDetails expired", e);
+            logger.warn(ACCESS_DETAILS_EXPIRED, e);
             if (retry) {
                 refreshAccessDetails(user, accessDetails.get());
                 return getChartTracks(user, false);
@@ -126,7 +128,7 @@ public abstract class BaseApi<ApiAccount extends Account, ApiAccountDetails exte
         try {
             return getNewReleasedTracks(accessDetails.get());
         } catch (AccessDetailsExpiredException e) {
-            logger.warn("AccessDetails expired", e);
+            logger.warn(ACCESS_DETAILS_EXPIRED, e);
             if (retry) {
                 refreshAccessDetails(user, accessDetails.get());
                 return getNewReleasedTracks(user, false);
@@ -152,7 +154,7 @@ public abstract class BaseApi<ApiAccount extends Account, ApiAccountDetails exte
         try {
             return getTrendingTracks(accessDetails.get());
         } catch (AccessDetailsExpiredException e) {
-            logger.warn("AccessDetails expired", e);
+            logger.warn(ACCESS_DETAILS_EXPIRED, e);
             if (retry) {
                 refreshAccessDetails(user, accessDetails.get());
                 return getTrendingTracks(user, false);
@@ -178,7 +180,7 @@ public abstract class BaseApi<ApiAccount extends Account, ApiAccountDetails exte
         try {
             return getFeaturedTracks(accessDetails.get());
         } catch (AccessDetailsExpiredException e) {
-            logger.warn("AccessDetails expired", e);
+            logger.warn(ACCESS_DETAILS_EXPIRED, e);
             if (retry) {
                 refreshAccessDetails(user, accessDetails.get());
                 return getFeaturedTracks(user, false);

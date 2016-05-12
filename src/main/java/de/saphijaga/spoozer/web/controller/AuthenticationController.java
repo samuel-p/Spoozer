@@ -26,6 +26,9 @@ import java.util.Optional;
  */
 @Controller
 public class AuthenticationController {
+    private static final String REDIRECT = "redirect:/";
+    private static final String REGISTER = "register";
+
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -35,19 +38,19 @@ public class AuthenticationController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String registerAction(@ModelAttribute("user") @Valid RegisterUserRequest register, BindingResult result) {
         if (isUserLoggedin()) {
-            return "redirect:/";
+            return REDIRECT;
         }
         if (result.hasErrors()) {
             Optional<ObjectError> error = result.getAllErrors().stream().filter(e -> e.getCode().equals(PasswordMatches.class.getSimpleName())).findAny();
             if (error.isPresent()) {
                 result.addError(new FieldError("user", "password2", error.get().getDefaultMessage()));
             }
-            return "register";
+            return REGISTER;
         }
         Optional<UserDetails> user = userService.registerUser(register);
         if (!user.isPresent()) {
             result.addError(new ObjectError("registration", "something went wrong"));
-            return "register";
+            return REGISTER;
         }
         return "redirect:/login";
     }
@@ -55,9 +58,9 @@ public class AuthenticationController {
     @RequestMapping("/register")
     public ModelAndView getRegisterContent() {
         if (isUserLoggedin()) {
-            return new ModelAndView("redirect:/");
+            return new ModelAndView(REDIRECT);
         }
-        ModelAndView register = new ModelAndView("register");
+        ModelAndView register = new ModelAndView(REGISTER);
         register.addObject("user", new RegisterUserRequest());
         return register;
     }
@@ -65,7 +68,7 @@ public class AuthenticationController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String getLoginContent() {
         if (isUserLoggedin()) {
-            return "redirect:/";
+            return REDIRECT;
         }
         return "login";
     }

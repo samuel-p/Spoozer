@@ -17,7 +17,7 @@ public class SecurityUserDetailsHandler implements UserDetailsService {
     private UserPersistenceService userService;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) {
         Optional<User> user = userService.getUserByUsername(username);
         if (user.isPresent()) {
             return new SecurityUserDetails(user.get().getId(), user.get().getUsername(), user.get().getPassword());

@@ -36,6 +36,7 @@ import static org.springframework.web.util.UriUtils.encode;
  */
 @Component
 public class SoundcloudApi extends BaseApi<SoundcloudAccount, SoundcloudAccountDetails, SoundcloudAccessDetails> {
+    private static final String OAUTH_TOKEN_KEY = "?oauth_token=";
     private static Logger logger = LoggerFactory.getLogger(SoundcloudApi.class);
 
     @Override
@@ -184,7 +185,7 @@ public class SoundcloudApi extends BaseApi<SoundcloudAccount, SoundcloudAccountD
     @Override
     protected List<TrackDetails> getNewReleasedTracks(SoundcloudAccessDetails accessDetails) throws AccessDetailsExpiredException {
         try {
-            String url = getApiUrl("/tracks") + "?oauth_token=" + accessDetails.getAccessToken() + "&filter=streamable&limit=10&order=created_at";
+            String url = getApiUrl("/tracks") + OAUTH_TOKEN_KEY + accessDetails.getAccessToken() + "&filter=streamable&limit=10&order=created_at";
             GetSoundcloudTrackResponse[] searchResponse = Get.forObject(url, GetSoundcloudTrackResponse[].class);
             return stream(searchResponse).map(this::trackToDetails).collect(toList());
         } catch (IOException e) {

@@ -31,6 +31,7 @@ import static org.springframework.web.util.UriUtils.encode;
  */
 @Component
 public class SpotifyApi extends BaseApi<SpotifyAccount, SpotifyAccountDetails, SpotifyAccessDetails> {
+    public static final String AUTHORIZATION = "Authorization";
     private static Logger logger = LoggerFactory.getLogger(SpotifyApi.class);
 
     @Override
@@ -83,7 +84,7 @@ public class SpotifyApi extends BaseApi<SpotifyAccount, SpotifyAccountDetails, S
     public SpotifyAccountDetails login(UserDetails user, String code, String serverUrl) throws IOException {
         GetSpotifyAccessTokensRequest request = new GetSpotifyAccessTokensRequest(code, getRedirectUrl(serverUrl));
         Map<String, String> authHeader = new HashMap<>();
-        authHeader.put("Authorization", getServerAuthorizationKey());
+        authHeader.put(AUTHORIZATION, getServerAuthorizationKey());
         GetSpotifyAccessTokensResponse accessTokenResponse = Post.forObject(Spotify.TOKEN_URL, request, authHeader, GetSpotifyAccessTokensResponse.class);
         SpotifyAccessDetails accessDetails = new SpotifyAccessDetails();
         accessDetails.setAccessToken(accessTokenResponse.getAccessToken());
@@ -112,7 +113,7 @@ public class SpotifyApi extends BaseApi<SpotifyAccount, SpotifyAccountDetails, S
 
     private Map<String, String> getHeader(SpotifyAccessDetails accessDetails) {
         Map<String, String> header = new HashMap<>();
-        header.put("Authorization", accessDetails.getTokenType() + " " + accessDetails.getAccessToken());
+        header.put(AUTHORIZATION, accessDetails.getTokenType() + " " + accessDetails.getAccessToken());
         return header;
     }
 
@@ -131,7 +132,7 @@ public class SpotifyApi extends BaseApi<SpotifyAccount, SpotifyAccountDetails, S
     protected void refreshAccessDetails(UserDetails user, SpotifyAccessDetails accessDetails) {
         RefreshSpotifyAccessTokensRequest request = new RefreshSpotifyAccessTokensRequest(accessDetails.getRefreshToken());
         Map<String, String> authHeader = new HashMap<>();
-        authHeader.put("Authorization", getServerAuthorizationKey());
+        authHeader.put(AUTHORIZATION, getServerAuthorizationKey());
         try {
             GetSpotifyAccessTokensResponse accessTokenResponse = Post.forObject(Spotify.TOKEN_URL, request, authHeader, GetSpotifyAccessTokensResponse.class);
             accessDetails.setAccessToken(accessTokenResponse.getAccessToken());
