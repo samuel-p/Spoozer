@@ -26,6 +26,8 @@ notifications:
 services:
   - mongodb
 
+cache:
+  - $HOME/.gradle/caches/
 #before_install:
 
 #before_script:

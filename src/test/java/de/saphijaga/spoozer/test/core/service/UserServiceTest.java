@@ -5,7 +5,6 @@ import de.saphijaga.spoozer.core.service.TrackService;
 import de.saphijaga.spoozer.core.service.UserService;
 import de.saphijaga.spoozer.persistence.service.UserPersistenceService;
 import de.saphijaga.spoozer.web.details.UserDetails;
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -16,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.Optional;
 
 import static de.saphijaga.spoozer.test.data.TestUserFactory.*;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -41,6 +41,7 @@ public class UserServiceTest {
         when(passwordEncoder.encode(TEST_PASSWORD)).thenReturn(TEST_ENCODED_PASSWORD);
 
         when(userPersistenceService.saveUser(testUserWithoutId())).thenReturn(testUserOptional());
+        when(userPersistenceService.getUser(TEST_ID)).thenReturn(testUserOptional());
     }
 
     @Test
@@ -49,6 +50,15 @@ public class UserServiceTest {
 
         verify(userPersistenceService).saveUser(testUserWithoutId());
 
-        assertThat(result, Matchers.is(testUserDetailsOptional()));
+        assertThat(result, is(testUserDetailsOptional()));
+    }
+
+    @Test
+    public void shouldReturnUserDetailsForId() throws Exception {
+        Optional<UserDetails> result = userService.getUserDetails(TEST_ID);
+
+        verify(userPersistenceService).getUser(TEST_ID);
+
+        assertThat(result, is(testUserDetailsOptional()));
     }
 }
