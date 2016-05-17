@@ -7,11 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
 
-import static de.saphijaga.spoozer.test.data.TestUserFactory.TEST_ID;
-import static de.saphijaga.spoozer.test.data.TestUserFactory.testUserOptional;
-import static de.saphijaga.spoozer.test.data.TestUserFactory.testUserWithoutId;
+import static de.saphijaga.spoozer.test.data.TestUserFactory.*;
 import static java.util.Optional.empty;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
@@ -38,6 +37,21 @@ public class UserPersistenceServiceIntegrationTest extends MongoIntegrationTest 
     }
 
     @Test
+    public void shouldReturnUserByUsername() throws Exception {
+        assertThat(userService.getUserByUsername(TEST_USERNAME), is(testUserOptional()));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowErrorForNullUsername() throws Exception {
+        userService.getUserByUsername(null);
+    }
+
+    @Test
+    public void shouldReturnNullForEmptyUsername() throws Exception {
+        assertThat(userService.getUserByUsername(""), is(empty()));
+    }
+
+    @Test
     public void shouldSaveNewUserAndAddId() throws Exception {
         User create = testUserWithoutId();
         Optional<User> created = userService.saveUser(create);
@@ -54,5 +68,12 @@ public class UserPersistenceServiceIntegrationTest extends MongoIntegrationTest 
         assertTrue(edited.isPresent());
         assertThat(edited.get(), is(edit));
         assertThat(findUser(TEST_ID), is(edited.get()));
+    }
+
+    @Test
+    public void shouldDeleteUser() throws Exception {
+        User delete = findUser(TEST_ID);
+        userService.deleteUser(delete);
+        assertNull(findUser(TEST_ID));
     }
 }
