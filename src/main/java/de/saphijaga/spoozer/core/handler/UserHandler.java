@@ -39,7 +39,8 @@ public class UserHandler implements UserService {
 
     @Override
     public Optional<UserDetails> registerUser(RegisterUserRequest request) {
-        Optional<User> user = userService.saveUser(toUser(request));
+        User user1 = toUser(request);
+        Optional<User> user = userService.saveUser(user1);
         return toUserDetails(user);
     }
 

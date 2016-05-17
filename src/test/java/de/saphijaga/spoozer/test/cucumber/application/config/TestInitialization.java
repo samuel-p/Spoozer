@@ -1,9 +1,6 @@
-package de.saphijaga.spoozer.test.application.config;
+package de.saphijaga.spoozer.test.cucumber.application.config;
 
 import de.saphijaga.spoozer.core.service.UserService;
-import de.saphijaga.spoozer.persistence.domain.Account;
-import de.saphijaga.spoozer.persistence.domain.Playlist;
-import de.saphijaga.spoozer.persistence.domain.User;
 import de.saphijaga.spoozer.web.domain.request.RegisterUserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;

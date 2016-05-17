@@ -1,11 +1,10 @@
-package de.saphijaga.spoozer.test.application.config;
+package de.saphijaga.spoozer.test.cucumber.application.config;
 
 import de.saphijaga.spoozer.core.handler.*;
 import de.saphijaga.spoozer.persistence.handler.AccountPersistenceHandler;
 import de.saphijaga.spoozer.persistence.handler.PlaylistPersistenceHandler;
 import de.saphijaga.spoozer.persistence.handler.TrackPersistenceHandler;
 import de.saphijaga.spoozer.persistence.handler.UserPersistenceHandler;
-import de.saphijaga.spoozer.service.soundcloud.Soundcloud;
 import de.saphijaga.spoozer.service.soundcloud.SoundcloudApi;
 import de.saphijaga.spoozer.service.spotify.SpotifyApi;
 import de.saphijaga.spoozer.service.utils.ApiService;

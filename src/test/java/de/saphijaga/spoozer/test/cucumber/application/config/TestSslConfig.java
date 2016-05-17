@@ -1,19 +1,11 @@
-package de.saphijaga.spoozer.test.application.config;
+package de.saphijaga.spoozer.test.cucumber.application.config;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.catalina.connector.Connector;
-import org.apache.coyote.http11.Http11NioProtocol;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.embedded.ErrorPage;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.PathResource;
 import org.springframework.http.HttpStatus;
 
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 /**
