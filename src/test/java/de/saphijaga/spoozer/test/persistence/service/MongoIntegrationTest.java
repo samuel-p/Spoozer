@@ -1,6 +1,6 @@
 package de.saphijaga.spoozer.test.persistence.service;
 
-import de.saphijaga.spoozer.persistence.domain.User;
+import de.saphijaga.spoozer.persistence.domain.*;
 import de.saphijaga.spoozer.persistence.handler.UserPersistenceHandler;
 import de.saphijaga.spoozer.test.cucumber.application.config.TestMongoConfig;
 import de.saphijaga.spoozer.test.data.TestUserFactory;
@@ -26,26 +26,33 @@ public class MongoIntegrationTest {
 
     @Before
     public void setUp() throws Exception {
-        dropAll(mongo);
-        testingSetup(mongo);
+        dropAll();
+        testSetup();
     }
 
     @After
     public void tearDown() throws Exception {
-        dropAll(mongo);
+        dropAll();
     }
 
-    private void testingSetup(MongoOperations mongo) {
+    private void testSetup() {
         mongo.insert(TestUserFactory.testUser());
         // TODO add all test domain objects
     }
 
-    protected void dropAll(MongoOperations mongo) {
+    protected void dropAll() {
+        mongo.dropCollection(Account.class);
+        mongo.dropCollection(History.class);
+        mongo.dropCollection(HTrack.class);
+        mongo.dropCollection(Playlist.class);
+        mongo.dropCollection(Properties.class);
+        mongo.dropCollection(SoundcloudAccount.class);
+        mongo.dropCollection(SpotifyAccount.class);
+        mongo.dropCollection(Track.class);
         mongo.dropCollection(User.class);
-        // TODO add all persistence domain classes
     }
 
-    protected User find(String id) {
+    protected User findUser(String id) {
         return find(id, User.class);
     }
 
