@@ -28,12 +28,14 @@ services:
 
 #before_install:
 
-before_script:
-  - sleep 15
+#before_script:
+#  - sleep 15
 
 # Run Integration tests
 script:
   - ./gradlew test jacocoTestReport
+
+after_script:
   - ./gradlew sonarRunner
 
 #after_success:
@@ -45,5 +47,3 @@ script:
 #deploy:
 
 #after_deploy:
-
-#after_script:
