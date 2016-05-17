@@ -6,7 +6,6 @@ import de.saphijaga.spoozer.test.cucumber.application.config.TestMongoConfig;
 import de.saphijaga.spoozer.test.data.TestUserFactory;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -19,7 +18,6 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
 /**
  * Created by samuel on 17.05.16.
  */
-@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestMongoConfig.class, UserPersistenceHandler.class})
 public class MongoIntegrationTest {

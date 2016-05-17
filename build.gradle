@@ -97,6 +97,7 @@ task buildAll(type: Jar) {
 
 test {
     exclude '**/cucumber/**'
+    exclude '**/MongoIntegrationTest**'
 }
 
 sonarRunner {

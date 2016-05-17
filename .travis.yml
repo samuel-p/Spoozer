@@ -1,9 +1,6 @@
 # configuration file for TravisCI
-
-
 # Notes:
 #  - you can skip a build by adding [ci skip] to the commit message
-#
 
 # see http://about.travis-ci.org/docs/user/languages/java/
 language: java
@@ -11,8 +8,6 @@ language: java
 # test for these JDK versions and environments
 jdk:
    - oraclejdk8
-#   - oraclejdk7
-#   - openjdk7
 
 # only build these branches (RegEx is also valid, eg. /^deploy.*$/):
 branches:
@@ -28,9 +23,13 @@ notifications:
   email:
     - test@spoozer.de
 
+services:
+  - mongodb
+
 #before_install:
 
-#before_script:
+before_script:
+  - sleep 15
 
 # Run Integration tests
 script:
