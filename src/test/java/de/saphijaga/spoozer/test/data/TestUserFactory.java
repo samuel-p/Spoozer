@@ -1,5 +1,6 @@
 package de.saphijaga.spoozer.test.data;
 
+import de.saphijaga.spoozer.persistence.domain.Track;
 import de.saphijaga.spoozer.persistence.domain.User;
 import de.saphijaga.spoozer.web.details.UserDetails;
 
@@ -24,6 +25,7 @@ public class TestUserFactory {
     public static User testUser() {
         User user = testUserWithoutId();
         user.setId(TEST_ID);
+        user.getHistory().addSong(new Track());
         return user;
     }
 

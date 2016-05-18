@@ -17,11 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
+import static java.util.Collections.emptyList;
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
 
@@ -81,9 +79,9 @@ public class UserHandler implements UserService {
         Optional<User> user = userService.getUser(userDetails.getId());
         if (user.isPresent()) {
             updateUser(user.get(), request);
+            user = userService.saveUser(user.get());
         }
-        Optional<User> userUpdate = userService.saveUser(user.get());
-        return toUserDetails(userUpdate);
+        return toUserDetails(user);
     }
 
     @Override
@@ -104,22 +102,23 @@ public class UserHandler implements UserService {
     @Override
     public void cutUserHistory(UserDetails userDetails, int limit) {
         Optional<User> user = userService.getUser(userDetails.getId());
-        user.get().getHistory().cutListtoLimit(limit);
+        user.ifPresent(u -> u.getHistory().cutListtoLimit(limit));
     }
 
     @Override
     public void clearUserHistory(UserDetails userDetails) {
         Optional<User> user = userService.getUser(userDetails.getId());
-        user.get().getHistory().clearHistory();
-        userService.saveUser(user.get());
+        user.ifPresent(u -> {
+            u.getHistory().clearHistory();
+            userService.saveUser(u);
+        });
     }
 
     @Override
     public Map<Date, TrackDetails> getHistoryMap(UserDetails userDetails) {
         Map<Date, TrackDetails> historyMap = new HashMap<>();
-        User user = userService.getUser(userDetails.getId()).get();
-        History history = user.getHistory();
-        for (HTrack track : history.getSongs()) {
+        Optional<User> user = userService.getUser(userDetails.getId());
+        for (HTrack track : user.map(User::getHistory).map(History::getSongs).orElse(emptyList())) {
             trackService.getTrack(track.getTrack().getId()).ifPresent(t -> historyMap.put(track.getDate(), t));
         }
         return historyMap;

@@ -48,4 +48,29 @@ public abstract class AccountDetails {
     public void setUrl(String url) {
         this.url = url;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AccountDetails that = (AccountDetails) o;
+
+        if (service != that.service) return false;
+        if (serviceName != null ? !serviceName.equals(that.serviceName) : that.serviceName != null) return false;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (username != null ? !username.equals(that.username) : that.username != null) return false;
+        return url != null ? url.equals(that.url) : that.url == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = service != null ? service.hashCode() : 0;
+        result = 31 * result + (serviceName != null ? serviceName.hashCode() : 0);
+        result = 31 * result + (id != null ? id.hashCode() : 0);
+        result = 31 * result + (username != null ? username.hashCode() : 0);
+        result = 31 * result + (url != null ? url.hashCode() : 0);
+        return result;
+    }
 }

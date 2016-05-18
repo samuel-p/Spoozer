@@ -52,4 +52,25 @@ public class HTrack {
     public void setId(String id) {
         this.id = id;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        HTrack hTrack = (HTrack) o;
+
+        if (id != null ? !id.equals(hTrack.id) : hTrack.id != null) return false;
+        if (track != null ? !track.equals(hTrack.track) : hTrack.track != null) return false;
+        return date != null ? date.equals(hTrack.date) : hTrack.date == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (track != null ? track.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        return result;
+    }
 }

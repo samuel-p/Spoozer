@@ -5,6 +5,7 @@ import de.saphijaga.spoozer.core.service.TrackService;
 import de.saphijaga.spoozer.core.service.UserService;
 import de.saphijaga.spoozer.persistence.domain.User;
 import de.saphijaga.spoozer.persistence.service.UserPersistenceService;
+import de.saphijaga.spoozer.web.details.TrackDetails;
 import de.saphijaga.spoozer.web.details.UserDetails;
 import de.saphijaga.spoozer.web.domain.request.AddHTrackRequest;
 import de.saphijaga.spoozer.web.domain.request.ChangePasswordRequest;
@@ -16,7 +17,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Optional;
+import java.util.*;
 
 import static de.saphijaga.spoozer.test.data.TestUserFactory.*;
 import static java.util.Optional.of;
@@ -57,6 +58,8 @@ public class UserServiceTest {
         when(userPersistenceService.getUserByUsername(TEST_USERNAME)).thenReturn(of(testUser()));
         when(userPersistenceService.saveUser(testUserWithName())).thenReturn(of(testUserWithName()));
         when(userPersistenceService.saveUser(testUserWithChangedPassword())).thenReturn(of(testUserWithChangedPassword()));
+
+        when(trackService.getTrack(any())).thenReturn(of(new TrackDetails()));
     }
 
     @Test
@@ -124,6 +127,16 @@ public class UserServiceTest {
         userService.addSongToHistory(testUserDetails(), new AddHTrackRequest());
 
         verify(trackService).addTrackToHistory(testUserDetails(), new AddHTrackRequest());
+    }
+
+    @Test
+    public void shouldReturnHistoryMap() throws Exception {
+        Map<Date, TrackDetails> historyMap = userService.getHistoryMap(testUserDetails());
+
+        verify(userPersistenceService).getUser(TEST_ID);
+        verify(trackService).getTrack(any());
+
+        assertThat(historyMap.size(), is(1));
     }
 
     private RegisterUserRequest testRegisterUserRequest() {
