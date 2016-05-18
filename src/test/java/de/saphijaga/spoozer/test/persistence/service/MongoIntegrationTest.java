@@ -4,6 +4,7 @@ import de.saphijaga.spoozer.persistence.domain.*;
 import de.saphijaga.spoozer.persistence.handler.PlaylistPersistenceHandler;
 import de.saphijaga.spoozer.persistence.handler.UserPersistenceHandler;
 import de.saphijaga.spoozer.test.cucumber.application.config.TestMongoConfig;
+import de.saphijaga.spoozer.test.data.TestPlaylistFactory;
 import de.saphijaga.spoozer.test.data.TestUserFactory;
 import org.junit.After;
 import org.junit.Before;
@@ -38,6 +39,7 @@ public class MongoIntegrationTest {
 
     private void testSetup() {
         mongo.insert(TestUserFactory.testUser());
+        mongo.insert(TestPlaylistFactory.testPlaylist());
         // TODO add all test domain objects
     }
 
@@ -55,6 +57,10 @@ public class MongoIntegrationTest {
 
     protected User findUser(String id) {
         return find(id, User.class);
+    }
+
+    protected Playlist findPlaylist(String id){
+        return find(id, Playlist.class);
     }
 
     // TODO add methods to find domain objects in database

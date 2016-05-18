@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
 
+
+
+import static de.saphijaga.spoozer.test.data.TestPlaylistFactory.*;
 import static java.util.Optional.empty;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertNull;
@@ -27,5 +30,12 @@ public class PlaylistPersistenceServiceIntegrationTest extends MongoIntegrationT
         Optional<Playlist> created = playlistService.savePlaylist(playlist);
         assertTrue(created.isPresent());
         assertThat(created.get(),is(playlist));
+    }
+
+    @Test
+    public void shouldDeletePlaylist() throws Exception {
+        Playlist playlist = playlistService.getPlaylist(TEST_ID).get();
+        playlistService.deletePlaylist(playlist);
+        assertNull(findPlaylist(TEST_ID));
     }
 }
