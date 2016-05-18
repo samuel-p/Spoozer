@@ -11,6 +11,7 @@ import java.util.Optional;
 
 import static de.saphijaga.spoozer.test.data.TestPlaylistFactory.*;
 import static java.util.Optional.empty;
+import static java.util.Optional.of;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
@@ -22,6 +23,11 @@ import static org.junit.Assert.assertTrue;
 public class PlaylistPersistenceServiceIntegrationTest extends MongoIntegrationTest {
     @Autowired
     private PlaylistPersistenceService playlistService;
+    
+    @Test
+    public void shouldReturnNullForEmptyId() throws Exception {
+        assertThat(playlistService.getPlaylist(""), is(empty()));
+    }
 
     @Test
     public void shouldSavePlaylistAndAddID() throws Exception {
@@ -34,7 +40,7 @@ public class PlaylistPersistenceServiceIntegrationTest extends MongoIntegrationT
 
     @Test
     public void shouldDeletePlaylist() throws Exception {
-        Playlist playlist = playlistService.getPlaylist(TEST_ID).get();
+        Playlist playlist = findPlaylist(TEST_ID);
         playlistService.deletePlaylist(playlist);
         assertNull(findPlaylist(TEST_ID));
     }
