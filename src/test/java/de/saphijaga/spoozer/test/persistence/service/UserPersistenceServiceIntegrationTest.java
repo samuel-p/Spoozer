@@ -9,6 +9,7 @@ import java.util.Optional;
 
 import static de.saphijaga.spoozer.test.data.TestUserFactory.*;
 import static java.util.Optional.empty;
+import static java.util.Optional.of;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
@@ -23,7 +24,7 @@ public class UserPersistenceServiceIntegrationTest extends MongoIntegrationTest 
 
     @Test
     public void shouldReturnUserById() throws Exception {
-        assertThat(userService.getUser(TEST_ID), is(testUserOptional()));
+        assertThat(userService.getUser(TEST_ID), is(of(testUser())));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -38,7 +39,7 @@ public class UserPersistenceServiceIntegrationTest extends MongoIntegrationTest 
 
     @Test
     public void shouldReturnUserByUsername() throws Exception {
-        assertThat(userService.getUserByUsername(TEST_USERNAME), is(testUserOptional()));
+        assertThat(userService.getUserByUsername(TEST_USERNAME), is(of(testUser())));
     }
 
     @Test(expected = NullPointerException.class)

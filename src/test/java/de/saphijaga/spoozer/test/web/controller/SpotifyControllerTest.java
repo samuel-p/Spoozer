@@ -6,13 +6,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.io.UnsupportedEncodingException;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -31,9 +31,9 @@ public class SpotifyControllerTest {
 
     @Before
     public void setup() {
-        MockitoAnnotations.initMocks(this);
+        initMocks(this);
 
-        mock = standaloneSetup(controller).setViewResolvers(BaseIntegration.viewResolver()).build();
+        mock = standaloneSetup(controller).setViewResolvers(ViewResolverFactory.viewResolver()).build();
 
         try {
             when(api.getLoginURL(any(), any())).thenReturn("spoozer.de/spotify");

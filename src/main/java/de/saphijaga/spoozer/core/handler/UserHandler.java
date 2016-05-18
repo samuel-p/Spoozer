@@ -83,19 +83,17 @@ public class UserHandler implements UserService {
             updateUser(user.get(), request);
         }
         Optional<User> userUpdate = userService.saveUser(user.get());
-
         return toUserDetails(userUpdate);
     }
 
     @Override
     public Optional<UserDetails> changeUserPassword(UserDetails userDetails, ChangePasswordRequest changePasswordRequest) {
         Optional<User> user = userService.getUser(userDetails.getId());
-        Optional<User> userUpdate = userService.getUser(userDetails.getId());
         if (user.isPresent() && passwordEncoder.matches(changePasswordRequest.getOldpassword(), user.get().getPassword())) {
             user.get().setPassword(passwordEncoder.encode(changePasswordRequest.getPassword()));
-            userUpdate = userService.saveUser(user.get());
+            user = userService.saveUser(user.get());
         }
-        return toUserDetails(userUpdate);
+        return toUserDetails(user);
     }
 
     @Override
