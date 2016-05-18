@@ -25,6 +25,12 @@ public class TestUserFactory {
     public static User testUser() {
         User user = testUserWithoutId();
         user.setId(TEST_ID);
+        return user;
+    }
+
+    public static User testUserWithOneEmptyTrackHistory() {
+        User user = testUserWithoutId();
+        user.setId(TEST_ID);
         user.getHistory().addSong(new Track());
         return user;
     }

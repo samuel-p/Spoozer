@@ -53,11 +53,11 @@ public class UserServiceTest {
         when(passwordEncoder.matches(TEST_PASSWORD, TEST_ENCODED_PASSWORD)).thenReturn(true);
         when(passwordEncoder.encode(TEST_CHANGE_PASSWORD)).thenReturn(TEST_CHANGE_ENCODED_PASSWORD);
 
-        when(userPersistenceService.saveUser(testUserWithoutId())).thenReturn(of(testUser()));
-        when(userPersistenceService.getUser(TEST_ID)).thenReturn(of(testUser()));
-        when(userPersistenceService.getUserByUsername(TEST_USERNAME)).thenReturn(of(testUser()));
+        when(userPersistenceService.saveUser(testUserWithoutId())).thenReturn(of(testUserWithOneEmptyTrackHistory()));
         when(userPersistenceService.saveUser(testUserWithName())).thenReturn(of(testUserWithName()));
         when(userPersistenceService.saveUser(testUserWithChangedPassword())).thenReturn(of(testUserWithChangedPassword()));
+        when(userPersistenceService.getUser(TEST_ID)).thenReturn(of(testUserWithOneEmptyTrackHistory()));
+        when(userPersistenceService.getUserByUsername(TEST_USERNAME)).thenReturn(of(testUserWithOneEmptyTrackHistory()));
 
         when(trackService.getTrack(any())).thenReturn(of(new TrackDetails()));
     }

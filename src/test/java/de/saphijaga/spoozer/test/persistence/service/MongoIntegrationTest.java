@@ -3,9 +3,7 @@ package de.saphijaga.spoozer.test.persistence.service;
 import de.saphijaga.spoozer.persistence.domain.*;
 import de.saphijaga.spoozer.persistence.handler.PlaylistPersistenceHandler;
 import de.saphijaga.spoozer.persistence.handler.UserPersistenceHandler;
-import de.saphijaga.spoozer.test.cucumber.application.config.TestMongoConfig;
-import de.saphijaga.spoozer.test.data.TestPlaylistFactory;
-import de.saphijaga.spoozer.test.data.TestUserFactory;
+import de.saphijaga.spoozer.test.config.TestMongoConfig;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -15,6 +13,8 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import static de.saphijaga.spoozer.test.data.TestPlaylistFactory.testPlaylist;
+import static de.saphijaga.spoozer.test.data.TestUserFactory.testUser;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 
 /**
@@ -38,8 +38,8 @@ public class MongoIntegrationTest {
     }
 
     private void testSetup() {
-        mongo.insert(TestUserFactory.testUser());
-        mongo.insert(TestPlaylistFactory.testPlaylist());
+        mongo.insert(testUser());
+        mongo.insert(testPlaylist());
         // TODO add all test domain objects
     }
 

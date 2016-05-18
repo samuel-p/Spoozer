@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 /**
  * Created by samuel on 16.05.16.
  */
-public class TestDatabaseConfig extends MongoConfig {
+public class TestMongoConfig extends MongoConfig {
     @Bean
     public MongoTemplate mongoTemplate(Mongo mongo) {
         return new MongoTemplate(mongo, "spoozer_automated_test");
