@@ -21,8 +21,8 @@ import static de.saphijaga.spoozer.test.data.TestUserFactory.*;
 import static java.util.Optional.of;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 /**
@@ -107,6 +107,17 @@ public class UserServiceTest {
         assertThat(result, is(of(testUserDetails())));
     }
 
+    @Test
+    public void shouldNotChangeUserPassword() throws Exception {
+        Optional<UserDetails> result = userService.changeUserPassword(testUserDetails(), testChangePasswordRequestWithoutOldPassword());
+
+        verify(passwordEncoder, never()).encode(any());
+        verify(userPersistenceService).getUser(TEST_ID);
+        verify(userPersistenceService, never()).saveUser(any());
+
+        assertThat(result, is(of(testUserDetails())));
+    }
+
     private RegisterUserRequest testRegisterUserRequest() {
         RegisterUserRequest request = new RegisterUserRequest();
         request.setUsername(TEST_USERNAME);
@@ -130,6 +141,12 @@ public class UserServiceTest {
         request.setOldpassword(TEST_PASSWORD);
         request.setPassword(TEST_CHANGE_PASSWORD);
         request.setPassword2(TEST_CHANGE_PASSWORD);
+        return request;
+    }
+
+    private ChangePasswordRequest testChangePasswordRequestWithoutOldPassword() {
+        ChangePasswordRequest request = testChangePasswordRequest();
+        request.setOldpassword(null);
         return request;
     }
 
