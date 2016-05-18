@@ -6,6 +6,7 @@ import de.saphijaga.spoozer.core.service.UserService;
 import de.saphijaga.spoozer.persistence.domain.User;
 import de.saphijaga.spoozer.persistence.service.UserPersistenceService;
 import de.saphijaga.spoozer.web.details.UserDetails;
+import de.saphijaga.spoozer.web.domain.request.AddHTrackRequest;
 import de.saphijaga.spoozer.web.domain.request.ChangePasswordRequest;
 import de.saphijaga.spoozer.web.domain.request.RegisterUserRequest;
 import de.saphijaga.spoozer.web.domain.request.SaveUserRequest;
@@ -116,6 +117,13 @@ public class UserServiceTest {
         verify(userPersistenceService, never()).saveUser(any());
 
         assertThat(result, is(of(testUserDetails())));
+    }
+
+    @Test
+    public void shouldAddTrackToUserHistory() throws Exception {
+        userService.addSongToHistory(testUserDetails(), new AddHTrackRequest());
+
+        verify(trackService).addTrackToHistory(testUserDetails(), new AddHTrackRequest());
     }
 
     private RegisterUserRequest testRegisterUserRequest() {
