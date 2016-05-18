@@ -17,7 +17,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 import static de.saphijaga.spoozer.test.data.TestUserFactory.*;
 import static java.util.Optional.of;
@@ -137,6 +140,22 @@ public class UserServiceTest {
         verify(trackService).getTrack(any());
 
         assertThat(historyMap.size(), is(1));
+    }
+
+    @Test
+    public void shouldSaveProperties() throws Exception {
+        userService.saveProperties(testUserDetails(), new HashMap<>());
+
+        verify(userPersistenceService).getUser(TEST_ID);
+        verify(userPersistenceService).saveUser(testUser());
+    }
+
+    @Test
+    public void shouldReturnProperties() throws Exception {
+        Map<String, Object> properties = userService.getProperties(testUserDetails());
+
+        verify(userPersistenceService).getUser(TEST_ID);
+        assertThat(properties, is(new HashMap<>()));
     }
 
     private RegisterUserRequest testRegisterUserRequest() {
