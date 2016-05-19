@@ -23,10 +23,15 @@ import static org.junit.Assert.assertTrue;
 public class PlaylistPersistenceServiceIntegrationTest extends MongoIntegrationTest {
     @Autowired
     private PlaylistPersistenceService playlistService;
-    
+
     @Test
     public void shouldReturnNullForEmptyId() throws Exception {
         assertThat(playlistService.getPlaylist(""), is(empty()));
+    }
+
+    @Test
+    public void shouldReturnPlaylistByID() throws Exception {
+        assertThat(playlistService.getPlaylist(TEST_ID),is(of(testPlaylist())));
     }
 
     @Test
