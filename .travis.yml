@@ -38,7 +38,8 @@ script:
 after_script:
   - ./gradlew sonarRunner
 
-#after_success:
+after_success:
+  - ./gradlew jacocoTestReport coveralls
 
 #after_failure:
 
