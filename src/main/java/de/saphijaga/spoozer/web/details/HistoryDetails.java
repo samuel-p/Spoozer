@@ -17,4 +17,20 @@ public class HistoryDetails {
     public void setHistory(Map<Date, TrackDetails> history) {
         this.history = history;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        HistoryDetails that = (HistoryDetails) o;
+
+        return history != null ? history.equals(that.history) : that.history == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return history != null ? history.hashCode() : 0;
+    }
 }

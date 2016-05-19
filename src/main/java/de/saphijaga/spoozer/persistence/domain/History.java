@@ -47,4 +47,23 @@ public class History {
     public void setId(String id) {
         this.id = id;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        History history = (History) o;
+
+        if (id != null ? !id.equals(history.id) : history.id != null) return false;
+        return songs != null ? songs.equals(history.songs) : history.songs == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (songs != null ? songs.hashCode() : 0);
+        return result;
+    }
 }

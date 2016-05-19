@@ -4,9 +4,9 @@ import de.saphijaga.spoozer.web.controller.SpoozerController;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
-import org.mockito.MockitoAnnotations;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.mockito.MockitoAnnotations.initMocks;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -23,9 +23,9 @@ public class SpoozerControllerTest {
 
     @Before
     public void setup() {
-        MockitoAnnotations.initMocks(this);
+        initMocks(this);
 
-        mock = standaloneSetup(controller).setViewResolvers(BaseIntegration.viewResolver()).build();
+        mock = standaloneSetup(controller).setViewResolvers(ViewResolverFactory.viewResolver()).build();
     }
 
     @Test

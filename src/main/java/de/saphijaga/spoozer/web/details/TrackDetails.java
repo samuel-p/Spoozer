@@ -87,4 +87,51 @@ public class TrackDetails {
     public void setUrl(String url) {
         this.url = url;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TrackDetails that = (TrackDetails) o;
+
+        if (durationInMillis != that.durationInMillis) return false;
+        if (service != that.service) return false;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (title != null ? !title.equals(that.title) : that.title != null) return false;
+        if (interpret != null ? !interpret.equals(that.interpret) : that.interpret != null) return false;
+        if (album != null ? !album.equals(that.album) : that.album != null) return false;
+        if (coverUrl != null ? !coverUrl.equals(that.coverUrl) : that.coverUrl != null) return false;
+        if (externalUrl != null ? !externalUrl.equals(that.externalUrl) : that.externalUrl != null) return false;
+        return url != null ? url.equals(that.url) : that.url == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = service != null ? service.hashCode() : 0;
+        result = 31 * result + (id != null ? id.hashCode() : 0);
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (int) (durationInMillis ^ (durationInMillis >>> 32));
+        result = 31 * result + (interpret != null ? interpret.hashCode() : 0);
+        result = 31 * result + (album != null ? album.hashCode() : 0);
+        result = 31 * result + (coverUrl != null ? coverUrl.hashCode() : 0);
+        result = 31 * result + (externalUrl != null ? externalUrl.hashCode() : 0);
+        result = 31 * result + (url != null ? url.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "TrackDetails{" +
+                "service=" + service +
+                ", id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", durationInMillis=" + durationInMillis +
+                ", interpret='" + interpret + '\'' +
+                ", album='" + album + '\'' +
+                ", coverUrl='" + coverUrl + '\'' +
+                ", externalUrl='" + externalUrl + '\'' +
+                ", url='" + url + '\'' +
+                '}';
+    }
 }

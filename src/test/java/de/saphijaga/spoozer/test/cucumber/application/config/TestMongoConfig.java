@@ -1,4 +1,4 @@
-package de.saphijaga.spoozer.test.application.config;
+package de.saphijaga.spoozer.test.cucumber.application.config;
 
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;

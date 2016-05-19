@@ -100,4 +100,39 @@ public class Track {
     public void setUrl(String url) {
         this.url = url;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Track track = (Track) o;
+
+        if (durationInMillis != track.durationInMillis) return false;
+        if (id != null ? !id.equals(track.id) : track.id != null) return false;
+        if (serviceId != null ? !serviceId.equals(track.serviceId) : track.serviceId != null) return false;
+        if (service != track.service) return false;
+        if (title != null ? !title.equals(track.title) : track.title != null) return false;
+        if (interpret != null ? !interpret.equals(track.interpret) : track.interpret != null) return false;
+        if (album != null ? !album.equals(track.album) : track.album != null) return false;
+        if (coverUrl != null ? !coverUrl.equals(track.coverUrl) : track.coverUrl != null) return false;
+        if (externalUrl != null ? !externalUrl.equals(track.externalUrl) : track.externalUrl != null) return false;
+        return url != null ? url.equals(track.url) : track.url == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (serviceId != null ? serviceId.hashCode() : 0);
+        result = 31 * result + (service != null ? service.hashCode() : 0);
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (int) (durationInMillis ^ (durationInMillis >>> 32));
+        result = 31 * result + (interpret != null ? interpret.hashCode() : 0);
+        result = 31 * result + (album != null ? album.hashCode() : 0);
+        result = 31 * result + (coverUrl != null ? coverUrl.hashCode() : 0);
+        result = 31 * result + (externalUrl != null ? externalUrl.hashCode() : 0);
+        result = 31 * result + (url != null ? url.hashCode() : 0);
+        return result;
+    }
 }

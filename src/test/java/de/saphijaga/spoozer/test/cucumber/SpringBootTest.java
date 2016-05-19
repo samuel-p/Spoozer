@@ -1,6 +1,6 @@
 package de.saphijaga.spoozer.test.cucumber;
 
-import de.saphijaga.spoozer.test.application.SpoozerTestApplication;
+import de.saphijaga.spoozer.test.cucumber.application.SpoozerTestApplication;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 import org.springframework.boot.test.IntegrationTest;
