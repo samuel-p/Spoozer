@@ -1,0 +1,8 @@
+codecov:
+  token: c64db653-f70b-41c1-9406-eb63d295aa8a
+  branch: master
+
+coverage:
+  precision: 2
+  round: nearest
+  range: "20...100"
