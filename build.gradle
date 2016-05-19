@@ -11,9 +11,7 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 repositories {
-    maven { url 'https://plugins.gradle.org/m2' }
     mavenCentral()
-    jcenter()
 }
 
 sourceSets {
@@ -30,9 +28,7 @@ sourceSets {
 
 buildscript {
     repositories {
-        maven { url 'https://plugins.gradle.org/m2' }
         mavenCentral()
-        jcenter()
     }
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:1.2.6.RELEASE"
