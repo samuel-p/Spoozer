@@ -2,6 +2,7 @@ package de.saphijaga.spoozer.test.persistence.service;
 
 import de.saphijaga.spoozer.persistence.domain.*;
 import de.saphijaga.spoozer.persistence.handler.PlaylistPersistenceHandler;
+import de.saphijaga.spoozer.persistence.handler.TrackPersistenceHandler;
 import de.saphijaga.spoozer.persistence.handler.UserPersistenceHandler;
 import de.saphijaga.spoozer.test.config.TestMongoConfig;
 import org.junit.After;
@@ -16,12 +17,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import static de.saphijaga.spoozer.test.data.TestPlaylistFactory.testPlaylist;
 import static de.saphijaga.spoozer.test.data.TestUserFactory.testUser;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
+import static de.saphijaga.spoozer.test.data.TestTrackFactory.testTrack;
 
 /**
  * Created by samuel on 17.05.16.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {TestMongoConfig.class, UserPersistenceHandler.class, PlaylistPersistenceHandler.class})
+@ContextConfiguration(classes = {TestMongoConfig.class, UserPersistenceHandler.class, PlaylistPersistenceHandler.class, TrackPersistenceHandler.class})
 public class MongoIntegrationTest {
     @Autowired
     private MongoOperations mongo;
@@ -40,6 +42,7 @@ public class MongoIntegrationTest {
     private void testSetup() {
         mongo.insert(testUser());
         mongo.insert(testPlaylist());
+        mongo.insert(testTrack());
         // TODO add all test domain objects
     }
 
@@ -57,6 +60,10 @@ public class MongoIntegrationTest {
 
     protected User findUser(String id) {
         return find(id, User.class);
+    }
+
+    protected Track findTrack(String id) {
+        return find(id, Track.class);
     }
 
     protected Playlist findPlaylist(String id){
