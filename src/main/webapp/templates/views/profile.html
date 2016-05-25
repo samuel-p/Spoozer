@@ -125,30 +125,6 @@
                     <button class="round soundcloud" ng-click="soundcloudLogout()">Abmelden</button>
                 </div>
             </accordion-group>
-            <accordion-group>
-                <accordion-heading>
-                    <img class="accordion-header" ng-class="{grayscale: !userAccounts.youtube}" src="/img/youtube.png"/>
-                </accordion-heading>
-                <a class="button round youtube" target="_blank" href="/youtube/login" ng-hide="userAccounts.youtube">Anmelden</a>
-                <div ng-show="userAccounts.youtube">
-                    <table>
-                        <tr ng-show="userAccounts.youtube.displayname">
-                            <th>Name:</th>
-                            <td>{{userAccounts.youtube.displayname}}</td>
-                        </tr>
-                        <tr ng-show="userAccounts.youtube.username">
-                            <th>Benutzername:</th>
-                            <td>{{userAccounts.youtube.username}}</td>
-                        </tr>
-                        <tr ng-show="userAccounts.youtube.url">
-                            <th>Url:</th>
-                            <td><a ng-href="{{userAccounts.youtube.url}}"
-                                   target="_blank">{{userAccounts.youtube.url}}</a></td>
-                        </tr>
-                    </table>
-                    <button class="round youtube" ng-click="youtubeLogout()">Abmelden</button>
-                </div>
-            </accordion-group>
         </accordion>
     </tab>
     <tab heading="Einstellungen" active="tabs.settings.active" select="selectTab('settings')">
