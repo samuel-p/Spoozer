@@ -20,7 +20,8 @@ public class User {
     private String password;
     private String name;
     private String email;
-    private Properties properties;
+    private Settings properties;
+    private Settings settings;
     private History history;
     @DBRef
     private List<Playlist> playlists;
@@ -31,7 +32,8 @@ public class User {
         playlists = new ArrayList<>();
         accounts = new ArrayList<>();
         history = new History();
-        properties = new Properties();
+        properties = new Settings();
+        settings = new Settings();
     }
 
     public String getId() {
@@ -98,12 +100,20 @@ public class User {
         this.history = history;
     }
 
-    public Properties getProperties() {
+    public Settings getProperties() {
         return properties;
     }
 
-    public void setProperties(Properties properties) {
-        this.properties = properties;
+    public void setProperties(Settings settings) {
+        this.properties = settings;
+    }
+
+    public Settings getSettings() {
+        return settings;
+    }
+
+    public void setSettings(Settings settings) {
+        this.settings = settings;
     }
 
     @Override

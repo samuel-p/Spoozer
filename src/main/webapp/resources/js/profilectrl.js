@@ -47,7 +47,7 @@ app.controller('ProfileCtrl', function ($ws, $scope, $modal, $window, $rootScope
         $('.view').bind('DOMSubtreeModified', changeHeight);
     });
 
-    $scope.saveUserDetails = function() {
+    $scope.saveUserDetails = function () {
         $ws.send('/saveUserDetails', $scope.editProfile);
     };
 
@@ -66,7 +66,7 @@ app.controller('ProfileCtrl', function ($ws, $scope, $modal, $window, $rootScope
         });
     });
 
-    $scope.changePassword = function(){
+    $scope.changePassword = function () {
         $ws.send("/savePassword", $scope.editPassword);
     };
 
@@ -76,7 +76,7 @@ app.controller('ProfileCtrl', function ($ws, $scope, $modal, $window, $rootScope
         });
     });
 
-    $scope.selectTab = function(tab) {
+    $scope.selectTab = function (tab) {
         if (tab == 'overview') {
             $location.path('/profile', false);
         } else {
@@ -88,4 +88,20 @@ app.controller('ProfileCtrl', function ($ws, $scope, $modal, $window, $rootScope
             $scope.editProfile = payload.userDetails;
         });
     });
+    $scope.settings = {
+        historySize: 50
+    };
+    $ws.subscribe("/setSettings", function (payload, headers, res) {
+        $scope.$applyAsync(function () {
+            $scope.settings = payload.settings;
+        });
+    });
+    $ws.send('/getSettings');
+    $scope.$watch('settings', function (newVal, oldVal) {
+        $scope.updateSettings(newVal);
+    }, true);
+
+    $scope.updateSettings = function (settings) {
+        $ws.send('/saveSettings', settings);
+    };
 });

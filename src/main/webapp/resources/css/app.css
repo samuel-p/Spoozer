@@ -367,17 +367,6 @@ ul.icon-bar li.spoozer * {
     background-color: #fd600a;
 }
 
-.youtube {
-    color: #fff;
-    background-color: #de2c26;
-    margin: 0;
-}
-
-.youtube:hover, .youtube:active, .youtube:focus {
-    color: #fff;
-    background-color: #bf171d;
-}
-
 .result-service {
     color: #fff;
 }
@@ -564,4 +553,22 @@ img.grayscale {
 
 .dashboard-tracks td .dashboard-track-image img {
     height: 40px;
+}
+
+.settings {
+    color: #fff;
+    background: none !important;
+    border: none;
+}
+
+.settings tr {
+    background: none !important;
+}
+
+.settings h3, .settings td {
+    color: #fff;
+}
+
+.settings input {
+    margin: 0;
 }

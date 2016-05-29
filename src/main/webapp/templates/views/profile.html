@@ -23,8 +23,13 @@
                         </tr>
                     </table>
                     <ul class="button-group even-2">
-                        <li><button class="button spoozer" ng-click="tabs.profile.active = true">Bearbeiten</button></li>
-                        <li><button class="button spoozer" ng-click="tabs.password.active = true">Passwort ändern</button></li>
+                        <li>
+                            <button class="button spoozer" ng-click="tabs.profile.active = true">Bearbeiten</button>
+                        </li>
+                        <li>
+                            <button class="button spoozer" ng-click="tabs.password.active = true">Passwort ändern
+                            </button>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -66,11 +71,14 @@
             <fieldset>
                 <h3>Passwort ändern</h3>
                 <label for="password">Altes Passwort</label>
-                <input type="password" id="oldpassword" name="oldpassword" ng-model="editPassword.oldpassword" required="required"/>
+                <input type="password" id="oldpassword" name="oldpassword" ng-model="editPassword.oldpassword"
+                       required="required"/>
                 <label for="password">Neues Passwort</label>
-                <input type="password" id="password" name="password" ng-model="editPassword.password" required="required"/>
+                <input type="password" id="password" name="password" ng-model="editPassword.password"
+                       required="required"/>
                 <label for="password2">Neues Passwort wiederholden</label>
-                <input type="password" id="password2" name="password2" ng-model="editPassword.password2" required="required"/>
+                <input type="password" id="password2" name="password2" ng-model="editPassword.password2"
+                       required="required"/>
                 <button type="submit" class="button spoozer">Speichern</button>
             </fieldset>
         </form>
@@ -103,9 +111,11 @@
             </accordion-group>
             <accordion-group>
                 <accordion-heading>
-                    <img class="accordion-header" ng-class="{grayscale: !userAccounts.soundcloud}" src="/img/soundcloud.png"/>
+                    <img class="accordion-header" ng-class="{grayscale: !userAccounts.soundcloud}"
+                         src="/img/soundcloud.png"/>
                 </accordion-heading>
-                <a class="button round soundcloud" target="_blank" href="/soundcloud/login" ng-hide="userAccounts.soundcloud">Anmelden</a>
+                <a class="button round soundcloud" target="_blank" href="/soundcloud/login"
+                   ng-hide="userAccounts.soundcloud">Anmelden</a>
                 <div ng-show="userAccounts.soundcloud">
                     <table>
                         <tr ng-show="userAccounts.soundcloud.displayname">
@@ -128,6 +138,18 @@
         </accordion>
     </tab>
     <tab heading="Einstellungen" active="tabs.settings.active" select="selectTab('settings')">
-        Settings comming soon...
+        <table class="settings">
+            <tr>
+                <th colspan="2"><h3>Verlauf:</h3></th>
+            </tr>
+            <tr>
+                <td>
+                    Länge:
+                </td>
+                <td>
+                    <input type="number" ng-model="settings.historySize"/>
+                </td>
+            </tr>
+        </table>
     </tab>
 </tabset>

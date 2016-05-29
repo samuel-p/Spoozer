@@ -36,4 +36,8 @@ public interface UserService {
     void saveProperties(UserDetails userDetails, Map<String, Object> properties);
 
     Map<String, Object> getProperties(UserDetails user);
+
+    void saveSettings(UserDetails userDetails, Map<String, Object> settings);
+
+    Map<String,Object> getSettings(UserDetails user);
 }
