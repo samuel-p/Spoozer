@@ -170,14 +170,15 @@
         </table>
         <h3 class="settings">Reihenfolge der Suchergebnisse:</h3>
         <table class="settings">
-            <tr>
+            <tr ng-repeat="service in settings.resultSequence">
                 <td>
-                    <img src="img/spotify-light.png">
+                    <ul class="button-group round">
+                        <li><a ng-click="upInSequence(service)" class="button tiny spoozer"><span class="fa fa-chevron-up"></span></a></li>
+                        <li><a ng-click="downInSequence(service)" class="button tiny spoozer"><span class="fa fa-chevron-down"></span></a></li>
+                    </ul>
                 </td>
-            </tr>
-            <tr>
                 <td>
-                    <img src="img/soundcloud-light.png">
+                    <img src="img/{{service | lowercase}}-light.png">
                 </td>
             </tr>
         </table>

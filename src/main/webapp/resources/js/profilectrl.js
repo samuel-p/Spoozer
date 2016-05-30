@@ -111,4 +111,25 @@ app.controller('ProfileCtrl', function ($ws, $scope, $modal, $window, $rootScope
     $scope.updateSettings = function (settings) {
         $ws.send('/saveSettings', settings);
     };
+
+    $scope.upInSequence = function (service) {
+        var sequence = $scope.settings.resultSequence;
+        var index = sequence.indexOf(service);
+        var indexToSwap = index - 1;
+        if (indexToSwap < 0) {
+            indexToSwap = sequence.length -1;
+        }
+        sequence[index] = sequence[indexToSwap];
+        sequence[indexToSwap] = service;
+    };
+    $scope.downInSequence = function (service) {
+        var sequence = $scope.settings.resultSequence;
+        var index = sequence.indexOf(service);
+        var indexToSwap = index + 1;
+        if (indexToSwap >= sequence.length) {
+            indexToSwap = 0;
+        }
+        sequence[index] = sequence[indexToSwap];
+        sequence[indexToSwap] = service;
+    };
 });
