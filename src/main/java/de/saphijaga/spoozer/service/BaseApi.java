@@ -2,6 +2,7 @@ package de.saphijaga.spoozer.service;
 
 import de.saphijaga.spoozer.core.service.AccountAccessService;
 import de.saphijaga.spoozer.core.service.AccountService;
+import de.saphijaga.spoozer.core.service.UserService;
 import de.saphijaga.spoozer.persistence.domain.Account;
 import de.saphijaga.spoozer.service.utils.ApiService;
 import de.saphijaga.spoozer.web.details.AccountDetails;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static java.util.Collections.emptyList;
@@ -34,6 +36,9 @@ public abstract class BaseApi<ApiAccount extends Account, ApiAccountDetails exte
     @Autowired
     protected AccountAccessService accessService;
 
+    @Autowired
+    protected UserService userService;
+
     @PostConstruct
     public void init() {
         service.registerApi(this);
@@ -51,8 +56,11 @@ public abstract class BaseApi<ApiAccount extends Account, ApiAccountDetails exte
         if (!accessDetails.isPresent()) {
             return emptyList();
         }
+        Map<String, Object> settings = userService.getSettings(user);
+        System.out.println(settings.get("resultSize"));
+        Map<String, Integer> resultSize = (Map<String, Integer>) settings.get("resultSize");
         try {
-            return getSearchResult(accessDetails.get(), search);
+            return getSearchResult(accessDetails.get(), search, resultSize.get(getService().getName().toLowerCase()));
         } catch (AccessDetailsExpiredException e) {
             logger.warn(ACCESS_DETAILS_EXPIRED, e);
             if (retry) {
@@ -63,7 +71,7 @@ public abstract class BaseApi<ApiAccount extends Account, ApiAccountDetails exte
         return emptyList();
     }
 
-    protected abstract List<TrackDetails> getSearchResult(ApiAccountAccessDetails accessDetails, String search) throws AccessDetailsExpiredException;
+    protected abstract List<TrackDetails> getSearchResult(ApiAccountAccessDetails accessDetails, String search, int limit) throws AccessDetailsExpiredException;
 
     @Override
     public TrackDetails getTrack(UserDetails user, String id) {

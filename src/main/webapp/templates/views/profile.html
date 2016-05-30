@@ -138,16 +138,46 @@
         </accordion>
     </tab>
     <tab heading="Einstellungen" active="tabs.settings.active" select="selectTab('settings')">
+        <h3 class="settings">Verlauf:</h3>
         <table class="settings">
-            <tr>
-                <th colspan="2"><h3>Verlauf:</h3></th>
-            </tr>
             <tr>
                 <td>
                     Länge:
                 </td>
                 <td>
                     <input type="number" ng-model="settings.historySize"/>
+                </td>
+            </tr>
+        </table>
+        <h3 class="settings">Maximale Anzahl der Suchergebnisse:</h3>
+        <table class="settings">
+            <tr>
+                <td>
+                    <img src="img/spotify-light.png">
+                </td>
+                <td>
+                    <input type="number" ng-model="settings.resultSize.spotify"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="img/soundcloud-light.png">
+                </td>
+                <td>
+                    <input type="number" ng-model="settings.resultSize.soundcloud"/>
+                </td>
+            </tr>
+        </table>
+        <h3 class="settings">Reihenfolge der Suchergebnisse:</h3>
+        <table class="settings">
+            <tr>
+                <td>
+                    <img src="img/spotify-light.png">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="img/soundcloud-light.png">
                 </td>
             </tr>
         </table>

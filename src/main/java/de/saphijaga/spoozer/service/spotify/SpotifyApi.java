@@ -153,8 +153,8 @@ public class SpotifyApi extends BaseApi<SpotifyAccount, SpotifyAccountDetails, S
     }
 
     @Override
-    protected List<TrackDetails> getSearchResult(SpotifyAccessDetails accessDetails, String search) throws AccessDetailsExpiredException {
-        String url = getApiUrl("/search?type=track&market=from_token&q=") + search.trim().replace(" ", "%20OR%20");
+    protected List<TrackDetails> getSearchResult(SpotifyAccessDetails accessDetails, String search, int limit) throws AccessDetailsExpiredException {
+        String url = getApiUrl("/search?type=track&market=from_token&q=") + search.trim().replace(" ", "%20OR%20") + "&limit=" + limit;
         try {
             GetSpotifyTrackSearchResponse searchResponse = Get.forObject(url, getHeader(accessDetails), GetSpotifyTrackSearchResponse.class);
             return searchResponse.getTracks().getItems().stream().map(this::trackToDetails).collect(toList());

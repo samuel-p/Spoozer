@@ -89,7 +89,14 @@ app.controller('ProfileCtrl', function ($ws, $scope, $modal, $window, $rootScope
         });
     });
     $scope.settings = {
-        historySize: 50
+        historySize: 50,
+        resultSize: {
+            spotify: 20,
+            soundcloud: 20
+        },
+        resultSequence: [
+            'spotify', 'soundcloud'
+        ]
     };
     $ws.subscribe("/setSettings", function (payload, headers, res) {
         $scope.$applyAsync(function () {

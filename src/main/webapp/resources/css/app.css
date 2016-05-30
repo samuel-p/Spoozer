@@ -555,20 +555,28 @@ img.grayscale {
     height: 40px;
 }
 
-.settings {
+h3.settings {
+    color: #fff;
+}
+
+table.settings {
     color: #fff;
     background: none !important;
     border: none;
 }
 
-.settings tr {
+table.settings tr {
     background: none !important;
 }
 
-.settings h3, .settings td {
+table.settings h3, .settings td {
     color: #fff;
 }
 
-.settings input {
+table.settings input {
     margin: 0;
+}
+
+table.settings img {
+    height: 40px;
 }
