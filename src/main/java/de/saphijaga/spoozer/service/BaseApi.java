@@ -20,7 +20,7 @@ import static java.util.Collections.emptyList;
 /**
  * Created by samuel on 09.05.16.
  */
-public abstract class BaseApi<ApiAccount extends Account, ApiAccountDetails extends AccountDetails, ApiAccountAccessDetails extends AccountAccessDetails> implements Api<ApiAccount, ApiAccountDetails, ApiAccountAccessDetails> {
+public abstract class BaseApi<A extends Account, B extends AccountDetails, C extends AccountAccessDetails> implements Api<A, B, C> {
     private static final String ACCESS_DETAILS_EXPIRED = "AccessDetails expired";
 
     private static Logger logger = LoggerFactory.getLogger(BaseApi.class);
@@ -39,7 +39,7 @@ public abstract class BaseApi<ApiAccount extends Account, ApiAccountDetails exte
         service.registerApi(this);
     }
 
-    protected abstract void refreshAccessDetails(UserDetails user, ApiAccountAccessDetails accessDetails);
+    protected abstract void refreshAccessDetails(UserDetails user, C accessDetails);
 
     @Override
     public List<TrackDetails> getSearchResult(UserDetails user, String search) {
@@ -47,7 +47,7 @@ public abstract class BaseApi<ApiAccount extends Account, ApiAccountDetails exte
     }
 
     private List<TrackDetails> getSearchResult(UserDetails user, String search, boolean retry) {
-        Optional<ApiAccountAccessDetails> accessDetails = accessService.getAccessDetails(user, getService());
+        Optional<C> accessDetails = accessService.getAccessDetails(user, getService());
         if (!accessDetails.isPresent()) {
             return emptyList();
         }
@@ -63,7 +63,7 @@ public abstract class BaseApi<ApiAccount extends Account, ApiAccountDetails exte
         return emptyList();
     }
 
-    protected abstract List<TrackDetails> getSearchResult(ApiAccountAccessDetails accessDetails, String search) throws AccessDetailsExpiredException;
+    protected abstract List<TrackDetails> getSearchResult(C accessDetails, String search) throws AccessDetailsExpiredException;
 
     @Override
     public TrackDetails getTrack(UserDetails user, String id) {
@@ -71,7 +71,7 @@ public abstract class BaseApi<ApiAccount extends Account, ApiAccountDetails exte
     }
 
     private TrackDetails getTrack(UserDetails user, String id, boolean retry) {
-        Optional<ApiAccountAccessDetails> accessDetails = accessService.getAccessDetails(user, getService());
+        Optional<C> accessDetails = accessService.getAccessDetails(user, getService());
         if (!accessDetails.isPresent()) {
             return null;
         }
@@ -87,7 +87,7 @@ public abstract class BaseApi<ApiAccount extends Account, ApiAccountDetails exte
         return null;
     }
 
-    protected abstract TrackDetails getTrack(ApiAccountAccessDetails accessDetails, String id) throws AccessDetailsExpiredException;
+    protected abstract TrackDetails getTrack(C accessDetails, String id) throws AccessDetailsExpiredException;
 
     @Override
     public List<TrackDetails> getChartTracks(UserDetails user) {
@@ -95,7 +95,7 @@ public abstract class BaseApi<ApiAccount extends Account, ApiAccountDetails exte
     }
 
     private List<TrackDetails> getChartTracks(UserDetails user, boolean retry) {
-        Optional<ApiAccountAccessDetails> accessDetails = accessService.getAccessDetails(user, getService());
+        Optional<C> accessDetails = accessService.getAccessDetails(user, getService());
         if (!accessDetails.isPresent()) {
             return emptyList();
         }
@@ -111,7 +111,7 @@ public abstract class BaseApi<ApiAccount extends Account, ApiAccountDetails exte
         return emptyList();
     }
 
-    protected List<TrackDetails> getChartTracks(ApiAccountAccessDetails accessDetails) throws AccessDetailsExpiredException {
+    protected List<TrackDetails> getChartTracks(C accessDetails) throws AccessDetailsExpiredException {
         return emptyList();
     }
 
@@ -121,7 +121,7 @@ public abstract class BaseApi<ApiAccount extends Account, ApiAccountDetails exte
     }
 
     private List<TrackDetails> getNewReleasedTracks(UserDetails user, boolean retry) {
-        Optional<ApiAccountAccessDetails> accessDetails = accessService.getAccessDetails(user, getService());
+        Optional<C> accessDetails = accessService.getAccessDetails(user, getService());
         if (!accessDetails.isPresent()) {
             return emptyList();
         }
@@ -137,7 +137,7 @@ public abstract class BaseApi<ApiAccount extends Account, ApiAccountDetails exte
         return emptyList();
     }
 
-    protected List<TrackDetails> getNewReleasedTracks(ApiAccountAccessDetails accessDetails) throws AccessDetailsExpiredException {
+    protected List<TrackDetails> getNewReleasedTracks(C accessDetails) throws AccessDetailsExpiredException {
         return emptyList();
     }
 
@@ -147,7 +147,7 @@ public abstract class BaseApi<ApiAccount extends Account, ApiAccountDetails exte
     }
 
     private List<TrackDetails> getTrendingTracks(UserDetails user, boolean retry) {
-        Optional<ApiAccountAccessDetails> accessDetails = accessService.getAccessDetails(user, getService());
+        Optional<C> accessDetails = accessService.getAccessDetails(user, getService());
         if (!accessDetails.isPresent()) {
             return emptyList();
         }
@@ -163,7 +163,7 @@ public abstract class BaseApi<ApiAccount extends Account, ApiAccountDetails exte
         return emptyList();
     }
 
-    protected List<TrackDetails> getTrendingTracks(ApiAccountAccessDetails accessDetails) throws AccessDetailsExpiredException {
+    protected List<TrackDetails> getTrendingTracks(C accessDetails) throws AccessDetailsExpiredException {
         return emptyList();
     }
 
@@ -173,7 +173,7 @@ public abstract class BaseApi<ApiAccount extends Account, ApiAccountDetails exte
     }
 
     private List<TrackDetails> getFeaturedTracks(UserDetails user, boolean retry) {
-        Optional<ApiAccountAccessDetails> accessDetails = accessService.getAccessDetails(user, getService());
+        Optional<C> accessDetails = accessService.getAccessDetails(user, getService());
         if (!accessDetails.isPresent()) {
             return emptyList();
         }
@@ -189,7 +189,7 @@ public abstract class BaseApi<ApiAccount extends Account, ApiAccountDetails exte
         return emptyList();
     }
 
-    protected List<TrackDetails> getFeaturedTracks(ApiAccountAccessDetails accessDetails) throws AccessDetailsExpiredException {
+    protected List<TrackDetails> getFeaturedTracks(C accessDetails) throws AccessDetailsExpiredException {
         return emptyList();
     }
 }

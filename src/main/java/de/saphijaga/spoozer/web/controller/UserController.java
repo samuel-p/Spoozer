@@ -14,7 +14,6 @@ import de.saphijaga.spoozer.web.domain.response.PropertiesResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,9 +30,6 @@ import java.util.Optional;
 public class UserController {
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private SimpMessagingTemplate messagingTemplate;
 
     @MessageMapping("/getUserDetails")
     @SendToUser("/setUserDetails")
