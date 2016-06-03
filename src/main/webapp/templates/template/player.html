@@ -24,6 +24,14 @@
     <div class="large-3 medium-4 hide-for-small-only columns text-center">
         <ul class="button-group radius player-control">
             <li>
+                <button ng-click="changeRepeatMode()" class="switch spoozer small"><span class="fa fa-repeat fa-fw" ng-class="{'foreground-white': isRepeat()}"></span>
+                </button>
+            </li>
+            <li>
+                <button ng-click="changeRandomMode()" class="switch spoozer small"><span class="fa fa-random fa-fw" ng-class="{'foreground-white': isRandom()}"></span>
+                </button>
+            </li>
+            <li>
                 <button ng-click="previousTrack()" class="button spoozer small"><span class="fa fa-step-backward fa-fw"></span>
                 </button>
             </li>
@@ -63,6 +71,14 @@
                 </div>
                 <ul class="button-group radius player-control">
                     <li>
+                        <button ng-click="changeRepeatMode()" class="switch spoozer small"><span class="fa fa-repeat fa-fw" ng-class="{'foreground-white': isRepeat()}"></span>
+                        </button>
+                    </li>
+                    <li>
+                        <button ng-click="changeRandomMode()" class="switch spoozer small"><span class="fa fa-random fa-fw" ng-class="{'foreground-white': isRandom()}">></span>
+                        </button>
+                    </li>
+                    <li>
                         <button ng-click="previousTrack()" class="button spoozer small"><span
                                 class="fa fa-step-backward fa-fw"></span>
                         </button>
@@ -76,6 +92,7 @@
                         <button ng-click="nextTrack()" class="button spoozer small"><span class="fa fa-step-forward fa-fw"></span>
                         </button>
                     </li>
+
                 </ul>
                 <div id="player-modal-volume-slider" class="range-slider volume-slider radius" data-slider="">
                     <span class="range-slider-handle gray" role="slider" tabindex="0"></span>

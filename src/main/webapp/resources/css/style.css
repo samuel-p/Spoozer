@@ -31,3 +31,7 @@ body {
     background-color: #00ad00 !important;
     color: #000 !important;
 }
+
+.foreground-white {
+    color: #fff !important;
+}

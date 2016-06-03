@@ -34,6 +34,15 @@ app.controller('PlayerCtrl', function ($player, $scope, $modal, $window, $ws) {
         $player.next();
         document.activeElement.blur();
     };
+    $scope.changeRandomMode = function () {
+        $player.changeRandom();
+        document.activeElement.blur();
+    };
+
+    $scope.changeRepeatMode = function () {
+        $player.changeRepeat();
+        document.activeElement.blur();
+    };
     $scope.previousTrack = function () {
         $player.previous();
         document.activeElement.blur();
@@ -179,9 +188,25 @@ app.controller('PlayerModalCtrl', function ($scope, $window, $player, $modalInst
     $scope.isPlaying = function () {
         return $player.isPlaying();
     };
+    $scope.changeRandomMode = function () {
+        $player.changeRandom();
+        document.activeElement.blur();
+    };
+    $scope.changeRepeatMode = function () {
+        $player.changeRepeat();
+        console.log("changing repeat: "+$scope.player.repeat);
+        document.activeElement.blur();
+    };
+
     $window.addEventListener('orientationchange', function () {
         $scope.$applyAsync(function () {
             volumeSlider.set($scope.player.volume * 100);
         });
     });
+    $scope.isRepeat = function() {
+      return $player.repeat;
+    };
+    $scope.isRandom = function() {
+        return $player.random;
+    };
 });

@@ -10,8 +10,10 @@ angular.module('ngPlayer', []).service('$player', [function () {
     this.index = 0;
     this.playing = null;
     this.running = null;
-    this.loop = false;
+    this.loop = true;
     this.volume = 1;
+    this.random = false;
+    this.repeat = false;
 
     this.play = function (playlist, index, loadOnly) {
         this.queue = playlist.tracks;
@@ -37,8 +39,28 @@ angular.module('ngPlayer', []).service('$player', [function () {
         }
     };
 
+    this.changeRandom = function () {
+        this.random = !this.random;
+        console.log("changing random: "+this.random);
+    };
+
+    this.changeRepeat = function () {
+        this.repeat = !this.repeat;
+        console.log("changing repeat: "+this.repeat);
+    };
+
     this.next = function () {
-        this.index = (this.index + 1) % this.queue.length;
+        if(this.repeat){
+
+            this.index = this.index;
+        }else if(this.random){
+            var help = this.index;
+            while(this.index == help){
+                this.index = Math.floor(Math.random()* this.queue.length);
+            }
+        }else{
+            this.index = (this.index + 1) % this.queue.length;
+        }
         this.playCurrent();
     };
 
