@@ -12,18 +12,18 @@ import static java.util.Collections.emptyList;
 /**
  * Created by samuel on 14.11.15.
  */
-public interface Api<ApiAccount extends Account, ApiAccountDetails extends AccountDetails, ApiAccountAccessDetails extends AccountAccessDetails> {
+public interface Api<A extends Account, B extends AccountDetails, C extends AccountAccessDetails> {
     StreamingService getService();
 
-    ApiAccountDetails getAccountDetailsFromAccount(ApiAccount account);
+    B getAccountDetailsFromAccount(A account);
 
-    ApiAccountAccessDetails getAccountAccessDetailsFromAccount(ApiAccount account);
+    C getAccountAccessDetailsFromAccount(A account);
 
-    void updateAccount(ApiAccount account, ApiAccountDetails details);
+    void updateAccount(A account, B details);
 
-    void updateAccount(ApiAccount account, ApiAccountAccessDetails accessDetails);
+    void updateAccount(A account, C accessDetails);
 
-    ApiAccountDetails updateAccountDetails(UserDetails userDetails);
+    B updateAccountDetails(UserDetails userDetails);
 
     List<TrackDetails> getSearchResult(UserDetails user, String search);
 
