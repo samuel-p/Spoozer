@@ -34,6 +34,26 @@ app.controller('PlayerCtrl', function ($player, $scope, $modal, $window, $ws) {
         $player.next();
         document.activeElement.blur();
     };
+    $scope.changeRandomMode = function () {
+        document.activeElement.blur();
+        $scope.$applyAsync(function () {
+            console.log("123 change random: " + $player.isRandom());
+            $player.changeRandom();
+        });
+    };
+    $scope.changeRepeatMode = function () {
+        document.activeElement.blur();
+        $scope.$applyAsync(function () {
+            console.log("456 change repeat: " + $player.isRepeat());
+            $player.changeRepeat();
+        });
+    };
+    $scope.isRepeatMode = function () {
+        return $player.isRepeat();
+    };
+    $scope.isRandomMode = function () {
+        return $player.isRandom();
+    };
     $scope.previousTrack = function () {
         $player.previous();
         document.activeElement.blur();
@@ -179,6 +199,27 @@ app.controller('PlayerModalCtrl', function ($scope, $window, $player, $modalInst
     $scope.isPlaying = function () {
         return $player.isPlaying();
     };
+    $scope.changeRandomMode = function () {
+        document.activeElement.blur();
+        $scope.$applyAsync(function () {
+            console.log("123 change random: " + $player.isRandom());
+            $player.changeRandom();
+        });
+    };
+    $scope.changeRepeatMode = function () {
+        document.activeElement.blur();
+        $scope.$applyAsync(function () {
+            console.log("456 change repeat: " + $player.isRepeat());
+            $player.changeRepeat();
+        });
+    };
+    $scope.isRepeatMode = function () {
+        return $player.isRepeat();
+    };
+    $scope.isRandomMode = function () {
+        return $player.isRandom();
+    };
+
     $window.addEventListener('orientationchange', function () {
         $scope.$applyAsync(function () {
             volumeSlider.set($scope.player.volume * 100);

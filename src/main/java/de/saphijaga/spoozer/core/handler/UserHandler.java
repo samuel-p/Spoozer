@@ -4,7 +4,7 @@ import de.saphijaga.spoozer.core.service.TrackService;
 import de.saphijaga.spoozer.core.service.UserService;
 import de.saphijaga.spoozer.persistence.domain.HTrack;
 import de.saphijaga.spoozer.persistence.domain.History;
-import de.saphijaga.spoozer.persistence.domain.Properties;
+import de.saphijaga.spoozer.persistence.domain.Settings;
 import de.saphijaga.spoozer.persistence.domain.User;
 import de.saphijaga.spoozer.persistence.service.UserPersistenceService;
 import de.saphijaga.spoozer.web.details.TrackDetails;
@@ -97,12 +97,17 @@ public class UserHandler implements UserService {
     @Override
     public void addSongToHistory(UserDetails userDetails, AddHTrackRequest request) {
         trackService.addTrackToHistory(userDetails, request);
+        int historySize = (int) getSettings(userDetails).getOrDefault("historySize", 50);
+        cutUserHistory(userDetails, historySize);
     }
 
     @Override
     public void cutUserHistory(UserDetails userDetails, int limit) {
         Optional<User> user = userService.getUser(userDetails.getId());
-        user.ifPresent(u -> u.getHistory().cutListtoLimit(limit));
+        user.ifPresent(u -> {
+            u.getHistory().cutListtoLimit(limit);
+            userService.saveUser(u);
+        });
     }
 
     @Override
@@ -141,6 +146,20 @@ public class UserHandler implements UserService {
 
     @Override
     public Map<String, Object> getProperties(UserDetails user) {
-        return userService.getUser(user.getId()).map(User::getProperties).map(Properties::getList).orElse(new HashMap<>());
+        return userService.getUser(user.getId()).map(User::getProperties).map(Settings::getList).orElse(new HashMap<>());
+    }
+
+    @Override
+    public void saveSettings(UserDetails userDetails, Map<String, Object> settings) {
+        Optional<User> user = userService.getUser(userDetails.getId());
+        if (user.isPresent()) {
+            user.get().getSettings().addList(settings);
+            userService.saveUser(user.get());
+        }
+    }
+
+    @Override
+    public Map<String, Object> getSettings(UserDetails user) {
+        return userService.getUser(user.getId()).map(User::getSettings).map(Settings::getList).orElse(new HashMap<>());
     }
 }

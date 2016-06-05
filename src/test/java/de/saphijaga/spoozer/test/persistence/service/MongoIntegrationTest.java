@@ -51,7 +51,7 @@ public class MongoIntegrationTest {
         mongo.dropCollection(History.class);
         mongo.dropCollection(HTrack.class);
         mongo.dropCollection(Playlist.class);
-        mongo.dropCollection(Properties.class);
+        mongo.dropCollection(Settings.class);
         mongo.dropCollection(SoundcloudAccount.class);
         mongo.dropCollection(SpotifyAccount.class);
         mongo.dropCollection(Track.class);

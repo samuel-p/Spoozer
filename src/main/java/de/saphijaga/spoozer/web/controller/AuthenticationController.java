@@ -38,9 +38,7 @@ public class AuthenticationController {
         }
         if (result.hasErrors()) {
             Optional<ObjectError> error = result.getAllErrors().stream().filter(e -> e.getCode().equals(PasswordMatches.class.getSimpleName())).findAny();
-            if (error.isPresent()) {
-                result.addError(new FieldError("user", "password2", error.get().getDefaultMessage()));
-            }
+            error.ifPresent(e -> result.addError(new FieldError("user", "password2", e.getDefaultMessage())));
             return REGISTER;
         }
         Optional<UserDetails> user = userService.registerUser(register);
