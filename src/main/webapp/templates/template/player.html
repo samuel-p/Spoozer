@@ -22,19 +22,7 @@
         </div>
     </div>
     <div class="large-3 medium-4 hide-for-small-only columns text-center">
-        <ul class="button-group radius player-control">
-            <li>
-                <button ng-click="previousTrack()" class="button spoozer small"><span class="fa fa-step-backward fa-fw"></span>
-                </button>
-            </li>
-            <li>
-                <button ng-click="(isPlaying() ? pauseTrack() : resumeTrack())" class="button spoozer small"><span class="fa fa-fw"
-                        ng-class="(isPlaying() ? 'fa-pause' : 'fa-play')"></span></button>
-            </li>
-            <li>
-                <button ng-click="nextTrack()" class="button spoozer small"><span class="fa fa-step-forward fa-fw"></span></button>
-            </li>
-        </ul>
+        <th:block th:replace="template/player :: buttons"></th:block>
     </div>
     <div class="large-1 hide-for-medium-only columns">
         <div id="player-volume-slider" class="range-slider volume-slider radius" data-slider="">
@@ -61,22 +49,7 @@
                 <div class="track-time-text text-white">
                     <span>{{player.trackPosition | timeFromSecondsFilter}} - {{player.trackLength | timeFromSecondsFilter}}</span>
                 </div>
-                <ul class="button-group radius player-control">
-                    <li>
-                        <button ng-click="previousTrack()" class="button spoozer small"><span
-                                class="fa fa-step-backward fa-fw"></span>
-                        </button>
-                    </li>
-                    <li>
-                        <button ng-click="(isPlaying() ? pauseTrack() : resumeTrack())"
-                                class="button spoozer small"><span class="fa fa-fw"
-                                ng-class="(isPlaying() ? 'fa-pause' : 'fa-play')"></span></button>
-                    </li>
-                    <li>
-                        <button ng-click="nextTrack()" class="button spoozer small"><span class="fa fa-step-forward fa-fw"></span>
-                        </button>
-                    </li>
-                </ul>
+                <th:block th:replace="template/player :: buttons"></th:block>
                 <div id="player-modal-volume-slider" class="range-slider volume-slider radius" data-slider="">
                     <span class="range-slider-handle gray" role="slider" tabindex="0"></span>
                     <span class="range-slider-active-segment spoozer"></span>
@@ -86,6 +59,36 @@
             <a class="button spoozer" ng-click="cancel()"><span class="fa fa-chevron-left"></span> Zurück</a>
         </div>
     </script>
+</th:block>
+<th:block th:fragment="buttons">
+    <ul class="button-group radius player-control">
+        <li>
+            <button ng-click="previousTrack()" class="button spoozer small"><span
+                    class="fa fa-step-backward fa-fw"></span>
+            </button>
+        </li>
+        <li>
+            <button ng-click="(isPlaying() ? pauseTrack() : resumeTrack())" class="button spoozer small"><span
+                    class="fa fa-fw"
+                    ng-class="(isPlaying() ? 'fa-pause' : 'fa-play')"></span></button>
+        </li>
+        <li>
+            <button ng-click="nextTrack()" class="button spoozer small"><span class="fa fa-step-forward fa-fw"></span>
+            </button>
+        </li>
+    </ul>
+    <ul class="button-group radius player-control">
+        <li>
+            <button ng-click="changeRepeatMode()" ng-class="{selected: isRepeatMode()}" class="button spoozer tiny">
+                <span class="fa fa-repeat fa-fw"></span>
+            </button>
+        </li>
+        <li>
+            <button ng-click="changeRandomMode()" ng-class="{selected: isRandomMode()}" class="button spoozer tiny">
+                <span class="fa fa-random fa-fw"></span>
+            </button>
+        </li>
+    </ul>
 </th:block>
 </body>
 

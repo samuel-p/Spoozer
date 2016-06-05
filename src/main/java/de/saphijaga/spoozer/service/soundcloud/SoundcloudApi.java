@@ -148,9 +148,9 @@ public class SoundcloudApi extends BaseApi<SoundcloudAccount, SoundcloudAccountD
     }
 
     @Override
-    protected List<TrackDetails> getSearchResult(SoundcloudAccessDetails accessDetails, String search) throws AccessDetailsExpiredException {
+    protected List<TrackDetails> getSearchResult(SoundcloudAccessDetails accessDetails, String search, int limit) throws AccessDetailsExpiredException {
         try {
-            String url = getApiUrl("/tracks") + "?oauth_token=" + accessDetails.getAccessToken() + "&q=" + encode(search.trim(), "utf8") + "&filter=streamable&limit=20";
+            String url = getApiUrl("/tracks") + "?oauth_token=" + accessDetails.getAccessToken() + "&q=" + encode(search.trim(), "utf8") + "&filter=streamable&limit=" + limit;
             GetSoundcloudTrackResponse[] searchResponse = Get.forObject(url, GetSoundcloudTrackResponse[].class);
             List<TrackDetails> tracks = new ArrayList<>();
             stream(searchResponse).forEach(track -> tracks.add(trackToDetails(track)));

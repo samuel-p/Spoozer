@@ -10,12 +10,12 @@ import java.util.Map;
  * Created by samuel on 05.04.16.
  */
 @Document
-public class Properties {
+public class Settings {
     @Id
     private String id;
     private Map<String, Object> list;
 
-    public Properties() {
+    public Settings() {
         this.list = new HashMap<>();
     }
 
@@ -45,7 +45,7 @@ public class Properties {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Properties that = (Properties) o;
+        Settings that = (Settings) o;
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         return list != null ? list.equals(that.list) : that.list == null;
