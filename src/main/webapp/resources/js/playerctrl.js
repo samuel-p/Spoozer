@@ -1,8 +1,11 @@
 app.controller('PlayerCtrl', function ($player, $scope, $modal, $window, $ws) {
     $ws.subscribe('/setProperties', function (data) {
         $scope.properties = data.properties;
-        if (data.properties.playerVolume)
+        $player.setRandomMode(data.properties.playerRandom);
+        $player.setRepeatMode(data.properties.playerRepeat);
+        if (data.properties.playerVolume) {
             $player.setVolume(data.properties.playerVolume);
+        }
         if (data.properties.playerTrackService && data.properties.playerTrackId) {
             $ws.send('/getServiceTrackDetails', {
                 service: data.properties.playerTrackService,
@@ -120,7 +123,9 @@ app.controller('PlayerCtrl', function ($player, $scope, $modal, $window, $ws) {
             var properties = {
                 playerVolume: player.volume,
                 playerTrackId: '[empty]',
-                playerTrackService: '[empty]'
+                playerTrackService: '[empty]',
+                playerRepeat: $player.isRepeat(),
+                playerRandom: $player.isRandom()
             };
             if (player.track) {
                 properties.playerTrackId = player.track.id;

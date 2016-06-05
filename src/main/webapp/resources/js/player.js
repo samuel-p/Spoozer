@@ -41,12 +41,20 @@ angular.module('ngPlayer', []).service('$player', [function () {
 
     this.changeRandom = function () {
         this.random = !this.random;
-        console.log("changing random: " + this.random);
+        this.firePlayerEvent('change');
     };
 
     this.changeRepeat = function () {
         this.repeat = !this.repeat;
-        console.log("changing repeat: " + this.repeat);
+        this.firePlayerEvent('change');
+    };
+
+    this.setRandomMode = function (random) {
+        this.random = random;
+    };
+
+    this.setRepeatMode = function (repeat) {
+        this.repeat = repeat;
     };
 
     this.next = function () {
