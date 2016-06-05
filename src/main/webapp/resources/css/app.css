@@ -225,7 +225,8 @@ ul.icon-bar li.spoozer * {
 }
 
 .player .player-control {
-    margin: 14px auto;
+    margin: 14px 7px;
+    display: inline-block;
 }
 
 .player .player-control .button {
@@ -565,3 +566,4 @@ img.grayscale {
 .dashboard-tracks td .dashboard-track-image img {
     height: 40px;
 }
+
