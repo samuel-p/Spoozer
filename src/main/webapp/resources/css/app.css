@@ -556,6 +556,21 @@ img.grayscale {
     height: 40px;
 }
 
+#weather iframe {
+    height: 100%;
+    width: 100%;
+}
+
+#ifBox {
+    height: 100%;
+    width: 100%;
+}
+
+.maxsize {
+    height: 100%;
+    width: 100%;
+}
+
 h3.settings {
     color: #fff;
 }
