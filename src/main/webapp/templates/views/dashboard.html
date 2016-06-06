@@ -8,6 +8,37 @@
             <h4>Dein <i>Spoozer</i>-Team</h4>
         </div>
     </li>
+    <li>
+        <div class="panel" data-equalizer-watch="panels" id="weather">
+            <!--<iframe id=\"widget\" width=\"300\" height=\"270\"
+                    src=\"http://www.wetter-deutschland.com/international/europa/deutschland/karlsruhe/widget/w300/color-weiss?utm_source=widget&utm_medium="
+                    + top.location.hostname +
+            "&utm_content=" + top.location.href + "&utm_campaign=Wetter%2BWidget\" frameborder=\"0\"
+            scrolling=\"no\"></iframe>-->
+            <script type="text/javascript">$("#weather").html("<iframe id = \"widget\" src=\"http://www.wetter-deutschland.com/international/europa/deutschland/karlsruhe/widget/w300/color-weiss?utm_source=widget&utm_medium=" + top.location.hostname + "&utm_content=" + top.location.href + "&utm_campaign=Wetter%2BWidget\" frameborder=\"0\" scrolling=\"no\"></iframe>");</script>
+            <center style="padding-top:5px; padding-bottom:5px; font-size:11px; line-height:15px; font-family:arial;"><a
+                    href="http://www.wetter-deutschland.com/international/europa/deutschland/karlsruhe"
+                    style="color:#4787a9; text-decoration:none;" target="_blank">Das aktuelle Wetter in
+                Karlsruhe</a><br/><a href="http://www.wetter-deutschland.com"
+                                     style="color:#4787a9; text-decoration:none;" target="_blank">Alles zum Wetter in
+                Deutschland</a></center>
+            <br/>
+        </div>
+    </li>
+
+    <li>
+        <div class="panel maxsize" data-equalizer-watch="panels">
+            <div align="left" class="maxsize">
+                <div class="maxsize" align="left" style="background-color:#ffffff;"><a
+                        href="http://www.derwesten.de//" target="_new" style="padding-bottom: 3px;"><img
+                        src="http://service.derwesten.de/configurator/img/logo_grafik.jpg" alt="" border="0"></a>
+                    <iframe id="ifBox" name="ifBox"
+                            src="http://service.derwesten.de/configurator/rss2.php?boxSize=300x300&boxCategory1=/rss&boxCategory2=&boxCategory3=&boxCategory4=&boxArticleNum=10&boxTeaserText=&boxBanner=yes&boxTeaserAnzahl=&boxTeaserTabs=&colorfield1=990000&colorfield2=FFFFFF&colorfield3=000000&colorfield4=FFFFFF&boxSuche=&auftritt=&utf8=1"
+                            frameborder="0" scrolling="No"></iframe>
+                    <a style="font-family:arial,helvetica,sans-serif;font-size:10px;color:#afafaf;text-decoration:none;"
+                       href="http://www.derwesten.de/" target="_new">Mehr aus der Kategorie "Nachrichten".</a></div>
+            </div>
+    </li>
     <li ng-if="!properties.spotify">
         <div class="panel" data-equalizer-watch="panels">
             <p><img src="img/spotify.png"></p>
@@ -68,7 +99,8 @@
                             <div class="dashboard-track-buttons right">
                                 <ul class="button-group radius">
                                     <li>
-                                        <button class="button spotify tiny" ng-click="playTracks('Neues von Spotify', newReleasedTracks.spotify, $index)"><span
+                                        <button class="button spotify tiny"
+                                                ng-click="playTracks('Neues von Spotify', newReleasedTracks.spotify, $index)"><span
                                                 class="fa fa-play"></span>
                                         </button>
                                     </li>
@@ -101,7 +133,8 @@
                             <div class="dashboard-track-buttons right">
                                 <ul class="button-group radius">
                                     <li>
-                                        <button class="button spotify tiny" ng-click="playTracks('Vorschläge von Spotify', featuredTracks.spotify, $index)"><span
+                                        <button class="button spotify tiny"
+                                                ng-click="playTracks('Vorschläge von Spotify', featuredTracks.spotify, $index)"><span
                                                 class="fa fa-play"></span>
                                         </button>
                                     </li>
@@ -134,7 +167,8 @@
                             <div class="dashboard-track-buttons right">
                                 <ul class="button-group radius">
                                     <li>
-                                        <button class="button soundcloud tiny" ng-click="playTracks('Charts auf Soundcloud', chartTracks.soundcloud, $index)"><span
+                                        <button class="button soundcloud tiny"
+                                                ng-click="playTracks('Charts auf Soundcloud', chartTracks.soundcloud, $index)"><span
                                                 class="fa fa-play"></span>
                                         </button>
                                     </li>
@@ -167,7 +201,8 @@
                             <div class="dashboard-track-buttons right">
                                 <ul class="button-group radius">
                                     <li>
-                                        <button class="button soundcloud tiny" ng-click="playTracks('Neues von Soundcloud', newReleasedTracks.soundcloud, $index)"><span
+                                        <button class="button soundcloud tiny"
+                                                ng-click="playTracks('Neues von Soundcloud', newReleasedTracks.soundcloud, $index)"><span
                                                 class="fa fa-play"></span>
                                         </button>
                                     </li>
@@ -200,7 +235,8 @@
                             <div class="dashboard-track-buttons right">
                                 <ul class="button-group radius">
                                     <li>
-                                        <button class="button spoozer tiny" ng-click="playTracks('Zuletzt angehört', historyTracks, $index)"><span
+                                        <button class="button spoozer tiny"
+                                                ng-click="playTracks('Zuletzt angehört', historyTracks, $index)"><span
                                                 class="fa fa-play"></span>
                                         </button>
                                     </li>
@@ -217,22 +253,7 @@
             </div>
         </div>
     </li>
-    <li>
-        <div class="panel" data-equalizer-watch="panels">
-            <h4>This is a regular panel.</h4>
-            <p>It has an easy to override visual style, and is appropriately subdued.</p>
-            <p>It has an easy to override visual style, and is appropriately subdued.</p>
-            <p>It has an easy to override visual style, and is appropriately subdued.</p>
-        </div>
-    </li>
-    <li>
-        <div class="panel" data-equalizer-watch="panels">
-            <h4>This is a regular panel.</h4>
-            <p>It has an easy to override visual style, and is appropriately subdued.</p>
-            <p>It has an easy to override visual style, and is appropriately subdued.</p>
-            <p>It has an easy to override visual style, and is appropriately subdued.</p>
-        </div>
-    </li>
+
     <li>
         <div class="panel" data-equalizer-watch="panels">
             <h4>This is a regular panel.</h4>

@@ -565,3 +565,18 @@ img.grayscale {
 .dashboard-tracks td .dashboard-track-image img {
     height: 40px;
 }
+
+#weather iframe {
+    height: 100%;
+    width: 100%;
+}
+
+#ifBox {
+    height: 100%;
+    width: 100%;
+}
+
+.maxsize {
+    height: 100%;
+    width: 100%;
+}
