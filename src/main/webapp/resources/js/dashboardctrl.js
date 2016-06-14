@@ -10,8 +10,8 @@ app.controller('DashboardCtrl', function ($scope, $ws) {
                 while (divs.length > 8) {
                     divs.splice(divs.length - 1, 1)[0].remove();
                 }
-                while (divs.length - 1) {
-                    parent.append(divs.splice(Math.floor(Math.random() * (divs.length - 1) + 1), 1)[0]);
+                while (divs.length - 2) {
+                    parent.append(divs.splice(Math.floor(Math.random() * (divs.length - 2) + 2), 1)[0]);
                 }
                 $(document).foundation('reflow');
                 $scope.hideLoadingView();

@@ -9,13 +9,15 @@
         </div>
     </li>
     <li>
+        <div class="panel" data-equalizer-watch="panels">
+            <a class="twitter-timeline" data-width="100%" data-height="100%" href="https://twitter.com/9GAG">Tweets by
+                9GAG</a>
+            <script src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+        </div>
+    </li>
+    <li>
         <div class="panel" data-equalizer-watch="panels" id="weather">
-            <!--<iframe id=\"widget\" width=\"300\" height=\"270\"
-                    src=\"http://www.wetter-deutschland.com/international/europa/deutschland/karlsruhe/widget/w300/color-weiss?utm_source=widget&utm_medium="
-                    + top.location.hostname +
-            "&utm_content=" + top.location.href + "&utm_campaign=Wetter%2BWidget\" frameborder=\"0\"
-            scrolling=\"no\"></iframe>-->
-            <script type="text/javascript">$("#weather").html("<iframe id = \"widget\" src=\"http://www.wetter-deutschland.com/international/europa/deutschland/karlsruhe/widget/w300/color-weiss?utm_source=widget&utm_medium=" + top.location.hostname + "&utm_content=" + top.location.href + "&utm_campaign=Wetter%2BWidget\" frameborder=\"0\" scrolling=\"no\"></iframe>");</script>
+            <script type="text/javascript">$("#weather").html("<iframe id = \"widget\" src=\"/weather?hostname=" + top.location.hostname + "&href=" + top.location.href + "\" frameborder=\"0\" scrolling=\"no\"></iframe>");</script>
             <center style="padding-top:5px; padding-bottom:5px; font-size:11px; line-height:15px; font-family:arial;"><a
                     href="http://www.wetter-deutschland.com/international/europa/deutschland/karlsruhe"
                     style="color:#4787a9; text-decoration:none;" target="_blank">Das aktuelle Wetter in
@@ -23,14 +25,6 @@
                                      style="color:#4787a9; text-decoration:none;" target="_blank">Alles zum Wetter in
                 Deutschland</a></center>
             <br/>
-        </div>
-    </li>
-
-    <li>
-        <div class="panel" data-equalizer-watch="panels">
-            <a class="twitter-timeline" data-width="350" data-height="400" href="https://twitter.com/9GAG">Tweets by
-                9GAG</a>
-            <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
         </div>
     </li>
     <li>
@@ -258,14 +252,6 @@
                     </tr>
                 </table>
             </div>
-        </div>
-    </li>
-    <li>
-        <div class="panel" data-equalizer-watch="panels">
-            <h4>This is a regular panel.</h4>
-            <p>It has an easy to override visual style, and is appropriately subdued.</p>
-            <p>It has an easy to override visual style, and is appropriately subdued.</p>
-            <p>It has an easy to override visual style, and is appropriately subdued.</p>
         </div>
     </li>
 </ul>
