@@ -11,6 +11,7 @@ import de.saphijaga.spoozer.web.domain.request.SaveUserRequest;
 import de.saphijaga.spoozer.web.domain.response.GetUserDetailsResponse;
 import de.saphijaga.spoozer.web.domain.response.HistoryResponse;
 import de.saphijaga.spoozer.web.domain.response.PropertiesResponse;
+import de.saphijaga.spoozer.web.domain.response.SettingsResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -59,8 +60,9 @@ public class UserController {
 
     @MessageMapping("/addHTrack")
     public void addHistoryTrack(UserDetails user, @Payload AddHTrackRequest addHTrackRequest) {
-        if (userService.getUserDetails(user.getId()).isPresent())
+        if (userService.getUserDetails(user.getId()).isPresent()) {
             userService.addSongToHistory(user, addHTrackRequest);
+        }
     }
 
     @MessageMapping("/getHistory")
@@ -82,6 +84,18 @@ public class UserController {
     public PropertiesResponse getProperties(UserDetails user) {
         Map<String, Object> properties = userService.getProperties(user);
         return new PropertiesResponse(properties);
+    }
+
+    @MessageMapping("/saveSettings")
+    public void saveSettings(UserDetails user, @Payload Map<String, Object> properties) {
+        userService.saveSettings(user, properties);
+    }
+
+    @MessageMapping("/getSettings")
+    @SendToUser("/setSettings")
+    public SettingsResponse getSettings(UserDetails user) {
+        Map<String, Object> settings = userService.getSettings(user);
+        return new SettingsResponse(settings);
     }
 
     @MessageMapping("/clearHistory")

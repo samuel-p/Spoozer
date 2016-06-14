@@ -41,24 +41,31 @@ angular.module('ngPlayer', []).service('$player', [function () {
 
     this.changeRandom = function () {
         this.random = !this.random;
-        console.log("changing random: "+this.random);
+        this.firePlayerEvent('change');
     };
 
     this.changeRepeat = function () {
         this.repeat = !this.repeat;
-        console.log("changing repeat: "+this.repeat);
+        this.firePlayerEvent('change');
+    };
+
+    this.setRandomMode = function (random) {
+        this.random = random;
+    };
+
+    this.setRepeatMode = function (repeat) {
+        this.repeat = repeat;
     };
 
     this.next = function () {
-        if(this.repeat){
-
-            this.index = this.index;
-        }else if(this.random){
+        if (this.repeat) {
+            // do nothing
+        } else if (this.random) {
             var help = this.index;
-            while(this.index == help){
-                this.index = Math.floor(Math.random()* this.queue.length);
+            while (this.index == help) {
+                this.index = Math.floor(Math.random() * this.queue.length);
             }
-        }else{
+        } else {
             this.index = (this.index + 1) % this.queue.length;
         }
         this.playCurrent();
@@ -85,7 +92,7 @@ angular.module('ngPlayer', []).service('$player', [function () {
         }
         var self = this;
         this.playing.setOnStart(function () {
-            if (this.running == null) {
+            if (self.running == null) {
                 self.firePlayerEvent('start');
             }
             self.firePlayerEvent('changeTrack');
@@ -165,5 +172,12 @@ angular.module('ngPlayer', []).service('$player', [function () {
         return {
             volume: this.volume
         };
+    };
+
+    this.isRepeat = function () {
+        return this.repeat;
+    };
+    this.isRandom = function () {
+        return this.random;
     };
 }]);

@@ -26,6 +26,13 @@ body {
     margin: 0;
 }
 
+.spoozer.selected {
+    background-color: #000 !important;
+    border-color: #00ad00 !important;
+    color: #00c300 !important;
+    margin: 0;
+}
+
 .button.spoozer:hover,
 .button.spoozer:focus {
     background-color: #00ad00 !important;

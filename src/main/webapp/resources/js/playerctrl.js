@@ -1,8 +1,11 @@
 app.controller('PlayerCtrl', function ($player, $scope, $modal, $window, $ws) {
     $ws.subscribe('/setProperties', function (data) {
         $scope.properties = data.properties;
-        if (data.properties.playerVolume)
+        $player.setRandomMode(data.properties.playerRandom);
+        $player.setRepeatMode(data.properties.playerRepeat);
+        if (data.properties.playerVolume) {
             $player.setVolume(data.properties.playerVolume);
+        }
         if (data.properties.playerTrackService && data.properties.playerTrackId) {
             $ws.send('/getServiceTrackDetails', {
                 service: data.properties.playerTrackService,
@@ -35,13 +38,24 @@ app.controller('PlayerCtrl', function ($player, $scope, $modal, $window, $ws) {
         document.activeElement.blur();
     };
     $scope.changeRandomMode = function () {
-        $player.changeRandom();
         document.activeElement.blur();
+        $scope.$applyAsync(function () {
+            console.log("123 change random: " + $player.isRandom());
+            $player.changeRandom();
+        });
     };
-
     $scope.changeRepeatMode = function () {
-        $player.changeRepeat();
         document.activeElement.blur();
+        $scope.$applyAsync(function () {
+            console.log("456 change repeat: " + $player.isRepeat());
+            $player.changeRepeat();
+        });
+    };
+    $scope.isRepeatMode = function () {
+        return $player.isRepeat();
+    };
+    $scope.isRandomMode = function () {
+        return $player.isRandom();
     };
     $scope.previousTrack = function () {
         $player.previous();
@@ -109,7 +123,9 @@ app.controller('PlayerCtrl', function ($player, $scope, $modal, $window, $ws) {
             var properties = {
                 playerVolume: player.volume,
                 playerTrackId: '[empty]',
-                playerTrackService: '[empty]'
+                playerTrackService: '[empty]',
+                playerRepeat: $player.isRepeat(),
+                playerRandom: $player.isRandom()
             };
             if (player.track) {
                 properties.playerTrackId = player.track.id;
@@ -189,13 +205,24 @@ app.controller('PlayerModalCtrl', function ($scope, $window, $player, $modalInst
         return $player.isPlaying();
     };
     $scope.changeRandomMode = function () {
-        $player.changeRandom();
         document.activeElement.blur();
+        $scope.$applyAsync(function () {
+            console.log("123 change random: " + $player.isRandom());
+            $player.changeRandom();
+        });
     };
     $scope.changeRepeatMode = function () {
-        $player.changeRepeat();
-        console.log("changing repeat: "+$scope.player.repeat);
         document.activeElement.blur();
+        $scope.$applyAsync(function () {
+            console.log("456 change repeat: " + $player.isRepeat());
+            $player.changeRepeat();
+        });
+    };
+    $scope.isRepeatMode = function () {
+        return $player.isRepeat();
+    };
+    $scope.isRandomMode = function () {
+        return $player.isRandom();
     };
 
     $window.addEventListener('orientationchange', function () {
@@ -203,10 +230,4 @@ app.controller('PlayerModalCtrl', function ($scope, $window, $player, $modalInst
             volumeSlider.set($scope.player.volume * 100);
         });
     });
-    $scope.isRepeat = function() {
-      return $player.repeat;
-    };
-    $scope.isRandom = function() {
-        return $player.random;
-    };
 });

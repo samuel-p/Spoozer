@@ -225,7 +225,8 @@ ul.icon-bar li.spoozer * {
 }
 
 .player .player-control {
-    margin: 14px auto;
+    margin: 14px 7px;
+    display: inline-block;
 }
 
 .player .player-control .button {
@@ -365,17 +366,6 @@ ul.icon-bar li.spoozer * {
 .soundcloud:hover, .soundcloud:active, .soundcloud:focus {
     color: #fff;
     background-color: #fd600a;
-}
-
-.youtube {
-    color: #fff;
-    background-color: #de2c26;
-    margin: 0;
-}
-
-.youtube:hover, .youtube:active, .youtube:focus {
-    color: #fff;
-    background-color: #bf171d;
 }
 
 .result-service {
@@ -579,4 +569,30 @@ img.grayscale {
 .maxsize {
     height: 100%;
     width: 100%;
+}
+
+h3.settings {
+    color: #fff;
+}
+
+table.settings {
+    color: #fff;
+    background: none !important;
+    border: none;
+}
+
+table.settings tr {
+    background: none !important;
+}
+
+table.settings h3, .settings td {
+    color: #fff;
+}
+
+table.settings input {
+    margin: 0;
+}
+
+table.settings img {
+    height: 40px;
 }
