@@ -37,50 +37,6 @@
             }(document, "script", "twitter-wjs");</script>
         </div>
     </li>
-    <li ng-if="!properties.spotify">
-        <div class="panel" data-equalizer-watch="panels">
-            <p><img src="img/spotify.png"></p>
-            <p>Verbinde jetzt deinen Spotify-Account mit Spoozer!<br><br></p>
-            <p class="text-center"><a class="button round spotify" href="#/profile/accounts">Zu den Einstellungen <span
-                    class="fa fa-arrow-right"></span></a><br><br><br></p>
-        </div>
-    </li>
-    <li ng-if="!properties.soundcloud">
-        <div class="panel" data-equalizer-watch="panels">
-            <p><img src="img/soundcloud.png"></p>
-            <p>Verbinde jetzt deinen Soundcloud-Account mit Spoozer!<br><br></p>
-            <p class="text-center"><a class="button round soundcloud" href="#/profile/accounts">Zu den Einstellungen
-                <span class="fa fa-arrow-right"></span></a><br><br><br></p>
-        </div>
-    </li>
-    <li ng-if="properties.playlists == 0">
-        <div class="panel" data-equalizer-watch="panels">
-            <h2>Erstelle jetzt deine erste Playlist!</h2>
-            <p>Du hast bis jetzt noch keine Playlist hinzugefügt. Erstelle deine erste Playlist um die erste Party
-                steigen zu lassen!<br><br></p>
-            <p class="text-center"><a class="button round alert" href="#/playlists">Los geht's <span
-                    class="fa fa-arrow-right"></span></a><br><br></p>
-        </div>
-    </li>
-    <li>
-        <div class="panel" data-equalizer-watch="panels">
-            <h2>Übersicht:</h2>
-            <table>
-                <tr>
-                    <th class="text-left">Verbundene Services:</th>
-                    <td>{{properties.services}}</td>
-                </tr>
-                <tr>
-                    <th class="text-left">Playlists:</th>
-                    <td>{{properties.playlists}}</td>
-                </tr>
-                <tr>
-                    <th class="text-left">Songs:</th>
-                    <td>{{properties.tracks}}</td>
-                </tr>
-            </table>
-        </div>
-    </li>
     <li ng-if="properties.spotify">
         <div class="panel" data-equalizer-watch="panels">
             <h3>Neues von Spotify:</h3>
@@ -249,6 +205,50 @@
                     </tr>
                 </table>
             </div>
+        </div>
+    </li>
+    <li ng-if="!properties.spotify">
+        <div class="panel" data-equalizer-watch="panels">
+            <p><img src="img/spotify.png"></p>
+            <p>Verbinde jetzt deinen Spotify-Account mit Spoozer!<br><br></p>
+            <p class="text-center"><a class="button round spotify" href="#/profile/accounts">Zu den Einstellungen <span
+                    class="fa fa-arrow-right"></span></a><br><br><br></p>
+        </div>
+    </li>
+    <li ng-if="!properties.soundcloud">
+        <div class="panel" data-equalizer-watch="panels">
+            <p><img src="img/soundcloud.png"></p>
+            <p>Verbinde jetzt deinen Soundcloud-Account mit Spoozer!<br><br></p>
+            <p class="text-center"><a class="button round soundcloud" href="#/profile/accounts">Zu den Einstellungen
+                <span class="fa fa-arrow-right"></span></a><br><br><br></p>
+        </div>
+    </li>
+    <li ng-if="properties.playlists == 0">
+        <div class="panel" data-equalizer-watch="panels">
+            <h2>Erstelle jetzt deine erste Playlist!</h2>
+            <p>Du hast bis jetzt noch keine Playlist hinzugefügt. Erstelle deine erste Playlist um die erste Party
+                steigen zu lassen!<br><br></p>
+            <p class="text-center"><a class="button round alert" href="#/playlists">Los geht's <span
+                    class="fa fa-arrow-right"></span></a><br><br></p>
+        </div>
+    </li>
+    <li>
+        <div class="panel" data-equalizer-watch="panels">
+            <h2>Übersicht:</h2>
+            <table>
+                <tr>
+                    <th class="text-left">Verbundene Services:</th>
+                    <td>{{properties.services}}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Playlists:</th>
+                    <td>{{properties.playlists}}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Songs:</th>
+                    <td>{{properties.tracks}}</td>
+                </tr>
+            </table>
         </div>
     </li>
 </ul>
