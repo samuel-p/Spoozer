@@ -5,7 +5,6 @@ import de.saphijaga.spoozer.core.service.UserService;
 import de.saphijaga.spoozer.service.Api;
 import de.saphijaga.spoozer.service.StreamingService;
 import de.saphijaga.spoozer.service.utils.ApiService;
-import de.saphijaga.spoozer.service.utils.Get;
 import de.saphijaga.spoozer.web.details.TrackDetails;
 import de.saphijaga.spoozer.web.details.UserDetails;
 import de.saphijaga.spoozer.web.domain.response.GetDashboardPropertiesResponse;
@@ -14,11 +13,8 @@ import de.saphijaga.spoozer.web.domain.response.GetTrackResultResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.annotation.SendToUser;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -96,11 +92,5 @@ public class DashboardController {
             }
         });
         return new GetServiceTrackResultResponse(searchResult);
-    }
-
-    @RequestMapping("/weather")
-    @ResponseBody
-    private String getWeatherWidget() throws IOException {
-        return Get.forString("http://oap.accuweather.com/launch.js");
     }
 }
