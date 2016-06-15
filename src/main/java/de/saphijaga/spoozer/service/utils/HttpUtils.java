@@ -48,7 +48,7 @@ public class HttpUtils {
         URL obj = new URL(url);
         HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
         connection.setRequestMethod(method);
-        header.forEach((key, value) -> connection.setRequestProperty(key, value));
+        header.forEach(connection::setRequestProperty);
         return connection;
     }
 

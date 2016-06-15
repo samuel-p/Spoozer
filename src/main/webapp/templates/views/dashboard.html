@@ -10,21 +10,23 @@
     </li>
     <li>
         <div class="panel" data-equalizer-watch="panels">
-            <a class="twitter-timeline" data-width="100%" data-height="100%" href="https://twitter.com/9GAG">Tweets by
+            <a class="twitter-timeline" data-width="100%" data-height="387px" href="https://twitter.com/9GAG">Tweets by
                 9GAG</a>
-            <script src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            <script src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
         </div>
     </li>
     <li>
         <div class="panel" data-equalizer-watch="panels" id="weather">
-            <script type="text/javascript">$("#weather").html("<iframe id = \"widget\" src=\"/weather?hostname=" + top.location.hostname + "&href=" + top.location.href + "\" frameborder=\"0\" scrolling=\"no\"></iframe>");</script>
-            <center style="padding-top:5px; padding-bottom:5px; font-size:11px; line-height:15px; font-family:arial;"><a
-                    href="http://www.wetter-deutschland.com/international/europa/deutschland/karlsruhe"
-                    style="color:#4787a9; text-decoration:none;" target="_blank">Das aktuelle Wetter in
-                Karlsruhe</a><br/><a href="http://www.wetter-deutschland.com"
-                                     style="color:#4787a9; text-decoration:none;" target="_blank">Alles zum Wetter in
-                Deutschland</a></center>
-            <br/>
+            <div style="width: 100%; height: 387px; overflow: auto; display: inline-block;">
+                <a href="http://www.accuweather.com/de/de/karlsruhe/76133/current-weather/167218" class="aw-widget-legal">
+                    <!--
+                    By accessing and/or using this code snippet, you agree to AccuWeather’s terms and conditions (in English) which can be found at http://www.accuweather.com/en/free-weather-widgets/terms and AccuWeather’s Privacy Statement (in English) which can be found at http://www.accuweather.com/en/privacy.
+                    -->
+                </a>
+                <div id="awtd1465974572067" class="aw-widget-36hour" data-locationkey="" data-unit="c" data-language="de"
+                     data-useip="true" data-uid="awtd1465974572067" data-editlocation="true"></div>
+                <script type="text/javascript" src="/weather"></script>
+            </div>
         </div>
     </li>
     <li>
@@ -35,9 +37,7 @@
                         src="http://service.derwesten.de/configurator/img/logo_grafik.jpg" alt="" border="0"></a>
                     <iframe id="ifBox" name="ifBox"
                             src="http://service.derwesten.de/configurator/rss2.php?boxSize=300x300&boxCategory1=/rss&boxCategory2=&boxCategory3=&boxCategory4=&boxArticleNum=10&boxTeaserText=&boxBanner=yes&boxTeaserAnzahl=&boxTeaserTabs=&colorfield1=990000&colorfield2=FFFFFF&colorfield3=000000&colorfield4=FFFFFF&boxSuche=&auftritt=&utf8=1"
-                            frameborder="0" scrolling="No"></iframe>
-                    <a style="font-family:arial,helvetica,sans-serif;font-size:10px;color:#afafaf;text-decoration:none;"
-                       href="http://www.derwesten.de/" target="_new">Mehr aus der Kategorie "Nachrichten".</a></div>
+                            frameborder="0" scrolling="No"></iframe></div>
             </div>
     </li>
     <li ng-if="!properties.spotify">

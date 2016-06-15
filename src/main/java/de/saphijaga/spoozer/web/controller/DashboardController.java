@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -101,8 +100,7 @@ public class DashboardController {
 
     @RequestMapping("/weather")
     @ResponseBody
-    private String getWeatherWidget(@RequestParam String hostname, @RequestParam String href) throws IOException {
-        String response = Get.forString("http://www.wetter-deutschland.com/international/europa/deutschland/karlsruhe/widget/w300/color-weiss?utm_source=widget&utm_medium=" + hostname + "&utm_content=" + href + "&utm_campaign=Wetter%2BWidget");
-        return response.replace("/wetter_public", "http://www.wetter-deutschland.com/wetter_public");
+    private String getWeatherWidget() throws IOException {
+        return Get.forString("http://oap.accuweather.com/launch.js");
     }
 }
